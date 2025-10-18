@@ -2,11 +2,18 @@
     width: 300px;
 }
 
+#home,
+.campus-map,
 nav,
 .nav-links,
 .nav-links>ul {
     display: flex;
     flex-direction: row;
+}
+
+nav,
+.nav-links,
+.nav-links>ul {
     gap: 30px;
     align-items: center;
 }
@@ -20,6 +27,17 @@ nav {
     list-style-type: none;
 }
 
-.school-layout>img {
+.campus-map>img {
     width: 1000px;
+}
+
+.zoom-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.zoom-buttons>button {
+    width: 30px;
+    height: 30px;
 }
