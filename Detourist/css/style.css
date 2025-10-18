@@ -1,0 +1,25 @@
+.logo img {
+    width: 300px;
+}
+
+nav,
+.nav-links,
+.nav-links>ul {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+
+nav {
+    padding: 0px 50px;
+    justify-content: space-between;
+}
+
+.nav-links>ul {
+    list-style-type: none;
+}
+
+.school-layout>img {
+    width: 1000px;
+}
