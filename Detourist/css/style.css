@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
 .logo img {
     width: 300px;
 }
@@ -23,8 +28,35 @@ nav {
     justify-content: space-between;
 }
 
+main {
+    padding: 30px;
+}
+
 .nav-links>ul {
     list-style-type: none;
+}
+
+.nav-links a, .login-button {
+    color: black;
+    text-decoration: none;
+    box-sizing: content-box;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.nav-links a {
+    color: black;
+    text-decoration: none;
+}
+
+.login-button {
+    color: white;
+    background-color: #2C2C2C;
+    border: none;
+}
+
+.nav-links a:hover {
+    background-color: #D9D9D9;
 }
 
 .campus-map>img {
