@@ -28,7 +28,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar-left">
         <a href="#home">
-          <img src="logo.jpg" alt="Detourist logo" class="navbar-logo" />
+          <img src="assets/images/logo.jpg" alt="Detourist logo" class="navbar-logo" />
         </a>
         <div class="navbar-title">
           <h1>Detourist</h1>
@@ -61,32 +61,35 @@
     <main id="main-content">
       <!-- ===== HOME SECTION ===== -->
       <header id="home">
-        <div class="destination-details">
+        <section class="destination-details">
           <input type="text" placeholder="Search destination..." />
 
           <div class="room-info">
             <h2>Room Name</h2>
-            <img src="room-img.jpg" alt="Room preview" />
+            <img src="assets/images/room.jpg" alt="Room preview" />
           </div>
 
           <div class="route-button">
-            <button>Route</button>
-            <button>Emergency Route</button>
+            <button id="norm-route">Route</button>
+            <button id="er-route"><img src="assets/images/warning.webp" alt=""> Emergency Route</button>
           </div>
 
           <div class="current-location-details">
-            <h2>Your Current Location</h2>
-            <h2>5th Floor</h2>
+            <img src="assets/images/location.png" alt="location">
+            <div id="details">
+              <h3 id="loc-header">Your Current Location</h3>
+              <h3 id="loc-info">Lobby, 6th Floor</h3>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="campus-map">
-          <img src="images/floor5.png" alt="Campus map" />
+        <section class="campus-map">
+          <img src="assets/images/floor5.png" alt="Campus map" />
           <div class="zoom-buttons">
             <button>+</button>
             <button>-</button>
           </div>
-        </div>
+        </section>
       </header>
 
       <!-- ===== ANNOUNCEMENTS ===== -->

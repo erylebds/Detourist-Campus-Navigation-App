@@ -7,6 +7,11 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   color: #222;
@@ -124,6 +129,129 @@ body {
 }
 .hamburger.active span:nth-child(3) {
   transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* =========================
+   Home Section
+========================= */
+#home {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-top: 80px;
+}
+
+.destination-details {
+  width: 30%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.destination-details input {
+  border-radius: 20px;
+  font-size: 15px;
+  padding: 10px 10px 10px 15px;
+  border: none;
+  background-color: #dbdbdb;
+}
+
+.destination-details img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.route-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+}
+
+.route-button button {
+  height: 30px;
+  font-size: 15px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#norm-route {
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: #ffd3a1;
+}
+
+#er-route {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 20px;
+}
+
+#er-route img {
+  width: 20px;
+  height: 20px;
+}
+
+.current-location-details {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-top: 5px;
+  background-color: rgb(230, 222, 222);
+  padding: 10px;
+  border-radius: 50px;
+}
+
+.current-location-details img {
+  width: 50px;
+  height: 50px;
+}
+
+#loc-header {
+  font-weight: normal;
+  font-size: 18px;
+}
+
+#loc-info {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.campus-map {
+  background-color: white;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  justify-content: center;
+  gap: 20px;
+}
+
+.campus-map img {
+  width: 1000px;
+  height: auto;
+}
+
+.zoom-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-left: 30px;
+}
+
+.zoom-buttons button {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 15px;
 }
 
 /* =========================
