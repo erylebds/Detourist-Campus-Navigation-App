@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- ===== Metadata ===== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Detourist - Campus Navigation System" />
+    <title>Detourist Navigation</title>
+
+    <!-- ===== Styles ===== -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- ===== Fonts & Icons ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- ===== NAVIGATION BAR ===== -->
+    <nav class="navbar" id="navbar">
+      <div class="navbar-left">
+        <a href="#home">
+          <img src="logo.jpg" alt="Detourist logo" class="navbar-logo" />
+        </a>
+        <div class="navbar-title">
+          <h1>Detourist</h1>
+          <p>Campus Navigation</p>
+        </div>
+      </div>
+
+      <nav class="navbar-center" aria-label="Main Navigation" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#announcements">Announcements</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="navbar-right">
+        <button class="btn-login">Login</button>
+
+        <!-- Hamburger -->
+        <div class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="main-content">
+      <!-- ===== HOME SECTION ===== -->
+      <header id="home">
+        <div class="destination-details">
+          <input type="text" placeholder="Search destination..." />
+
+          <div class="room-info">
+            <h2>Room Name</h2>
+            <img src="room-img.jpg" alt="Room preview" />
+          </div>
+
+          <div class="route-button">
+            <button>Route</button>
+            <button>Emergency Route</button>
+          </div>
+
+          <div class="current-location-details">
+            <h2>Your Current Location</h2>
+            <h2>5th Floor</h2>
+          </div>
+        </div>
+
+        <div class="campus-map">
+          <img src="images/floor5.png" alt="Campus map" />
+          <div class="zoom-buttons">
+            <button>+</button>
+            <button>-</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== ANNOUNCEMENTS ===== -->
+      <section class="announcements-section" id="announcements">
+        <h2>Announcements</h2>
+
+        <article class="announcement-card" data-title="Campus Maintenance Notice"
+          data-body="Power will be temporarily interrupted on October 26, from 8AM to 10AM for scheduled maintenance. Please save your work before this time.">
+          <h3>Campus Maintenance Notice</h3>
+          <p>Power will be temporarily interrupted...</p>
+        </article>
+
+        <article class="announcement-card" data-title="Safety Drill"
+          data-body="There will be a campus-wide safety drill on October 30. Please follow evacuation signs and cooperate with campus personnel.">
+          <h3>Safety Drill</h3>
+          <p>There will be a campus-wide safety drill...</p>
+        </article>
+
+        <article class="announcement-card" data-title="New Cafeteria Menu"
+          data-body="The cafeteria introduces new healthy meal options starting next week! Visit the canteen to check out the full menu.">
+          <h3>New Cafeteria Menu</h3>
+          <p>The cafeteria introduces new healthy meal options...</p>
+        </article>
+
+        <article class="announcement-card" data-title="Library Schedule Update"
+          data-body="The library will now open from 7AM to 9PM daily. This adjustment aims to accommodate more students.">
+          <h3>Library Schedule Update</h3>
+          <p>The library will now open from 7AM to 9PM...</p>
+        </article>
+      </section>
+
+      <!-- ===== MODAL ===== -->
+      <div class="modal" id="announcement-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-body">
+        <div class="modal-content">
+          <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+          <h3 id="modal-title"></h3>
+          <p id="modal-body"></p>
+        </div>
+      </div>
+
+      <!-- ===== ABOUT ===== -->
+      <section class="about-section" id="about">
+        <div class="about-container">
+          <figure class="about-image">
+            <img src="detourist.jpg" alt="Detourist application preview" />
+          </figure>
+          <div class="about-info">
+            <h2>About</h2>
+            <p>
+              Detourist is a campus navigation system designed to help students
+              locate rooms, view campus layouts, and navigate safely during
+              emergencies. It provides real-time alerts, interactive maps, and
+              emergency routing options managed by administrators.
+              <br /><br />
+              Our mission is to enhance campus safety and accessibility through
+              innovative technology, ensuring that students can navigate their
+              campus with confidence and ease.
+              <br /><br />
+              Join us in making campus navigation safer and more efficient for
+              everyone!
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" id="contact">
+      <div class="footer-container">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="brand-logo"></div>
+          <div class="brand-text">
+            <h2>Detourist</h2>
+            <p>Campus Navigation</p>
+          </div>
+        </div>
+
+        <!-- Contact Links -->
+        <div class="footer-links">
+          <a href="https://instagram.com/detouristph" target="_blank" class="contact-item">
+            <i class="fab fa-instagram"></i>
+            <div><h3>Instagram</h3><p>@detouristph</p></div>
+          </a>
+
+          <a href="https://facebook.com/detouristph" target="_blank" class="contact-item">
+            <i class="fab fa-facebook-f"></i>
+            <div><h3>Facebook</h3><p>@detouristph</p></div>
+          </a>
+
+          <a href="https://twitter.com/detouristph" target="_blank" class="contact-item">
+            <i class="fab fa-x-twitter"></i>
+            <div><h3>Twitter</h3><p>@detouristph</p></div>
+          </a>
+
+          <a href="mailto:detourist@email.com" class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div><h3>Email</h3><p>detourist@email.com</p></div>
+          </a>
+
+          <a href="tel:+639123456789" class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div><h3>Contact</h3><p>+63 912 345 6789</p></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Detourist | Campus Navigation System</p>
+      </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="js/script.js" defer></script>
+  </body>
+</html>
