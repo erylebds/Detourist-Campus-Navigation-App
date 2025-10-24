@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Detourist | Campus Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detourist | Campus Navigation - Login</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="login-page">
     <header>
@@ -16,15 +25,25 @@
         </a>
     </header>
     <main>
-        <h1 class="center-title">Detourist</h1>
+        <h1 class="center-title">Welcome Back!</h1>
         <form class="login-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
+            <div class="input-group">
+                <label for="username"><i class="fas fa-user"></i> Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password"><i class="fas fa-lock"></i> Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
             <div class="form-actions">
-                <button type="button" class="forgot">Forgot Password?</button>
-                <button type="submit" class="login-btn">Login</button>
+                <button type="button" class="forgot">
+                    <i class="fas fa-question-circle"></i> Forgot Password?
+                </button>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
             </div>
         </form>
     </main>
