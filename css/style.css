@@ -21,6 +21,10 @@ body {
   scroll-padding-top: 80px;
 }
 
+main {
+  margin: 0 20px;
+}
+
 /* =========================
    Navbar
 ========================= */
@@ -124,9 +128,11 @@ body {
 .hamburger.active span:nth-child(1) {
   transform: translateY(7.5px) rotate(45deg);
 }
+
 .hamburger.active span:nth-child(2) {
   opacity: 0;
 }
+
 .hamburger.active span:nth-child(3) {
   transform: translateY(-7.5px) rotate(-45deg);
 }
@@ -230,11 +236,10 @@ body {
   padding: 10px;
   margin: 0;
   justify-content: center;
-  gap: 20px;
 }
 
 .campus-map img {
-  width: 1000px;
+  width: 900px;
   height: auto;
 }
 
@@ -244,7 +249,6 @@ body {
   align-items: center;
   gap: 10px;
   margin-top: 15px;
-  margin-left: 30px;
 }
 
 .zoom-buttons button {
@@ -457,6 +461,7 @@ body {
    Responsive Design
 ========================= */
 @media (max-width: 768px) {
+
   /* Navbar mobile */
   .nav-links {
     position: fixed;
@@ -529,6 +534,7 @@ body {
 
 /* Override body styles for login page specifically */
 body.login-page {
+<<<<<<< HEAD
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
@@ -557,10 +563,22 @@ body.login-page::before {
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
+=======
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #fff;
+  color: #111;
+  border: 3px solid #000;
+  min-height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+>>>>>>> a2642d39725279b2c93785bb374352ec0f4eb695
 }
 
 /* Login page header */
 body.login-page header {
+<<<<<<< HEAD
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -598,15 +616,46 @@ body.login-page .logo-image {
     object-fit: cover;
     border: 3px solid #e67e22;
     box-shadow: 0 3px 10px rgba(230, 126, 34, 0.4);
+=======
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 18px 38px 18px 18px;
+  border-bottom: 1px solid #aaa;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body.login-page .logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+body.login-page .logo-section:hover {
+  opacity: 0.8;
+}
+
+body.login-page .logo-image {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+>>>>>>> a2642d39725279b2c93785bb374352ec0f4eb695
 }
 
 body.login-page .logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 
 body.login-page .main-title {
+<<<<<<< HEAD
     font-family: 'Poppins', serif;
     font-size: 2.2rem;
     font-weight: 700;
@@ -626,35 +675,54 @@ body.login-page .subtitle {
     margin-left: 0;
     margin-top: 0;
     font-weight: 500;
+=======
+  font-family: serif;
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  display: block;
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+
+body.login-page .subtitle {
+  font-size: 0.9rem;
+  color: #222;
+  letter-spacing: 0.4px;
+  display: block;
+  margin-left: 0;
+  margin-top: 0;
+>>>>>>> a2642d39725279b2c93785bb374352ec0f4eb695
 }
 
 body.login-page nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 body.login-page nav a {
-    color: #222;
-    text-decoration: none;
-    font-size: 0.96rem;
-    padding: 0 2px;
+  color: #222;
+  text-decoration: none;
+  font-size: 0.96rem;
+  padding: 0 2px;
 }
 
 body.login-page .login-nav {
-    background: #222;
-    color: #fff;
-    border: none;
-    border-radius: 7px;
-    padding: 5px 13px;
-    font-size: 1rem;
-    margin-left: 7px;
-    cursor: pointer;
-    box-shadow: none;
-    outline: none;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 5px 13px;
+  font-size: 1rem;
+  margin-left: 7px;
+  cursor: pointer;
+  box-shadow: none;
+  outline: none;
 }
 
 body.login-page .center-title {
+<<<<<<< HEAD
     font-family: 'Poppins', serif;
     text-align: center;
     margin: 60px 0 40px 0;
@@ -775,10 +843,66 @@ body.login-page .form-actions {
     justify-content: space-between;
     margin-top: 25px;
     gap: 15px;
+=======
+  font-family: serif;
+  text-align: center;
+  margin: 50px 0 32px 0;
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
-body.login-page .forgot, 
+body.login-page main {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+body.login-page .login-form {
+  width: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+body.login-page .login-form label {
+  margin-bottom: 3px;
+  font-size: 1.01rem;
+  letter-spacing: 0.2px;
+}
+
+body.login-page .login-form input {
+  border: none;
+  background: #d6d6d6;
+  border-radius: 15px;
+  padding: 10px 13px;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+body.login-page .form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+>>>>>>> a2642d39725279b2c93785bb374352ec0f4eb695
+}
+
+body.login-page .forgot,
 body.login-page .login-btn {
+<<<<<<< HEAD
     border: none;
     border-radius: 15px;
     padding: 12px 25px;
@@ -823,78 +947,97 @@ body.login-page .login-btn:hover {
     background: linear-gradient(135deg, #e67e22, #d35400);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
+=======
+  border: none;
+  border-radius: 15px;
+  padding: 7px 18px;
+  font-size: 1rem;
+  background: #bcbcbc;
+  cursor: pointer;
+  color: #222;
+  box-shadow: none;
+  outline: none;
+}
+
+body.login-page .forgot {
+  background: #c7c7c7;
+}
+
+body.login-page .login-btn {
+  background: #bcbcbc;
+>>>>>>> a2642d39725279b2c93785bb374352ec0f4eb695
 }
 
 /* Login Page Responsive Design */
 @media (max-width: 768px) {
-    body.login-page header {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px 20px 20px;
-        align-items: center;
-        text-align: center;
-    }
+  body.login-page header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px 20px 20px;
+    align-items: center;
+    text-align: center;
+  }
 
-    body.login-page nav {
-        flex-wrap: wrap;
-        gap: 15px;
-        justify-content: center;
-    }
+  body.login-page nav {
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
 
-    body.login-page nav a {
-        margin-right: 0;
-    }
+  body.login-page nav a {
+    margin-right: 0;
+  }
 
-    body.login-page .main-title {
-        font-size: 1.5rem;
-        letter-spacing: 1.5px;
-    }
+  body.login-page .main-title {
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+  }
 
-    body.login-page .center-title {
-        font-size: 1.8rem;
-        letter-spacing: 1.5px;
-        margin: 30px auto 20px auto;
-    }
+  body.login-page .center-title {
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    margin: 30px auto 20px auto;
+  }
 
-    body.login-page main {
-        padding: 10px;
-        min-height: calc(100vh - 150px);
-    }
+  body.login-page main {
+    padding: 10px;
+    min-height: calc(100vh - 150px);
+  }
 
-    body.login-page .login-form {
-        max-width: 300px;
-        padding: 15px;
-    }
+  body.login-page .login-form {
+    max-width: 300px;
+    padding: 15px;
+  }
 
-    body.login-page .form-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
+  body.login-page .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    body.login-page .forgot, 
-    body.login-page .login-btn {
-        width: 100%;
-        text-align: center;
-    }
+  body.login-page .forgot,
+  body.login-page .login-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
-    body.login-page header {
-        padding: 10px 15px 15px 15px;
-    }
+  body.login-page header {
+    padding: 10px 15px 15px 15px;
+  }
 
-    body.login-page .main-title {
-        font-size: 1.2rem;
-        letter-spacing: 1px;
-    }
+  body.login-page .main-title {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
 
-    body.login-page .center-title {
-        font-size: 1.5rem;
-        letter-spacing: 1px;
-    }
+  body.login-page .center-title {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
 
-    body.login-page .login-form {
-        max-width: 280px;
-        padding: 10px;
-    }
+  body.login-page .login-form {
+    max-width: 280px;
+    padding: 10px;
+  }
 }
