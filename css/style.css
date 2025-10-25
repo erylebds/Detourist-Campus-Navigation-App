@@ -556,8 +556,8 @@ a {
 }
 
 .login-grid {
-  margin: 0;
-  height: 100vh;
+  padding: 0;
+  height: 100svh;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   background-image: url(../assets/images/slubakakeng.jpg);
