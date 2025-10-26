@@ -278,6 +278,7 @@ a {
 }
 
 .campus-map {
+  position: relative;
   background-color: white;
   display: flex;
   width: 100%;
@@ -287,10 +288,29 @@ a {
 }
 
 .campus-map img {
-  width: 1500px;
+  width: 100%;
   height: auto;
   object-fit: contain;
   max-width: 100%;
+  display: block;
+}
+
+/* Map Markers */
+.room-marker {
+  width: 12px;
+  height: 12px;
+  background-color: #e67e22;
+  border: 2px solid white;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.room-marker:hover {
+  background-color: #2f4048;
+  transform: translate(-50%, -50%) scale(1.3);
 }
 
 .zoom-buttons {
