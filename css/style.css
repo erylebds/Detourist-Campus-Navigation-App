@@ -168,7 +168,6 @@ a {
   flex-direction: column;
   gap: 20px;
   background-color: #5e95a1;
-  padding-left: 20px;
   border-right: 1px dotted #2f4048;
 }
 
@@ -186,6 +185,17 @@ a {
   object-fit: contain;
 }
 
+
+.room-info img {
+  display: block;
+  margin: 10px auto 0;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
 .room-info>h2 {
   color: white;
   border-bottom: #2f4048 solid 2px;
@@ -198,10 +208,13 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 25px;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
 }
 
 .route-button button {
+  width: 100%;
   height: 30px;
   font-size: 1.05rem;
   box-sizing: content-box;
@@ -268,13 +281,16 @@ a {
   background-color: white;
   display: flex;
   width: 100%;
-  padding: 10px;
+  padding: 5%;
   justify-content: center;
+  overflow: hidden;
 }
 
 .campus-map img {
   width: 900px;
   height: auto;
+  object-fit: contain;
+  max-width: 100%;
 }
 
 .zoom-buttons {
@@ -295,6 +311,70 @@ a {
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  #home {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .destination-details {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px dotted #2f4048;
+    padding: 15px;
+  }
+
+  .campus-map {
+    width: 100%;
+    padding: 5%;
+  }
+
+  .route-button {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .route-button button {
+    width: 45%;
+  }
+}
+
+/* ======== MOBILE VIEW ======== */
+@media (max-width: 600px) {
+  #home {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .destination-details {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .route-button {
+    gap: 15px;
+  }
+
+  .route-button button {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .current-location-details {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+  }
+
+  .current-location-details img {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 
