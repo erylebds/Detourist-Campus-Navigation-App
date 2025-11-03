@@ -458,6 +458,13 @@ a {
   color: #e67e22;
 }
 
+.announcement-list {
+  max-height: 400px;
+  overflow-y: scroll;
+  padding-right: 10px;
+  scrollbar-width: none;
+}
+
 .announcement-card {
   background: #fffdf8;
   border: 1px solid #ffd6a5;
