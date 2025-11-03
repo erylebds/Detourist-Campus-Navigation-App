@@ -574,7 +574,7 @@ a {
 
 .contact-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   text-decoration: none;
   color: inherit;
@@ -589,6 +589,8 @@ a {
 .contact-item i {
   font-size: 1.5rem;
   color: #ff9f43;
+  width: 1.8rem;
+  text-align: center;
 }
 
 .contact-item h3 {
@@ -596,6 +598,7 @@ a {
   font-weight: 600;
   margin: 0;
   color: #222;
+  text-align: left;
 }
 
 .contact-item p {
