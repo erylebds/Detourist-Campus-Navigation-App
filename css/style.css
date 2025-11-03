@@ -277,21 +277,29 @@ a {
   font-size: 1rem;
 }
 
-.campus-map {
+.map-wrapper {
+  width: 100%;
   position: relative;
   background-color: white;
-  display: flex;
-  width: 100%;
   padding: 5%;
+  display: flex;
   justify-content: center;
-  overflow: hidden;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.campus-map {
+  flex: 1;
+  min-width: 600px;
+  max-width: 1500px;
+  position: relative;
 }
 
 .campus-map img {
   width: 100%;
   height: auto;
+  max-height: 80vh;
   object-fit: contain;
-  max-width: 100%;
   display: block;
 }
 
@@ -318,6 +326,7 @@ a {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  position: sticky;
   margin-top: 15px;
 }
 
