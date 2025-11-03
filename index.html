@@ -55,7 +55,10 @@
   <header>
     <section id="home">
       <div class=" destination-details">
-        <input type="text" placeholder="Search destination..." />
+        <div class="search-container">
+          <input type="text" id="searchRoom" placeholder="Search destination..." autocomplete="off"/>
+          <div id="searchResults" class="autocomplete-results"></div>
+        </div>
 
         <div class="room-info">
           <h2>Room Name</h2>
@@ -221,6 +224,7 @@
   <script src="js/coordinates.js"></script>
   <script src="js/map.js"></script>
   <script src="js/zoomButtons.js"></script>
+  <script src="js/search.js"></script>
 </body>
 
 </html>

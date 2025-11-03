@@ -179,6 +179,35 @@ a {
   background-color: #dbdbdb;
 }
 
+.search-container {
+  position: relative;
+  width: 220px;
+  margin-bottom: 10px;
+}
+
+.autocomplete-results {
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 1000;
+  display: none;
+}
+
+.autocomplete-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-item:hover {
+  background-color: #f0f0f0;
+}
+
+
 .destination-details img {
   max-width: 100%;
   height: auto;
