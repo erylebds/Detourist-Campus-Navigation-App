@@ -645,6 +645,7 @@ a {
   font-size: 0.85rem;
   color: #777;
   margin-top: 2px;
+  text-align: left;
 }
 
 /* Footer Bottom */
@@ -868,7 +869,7 @@ a {
   }
 
   .footer-links {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
 
