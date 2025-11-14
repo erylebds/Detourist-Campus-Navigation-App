@@ -318,11 +318,11 @@ a {
   justify-content: center;
   align-items: flex-start;
   gap: 15px;
-  overflow: auto;
+  overflow: clip;
 }
 
 .campus-map {
-  transform-origin: center center ;
+  transform-origin: center center;
   transition: transform 0.25s ease;
   position: relative;
   display: inline-block;
