@@ -328,18 +328,31 @@ a {
   display: inline-block;
   cursor: grab;
   user-select: none;
+  width: 838px;
+  height: 458px;
 }
 
-.campus-map:active {
-  cursor: grabbing;
+.map-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.campus-map img {
-  max-width: 100%;
-  height: auto;
-  max-height: 80vh;
-  object-fit: contain;
-  display: block;
+#map-canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  /* minimize blurriness of canvas lines & text */
+  /* multiple values to ensure compatibility with most browsers */
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 /* Map Markers */
@@ -367,13 +380,14 @@ a {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  border: none;  
+  border: none;
   border-radius: 0;
   position: absolute;
   cursor: pointer;
   transform: translate(-50%, -50%);
   transition: transform 0.2s ease;
 }
+
 .emergency-marker:hover {
   transform: translate(-50%, -50%) scale(1.3);
 }
