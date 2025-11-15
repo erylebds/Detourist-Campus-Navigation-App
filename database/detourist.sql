@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 15, 2025 at 04:57 AM
--- Server version: 9.1.0
+-- Generation Time: Nov 15, 2025 at 01:01 PM
+-- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -131,6 +131,48 @@ INSERT INTO `room` (`room_id`, `room_code`, `building_name`, `wing`, `room_numbe
 (9, 'D513', 'Devesse', 1, 3, 'classroom', 50, 86, 5, 'assets/images/room.jpg'),
 (10, 'D514', 'Devesse', 1, 4, 'classroom', 59, 86, 5, 'assets/images/room.jpg'),
 (11, 'D515', 'Devesse', 1, 5, 'classroom', 69, 86, 5, 'assets/images/room.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roomlabel`
+--
+
+DROP TABLE IF EXISTS `roomlabel`;
+CREATE TABLE IF NOT EXISTS `roomlabel` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `x_coord` int NOT NULL,
+  `y_coord` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `roomlabel`
+--
+
+INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`) VALUES
+(1, 'D501', 48, 40),
+(2, 'D502', 48, 210),
+(3, 'D503', 48, 300),
+(4, 'D504', 48, 390),
+(5, 'D505', 160, 390),
+(6, 'D506', 160, 250),
+(7, 'D507', 160, 160),
+(8, 'D508', 160, 70),
+(9, 'D511', 240, 390),
+(10, 'D512', 320, 390),
+(11, 'D513', 400, 390),
+(12, 'D514', 480, 390),
+(13, 'D515', 560, 390),
+(14, 'D525', 640, 390),
+(15, 'D522', 755, 370),
+(16, 'D524', 755, 230),
+(17, 'D521', 755, 40),
+(18, 'D526', 640, 230),
+(19, 'D528', 640, 90),
+(20, 'CR(M)', 30, 145),
+(21, 'CR(F)', 765, 145);
 
 -- --------------------------------------------------------
 
