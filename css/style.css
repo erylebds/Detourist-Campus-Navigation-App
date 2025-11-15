@@ -344,6 +344,24 @@ a {
 
 /* Map Markers */
 .room-marker {
+  width: 12px;
+  height: 12px;
+  background-color: #e67e22;
+  border: 2px solid white;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.room-marker:hover {
+  background-color: #2f4048;
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+/* Map Markers */
+.emergency-marker {
   width: 24px;
   height: 24px;
   background-image: url('/favicon.ico');
@@ -357,7 +375,7 @@ a {
   transform: translate(-50%, -50%);
   transition: transform 0.2s ease;
 }
-.room-marker:hover {
+.emergency-marker:hover {
   transform: translate(-50%, -50%) scale(1.3);
 }
 
