@@ -384,7 +384,7 @@ a {
 .emergency-marker {
   width: 24px;
   height: 24px;
-  background-image: url('/favicon.ico');
+  background-image: url('/assets/images/location.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -718,7 +718,7 @@ a {
   height: 100svh;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  background-image: url(../assets/images/slubakakeng.jpg);
+  background-image: url('/Detourist-Campus-Navigation-App/assets/images/location.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
