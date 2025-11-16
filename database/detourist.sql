@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 15, 2025 at 01:01 PM
+-- Generation Time: Nov 16, 2025 at 04:39 AM
 -- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
@@ -91,6 +91,104 @@ CREATE TABLE IF NOT EXISTS `mapfloor` (
 
 INSERT INTO `mapfloor` (`floor_id`, `building_code`, `floor_number`, `map_image_path`) VALUES
 (5, 'D', 5, 'assets/images/floor5.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mapnode`
+--
+
+DROP TABLE IF EXISTS `mapnode`;
+CREATE TABLE IF NOT EXISTS `mapnode` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room_label_id` int DEFAULT NULL,
+  `type` varchar(50) NOT NULL,
+  `x_coord` int NOT NULL,
+  `y_coord` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_mapnode_roomlabel` (`room_label_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `mapnode`
+--
+
+INSERT INTO `mapnode` (`id`, `room_label_id`, `type`, `x_coord`, `y_coord`) VALUES
+(1, NULL, 'corridor', 119, 37),
+(2, NULL, 'corridor', 119, 60),
+(3, NULL, 'corridor', 119, 86),
+(4, NULL, 'corridor', 119, 123),
+(5, NULL, 'corridor', 119, 165),
+(6, NULL, 'corridor', 119, 190),
+(7, NULL, 'corridor', 119, 220),
+(8, NULL, 'corridor', 119, 231),
+(9, NULL, 'corridor', 119, 260),
+(10, NULL, 'corridor', 119, 286),
+(11, NULL, 'corridor', 119, 325),
+(12, NULL, 'corridor', 119, 352),
+(13, NULL, 'corridor', 154, 325),
+(14, NULL, 'corridor', 209, 325),
+(15, NULL, 'corridor', 247, 325),
+(16, NULL, 'corridor', 283, 325),
+(17, NULL, 'corridor', 317, 325),
+(18, NULL, 'corridor', 361, 325),
+(19, NULL, 'corridor', 389, 325),
+(20, NULL, 'corridor', 446, 325),
+(21, NULL, 'corridor', 475, 325),
+(22, NULL, 'corridor', 520, 325),
+(23, NULL, 'corridor', 554, 325),
+(24, NULL, 'corridor', 590, 325),
+(25, NULL, 'corridor', 628, 325),
+(26, NULL, 'corridor', 683, 325),
+(27, NULL, 'corridor', 715, 37),
+(28, NULL, 'corridor', 715, 60),
+(29, NULL, 'corridor', 715, 116),
+(30, NULL, 'corridor', 715, 171),
+(31, NULL, 'corridor', 715, 193),
+(32, NULL, 'corridor', 715, 245),
+(33, NULL, 'corridor', 715, 261),
+(34, NULL, 'corridor', 715, 325),
+(35, 8, 'room', 136, 37),
+(36, 8, 'room', 136, 86),
+(37, 7, 'room', 136, 123),
+(38, 7, 'room', 136, 190),
+(39, 6, 'room', 136, 220),
+(40, 6, 'room', 136, 286),
+(41, 5, 'room', 154, 343),
+(42, 5, 'room', 209, 343),
+(43, 9, 'room', 247, 343),
+(44, 9, 'room', 283, 343),
+(45, 10, 'room', 317, 343),
+(46, 10, 'room', 361, 343),
+(47, 11, 'room', 389, 343),
+(48, 11, 'room', 446, 343),
+(49, 12, 'room', 475, 343),
+(50, 12, 'room', 520, 343),
+(51, 13, 'room', 554, 343),
+(52, 13, 'room', 590, 343),
+(53, 14, 'room', 628, 343),
+(54, 14, 'room', 683, 343),
+(55, 19, 'room', 700, 37),
+(56, 19, 'room', 700, 116),
+(57, 18, 'room', 700, 193),
+(58, 18, 'room', 700, 261),
+(59, 17, 'room', 732, 27),
+(60, 16, 'room', 732, 171),
+(61, 16, 'room', 732, 245),
+(62, 15, 'room', 732, 325),
+(63, 1, 'room', 105, 27),
+(64, 2, 'room', 105, 165),
+(65, 2, 'room', 105, 231),
+(66, 3, 'room', 105, 260),
+(67, 3, 'room', 105, 325),
+(68, 4, 'room', 105, 352),
+(69, 20, 'room', 86, 127),
+(70, 21, 'room', 750, 127),
+(71, NULL, 'exit', 86, 60),
+(72, NULL, 'exit', 265, 297),
+(73, NULL, 'exit', 572, 297),
+(74, NULL, 'exit', 750, 60),
+(75, NULL, 'exit', 446, 297);
 
 -- --------------------------------------------------------
 
@@ -235,6 +333,16 @@ CREATE TABLE IF NOT EXISTS `routetype` (
 INSERT INTO `routetype` (`route_type_id`, `name`) VALUES
 (2, 'emergency'),
 (1, 'normal');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `mapnode`
+--
+ALTER TABLE `mapnode`
+  ADD CONSTRAINT `FK_mapnode_roomlabel` FOREIGN KEY (`room_label_id`) REFERENCES `roomlabel` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

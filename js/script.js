@@ -5,10 +5,21 @@ ctx.font = "15px Arial";
 fetch("database/roomLabels.php")
   .then(res => res.json())
   .then(data => {
-    data.forEach((roomLabel) => {
+    data.forEach(roomLabel => {
       ctx.fillText(roomLabel.name, roomLabel.x_coord, roomLabel.y_coord);
     });
   });
+
+
+/* Uncomment code below to visualize the map nodes */
+// fetch("database/mapNodes.php")
+//   .then(res => res.json())
+//   .then(data => {
+//     data.forEach(mapNode => {
+//       ctx.fillStyle = "red";
+//       ctx.fillRect(mapNode.x_coord, mapNode.y_coord, 3, 3);
+//     });
+//   });
 
 // Temporary function for help in finding coordinates (to be removed later)
 // Click on map then check console for coordinates
