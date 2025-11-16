@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 16, 2025 at 04:39 AM
+-- Generation Time: Nov 16, 2025 at 06:11 AM
 -- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
@@ -68,6 +68,106 @@ INSERT INTO `announcement` (`announcement_id`, `title`, `message`, `created_at`)
 (1, 'Fire Drill', 'A fire drill will be conducted tomorrow at 10:00 AM. Please evacuate calmly.', '2025-10-11 14:00:00'),
 (2, 'System Maintenance', 'The system will be down for maintenance from 2 AM to 4 AM on Sunday.', '2025-10-10 09:00:00'),
 (3, 'New Lab Opening', 'The new computer lab on the 5th floor is now open for use.', '2025-10-12 07:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mapedge`
+--
+
+DROP TABLE IF EXISTS `mapedge`;
+CREATE TABLE IF NOT EXISTS `mapedge` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `adjacent_node_id` int NOT NULL,
+  `map_node_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_mapedge_mapnode_1` (`adjacent_node_id`),
+  KEY `FK_mapedge_mapnode_2` (`map_node_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `mapedge`
+--
+
+INSERT INTO `mapedge` (`id`, `adjacent_node_id`, `map_node_id`) VALUES
+(1, 63, 1),
+(3, 35, 1),
+(4, 2, 1),
+(5, 71, 2),
+(6, 3, 2),
+(7, 36, 3),
+(8, 4, 3),
+(9, 69, 4),
+(10, 37, 4),
+(11, 5, 4),
+(12, 64, 5),
+(13, 6, 5),
+(14, 38, 6),
+(15, 7, 6),
+(16, 39, 7),
+(17, 8, 7),
+(18, 65, 8),
+(19, 9, 8),
+(20, 66, 9),
+(21, 10, 9),
+(22, 40, 10),
+(23, 11, 10),
+(24, 67, 11),
+(25, 12, 11),
+(26, 13, 11),
+(27, 68, 12),
+(28, 41, 13),
+(29, 14, 13),
+(30, 42, 14),
+(31, 15, 14),
+(32, 43, 15),
+(33, 72, 15),
+(34, 16, 15),
+(35, 72, 16),
+(36, 44, 16),
+(37, 17, 16),
+(38, 45, 17),
+(39, 18, 17),
+(40, 46, 18),
+(41, 19, 18),
+(42, 47, 19),
+(43, 20, 19),
+(44, 75, 20),
+(45, 48, 20),
+(46, 21, 20),
+(47, 49, 21),
+(48, 22, 21),
+(49, 50, 22),
+(50, 23, 22),
+(51, 73, 23),
+(52, 51, 23),
+(53, 24, 23),
+(54, 73, 24),
+(55, 52, 24),
+(56, 25, 24),
+(57, 53, 25),
+(58, 26, 25),
+(59, 54, 26),
+(60, 34, 26),
+(61, 62, 34),
+(62, 33, 34),
+(63, 58, 33),
+(64, 32, 33),
+(65, 61, 32),
+(66, 31, 32),
+(67, 57, 31),
+(68, 30, 31),
+(69, 60, 30),
+(70, 29, 30),
+(71, 56, 29),
+(72, 70, 29),
+(73, 28, 29),
+(74, 74, 28),
+(75, 27, 28),
+(76, 59, 27),
+(77, 55, 27),
+(78, 69, 71),
+(79, 70, 74);
 
 -- --------------------------------------------------------
 
@@ -337,6 +437,13 @@ INSERT INTO `routetype` (`route_type_id`, `name`) VALUES
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `mapedge`
+--
+ALTER TABLE `mapedge`
+  ADD CONSTRAINT `FK_mapedge_mapnode_1` FOREIGN KEY (`adjacent_node_id`) REFERENCES `mapnode` (`id`),
+  ADD CONSTRAINT `FK_mapedge_mapnode_2` FOREIGN KEY (`map_node_id`) REFERENCES `mapnode` (`id`);
 
 --
 -- Constraints for table `mapnode`
