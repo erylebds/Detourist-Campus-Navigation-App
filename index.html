@@ -55,14 +55,19 @@
   <header>
     <section id="home">
       <div class=" destination-details">
-        <div class="search-container">
+        <!-- <div class="search-container">
           <input type="text" id="searchRoom" placeholder="Search destination..." autocomplete="off" />
           <div id="searchResults" class="autocomplete-results"></div>
-        </div>
+        </div> -->
 
         <div class="room-info">
           <h2>Maryheights Bakakeng</h2>
           <img src="assets\images\maryheights-campus.jpg" alt="Room preview" />
+        </div>
+
+        <div class="text-fields">
+          <input type="text" id="source-room" placeholder="Source" />
+          <input type="text" id="destination-room" placeholder="Destination" />
         </div>
 
         <div class="route-button">
@@ -73,8 +78,7 @@
         <div class="current-location-details">
           <img src="assets/images/location.png" alt="location">
           <div id="details">
-            <p id="loc-header">Your Current Location:</p>
-            <p id="loc-info">5th Floor</p>
+            <p id="loc-header">Current Location: <span id="loc-info">5th Floor</span></p>
           </div>
         </div>
       </div>
@@ -82,7 +86,8 @@
       <div class="map-wrapper">
         <div class="campus-map" id="campusMap">
           <img src="assets/images/floor5.png" alt="Campus map" class="map-img" draggable="false" />
-          <canvas width="838px" height="458px" id="map-canvas"></canvas>
+          <canvas width="838px" height="458px" id="map-line-canvas"></canvas>
+          <canvas width="838px" height="458px" id="map-text-canvas"></canvas>
         </div>
 
         <div class="zoom-buttons">
@@ -229,7 +234,7 @@
   <script src="js/coordinates.js"></script>
   <script src="js/emergencyRoute.js"></script>
   <script src="js/zoomButtons.js"></script>
-  <script src="js/search.js"></script>
+  <!-- <script src="js/search.js"></script> -->
   <script src="js/announcements.js"></script>
 </body>
 
