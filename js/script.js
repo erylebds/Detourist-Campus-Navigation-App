@@ -68,8 +68,8 @@ document.getElementById("norm-route").addEventListener("click", () => {
 });
 
 document.getElementById("er-route").addEventListener("click", () => {
-  const source = document.getElementById("source-room").value;
-  if (!String(source).trim()) {
+  const source = String(document.getElementById("source-room").value).trim();
+  if (!source) {
     alert("The name of the source room was not given.");
     return;
   }
@@ -101,7 +101,7 @@ function drawRoute(source, destination) {
       const endNodes = [];
 
       nodeList.forEach(node => {
-        if (String(node.name).toLowerCase() == String(source).toLowerCase()) {
+        if (String(node.name).toLowerCase() == source.toLowerCase()) {
           startNodes.push(node);
         } else if (String(node.name).toLowerCase() == String(destination).toLowerCase()) {
           endNodes.push(node);
@@ -120,7 +120,7 @@ function drawEmergencyRoute(source) {
       const endNodes = [];
 
       nodeList.forEach(node => {
-        if (String(node.name).toLowerCase() == String(source).toLowerCase()) {
+        if (String(node.name).toLowerCase() == source.toLowerCase()) {
           startNodes.push(node);
         } else if (node.type == "exit") {
           endNodes.push(node);
