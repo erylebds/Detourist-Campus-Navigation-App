@@ -49,6 +49,12 @@ document.getElementById("norm-route").addEventListener("click", () => {
   drawRoute(source, destination);
 });
 
+document.getElementById("er-route").addEventListener("click", () => {
+  const source = document.getElementById("source-room").value;
+  clearLines();
+  drawEmergencyRoute(source);
+})
+
 // Get label names and coordinates from the database then draw the labels on the map
 var c = document.getElementById("map-text-canvas");
 var ctx = c.getContext("2d");
@@ -80,68 +86,136 @@ function clearLines() {
 function drawRoute(source, destination) {
   fetch("database/mapNodes.php")
     .then(res => res.json())
-    .then(data => {
-      let unvisited = data;
-      let visited = [];
-      let currentNode;
+    .then(nodeList => {
+      const startNodes = [];
+      const endNodes = [];
 
-      // Assign tentative distances to each node
-      let startSelected = false;
-      unvisited.forEach(node => {
-        if (node.name == source && !startSelected) {
-          currentNode = node;
-          node.distance = 0;
-          startSelected = true;
-        } else {
-          node.distance = Infinity;
+      nodeList.forEach(node => {
+        if (node.name == source) {
+          startNodes.push(node);
+        } else if (node.name == destination) {
+          endNodes.push(node);
         }
       });
 
-      do {
-        // For the current node, calculate the distances to all unvisited neighbors
-        currentNode.adjacent_node_ids.forEach(nodeId => {
-          const adjacentNode = getNodeFromId(unvisited, nodeId);
-          if (adjacentNode != undefined) {
-            // If the new distance is shorter, replace the old distance
-            if (updateNodeDistance(currentNode, adjacentNode)) {
-              // Store current node as the previous node if the neighbor's distance was updated
-              adjacentNode.previous = currentNode;
-            }
-          }
-        });
+      drawBetweenEndPoints(nodeList, startNodes, endNodes);
+    });
+}
 
-        // Mark current node as visited and remove from unvisited
-        visited.push(currentNode);
-        for (let i = 0; i < unvisited.length; i++) {
-          if (unvisited[i].id == currentNode.id) {
-            unvisited.splice(i, 1);
-            break;
-          }
-        }
+function drawEmergencyRoute(source) {
+  fetch("database/mapNodes.php")
+    .then(res => res.json())
+    .then(nodeList => {
+      const startNodes = [];
+      const endNodes = [];
 
-        // Get the unvisited node with the shortest distance
-        currentNode = getShortestNode(unvisited);
-      } while (unvisited.length > 0);
-
-      // Draw the route
-      const canvas = document.getElementById("map-line-canvas");
-      const ctx = canvas.getContext("2d");
-      let destinationNode;
-      visited.forEach(node => {
-        if (node.name == destination) {
-          destinationNode = node;
+      nodeList.forEach(node => {
+        if (node.name == source) {
+          startNodes.push(node);
+        } else if (node.type == "exit") {
+          endNodes.push(node);
         }
       });
-      currentNode = destinationNode;
-      while (currentNode.name != source) {
-        ctx.beginPath();
-        ctx.moveTo(currentNode.x_coord, currentNode.y_coord);
-        ctx.lineTo(currentNode.previous.x_coord, currentNode.previous.y_coord);
-        ctx.strokeStyle = "blue";
-        ctx.stroke();
-        currentNode = currentNode.previous;
+
+      drawBetweenEndPoints(nodeList, startNodes, endNodes);
+    });
+}
+
+function drawBetweenEndPoints(nodeList, startNodes, endNodes) {
+  // Account for rooms with multiple entrances
+  let nearestEndPoints = findNearestEndPoints(startNodes, endNodes);
+  let nearestStart = nearestEndPoints.nearestStartingPoint;
+  let nearestEnd = nearestEndPoints.nearestEndingPoint;
+
+  const visited = findShortestPath(nodeList, nearestStart.id,);
+  const traceBackNode = findNodeById(visited, nearestEnd.id);
+
+  drawRouteLines(nearestStart.id, traceBackNode);
+}
+
+function findNearestEndPoints(startNodes, endNodes) {
+  let shortestDistance = Infinity;
+  let nearestStart;
+  let nearestEnd;
+
+  startNodes.forEach(startNode => {
+    endNodes.forEach(endNode => {
+      let distance = calculateDistanceBetween(startNode, endNode);
+      if (distance < shortestDistance) {
+        shortestDistance = distance;
+        nearestStart = startNode;
+        nearestEnd = endNode;
       }
     });
+  });
+  return { nearestStartingPoint: nearestStart, nearestEndingPoint: nearestEnd };
+}
+
+function drawRouteLines(startNodeId, currentNode) {
+  const canvas = document.getElementById("map-line-canvas");
+  const ctx = canvas.getContext("2d");
+  while (currentNode.id != startNodeId) {
+    ctx.beginPath();
+    ctx.moveTo(currentNode.x_coord, currentNode.y_coord);
+    ctx.lineTo(currentNode.previous.x_coord, currentNode.previous.y_coord);
+    ctx.strokeStyle = "blue";
+    ctx.stroke();
+    currentNode = currentNode.previous;
+  }
+}
+
+function findNodeById(nodeList, targetId) {
+  let result;
+  nodeList.forEach(node => {
+    if (node.id == targetId) {
+      result = node;
+    }
+  });
+  return result;
+}
+
+function findShortestPath(nodeList, sourceId) {
+  let unvisited = nodeList;
+  let visited = [];
+  let currentNode;
+
+  // Assign tentative distances to each node
+  unvisited.forEach(node => {
+    if (node.id == sourceId) {
+      currentNode = node;
+      node.distance = 0;
+      startSelected = true;
+    } else {
+      node.distance = Infinity;
+    }
+  });
+
+  do {
+    // For the current node, calculate the distances to all unvisited neighbors
+    currentNode.adjacent_node_ids.forEach(nodeId => {
+      const adjacentNode = getNodeFromId(unvisited, nodeId);
+      if (adjacentNode != undefined) {
+        // If the new distance is shorter, replace the old distance
+        if (updateNodeDistance(currentNode, adjacentNode)) {
+          // Store current node as the previous node if the neighbor's distance was updated
+          adjacentNode.previous = currentNode;
+        }
+      }
+    });
+
+    // Mark current node as visited and remove from unvisited
+    visited.push(currentNode);
+    for (let i = 0; i < unvisited.length; i++) {
+      if (unvisited[i].id == currentNode.id) {
+        unvisited.splice(i, 1);
+        break;
+      }
+    }
+
+    // Get the unvisited node with the shortest distance
+    currentNode = getShortestNode(unvisited);
+  } while (unvisited.length > 0);
+  return visited;
 }
 
 function getShortestNode(unvisited) {
