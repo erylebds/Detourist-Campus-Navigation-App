@@ -147,11 +147,13 @@ function drawEmergencyRoute(source) {
 // Account for rooms with multiple entrances
 function drawBetweenEndPoints(nodeList, startNodes, endNodes, lineColor) {
   if (startNodes.length == 0) {
-    throw "The source room was not found.";
+    alert("The source room was not found.");
+    return;
   }
 
   if (endNodes.length == 0) {
-    throw "The destination room was not found.";
+    alert("The destination room was not found.");
+    return;
   }
 
   let nearestEndPoints = findNearestEndPoints(startNodes, endNodes);
