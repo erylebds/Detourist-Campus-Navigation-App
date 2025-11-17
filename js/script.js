@@ -91,7 +91,7 @@ function drawRoute(source, destination) {
       const endNodes = [];
 
       nodeList.forEach(node => {
-        if (node.name == source) {
+        if (String(node.name).toLowerCase() == String(source).toLowerCase()) {
           startNodes.push(node);
         } else if (node.name == destination) {
           endNodes.push(node);
@@ -110,7 +110,7 @@ function drawEmergencyRoute(source) {
       const endNodes = [];
 
       nodeList.forEach(node => {
-        if (node.name == source) {
+        if (String(node.name).toLowerCase() == String(source).toLowerCase()) {
           startNodes.push(node);
         } else if (node.type == "exit") {
           endNodes.push(node);
