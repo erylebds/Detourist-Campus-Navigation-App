@@ -55,19 +55,21 @@
   <header>
     <section id="home">
       <div class=" destination-details">
-        <!-- <div class="search-container">
-          <input type="text" id="searchRoom" placeholder="Search destination..." autocomplete="off" />
-          <div id="searchResults" class="autocomplete-results"></div>
-        </div> -->
-
         <div class="room-info">
           <h2>Maryheights Bakakeng</h2>
           <img src="assets\images\maryheights-campus.jpg" alt="Room preview" />
         </div>
 
         <div class="text-fields">
-          <input type="text" id="source-room" placeholder="Source" />
-          <input type="text" id="destination-room" placeholder="Destination" />
+            <div class="search-container">
+              <input type="text" class="search" id="source-room" placeholder="Source" />
+              <div id="sourceResults" class="autocomplete-results"></div>
+          </div>
+
+          <div class="search-container">
+              <input type="text" class="search" id="destination-room" placeholder="Destination" />
+              <div id="destinationResults" class="autocomplete-results"></div>
+          </div>
         </div>
 
         <div class="route-button">
@@ -231,10 +233,8 @@
 
   <!-- ===== SCRIPTS ===== -->
   <script src="js/script.js" defer></script>
-  <script src="js/coordinates.js"></script>
-  <!-- <script src="js/emergencyRoute.js"></script> -->
   <script src="js/zoomButtons.js"></script>
-  <!-- <script src="js/search.js"></script> -->
+  <script src="js/search.js"></script>
   <script src="js/announcements.js"></script>
 </body>
 

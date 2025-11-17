@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 16, 2025 at 01:58 PM
--- Server version: 8.0.41
+-- Generation Time: Nov 17, 2025 at 02:04 PM
+-- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -293,46 +293,6 @@ INSERT INTO `mapnode` (`id`, `room_label_id`, `type`, `x_coord`, `y_coord`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room`
---
-
-DROP TABLE IF EXISTS `room`;
-CREATE TABLE IF NOT EXISTS `room` (
-  `room_id` int NOT NULL AUTO_INCREMENT,
-  `room_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `building_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `wing` tinyint NOT NULL,
-  `room_number` int NOT NULL,
-  `room_type` enum('classroom','office','lab','comfort_room','entrance','safe_route') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'classroom',
-  `x_coord` int NOT NULL,
-  `y_coord` int NOT NULL,
-  `floor_id` int NOT NULL,
-  `room_image_path` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`room_id`),
-  UNIQUE KEY `room_code` (`room_code`),
-  KEY `floor_id` (`floor_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `room`
---
-
-INSERT INTO `room` (`room_id`, `room_code`, `building_name`, `wing`, `room_number`, `room_type`, `x_coord`, `y_coord`, `floor_id`, `room_image_path`) VALUES
-(1, 'entrance', 'Devesse', 1, 0, 'entrance', 53, 60, 5, 'assets/images/entrance_stairs.jpg'),
-(2, 'safe_entra', 'Devesse', 1, 0, 'safe_route', 53, 62, 5, 'assets/images/entrance_stairs.jpg'),
-(3, 'fire_exitR', 'Devesse', 1, 0, 'safe_route', 70, 62, 5, 'assets/images/entrance_stairs.jpg'),
-(4, 'fire_exitL', 'Devesse', 1, 0, 'safe_route', 30, 62, 5, 'assets/images/entrance_stairs.jpg'),
-(5, 'safe_east', 'Devesse', 2, 0, 'safe_route', 92, 13, 5, 'assets/images/entrance_stairs.jpg'),
-(6, 'safe_west', 'Devesse', 0, 0, 'safe_route', 8, 13, 5, 'assets/images/entrance_stairs.jpg'),
-(7, 'D511', 'Devesse', 1, 1, 'classroom', 30, 86, 5, 'assets/images/room.jpg'),
-(8, 'D512', 'Devesse', 1, 2, 'classroom', 40, 86, 5, 'assets/images/room.jpg'),
-(9, 'D513', 'Devesse', 1, 3, 'classroom', 50, 86, 5, 'assets/images/room.jpg'),
-(10, 'D514', 'Devesse', 1, 4, 'classroom', 59, 86, 5, 'assets/images/room.jpg'),
-(11, 'D515', 'Devesse', 1, 5, 'classroom', 69, 86, 5, 'assets/images/room.jpg');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `roomlabel`
 --
 
@@ -342,6 +302,11 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
   `name` varchar(50) NOT NULL,
   `x_coord` int NOT NULL,
   `y_coord` int NOT NULL,
+  `building_name` varchar(100) DEFAULT NULL,
+  `wing` tinyint DEFAULT NULL,
+  `floor_id` int DEFAULT NULL,
+  `room_type` enum('classroom','office','lab','comfort_room','entrance','safe_route') DEFAULT 'classroom',
+  `room_image_path` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -349,90 +314,28 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
 -- Dumping data for table `roomlabel`
 --
 
-INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`) VALUES
-(1, 'D501', 48, 40),
-(2, 'D502', 48, 210),
-(3, 'D503', 48, 300),
-(4, 'D504', 48, 390),
-(5, 'D505', 160, 390),
-(6, 'D506', 160, 250),
-(7, 'D507', 160, 160),
-(8, 'D508', 160, 70),
-(9, 'D511', 240, 390),
-(10, 'D512', 320, 390),
-(11, 'D513', 400, 390),
-(12, 'D514', 480, 390),
-(13, 'D515', 560, 390),
-(14, 'D525', 640, 390),
-(15, 'D522', 755, 370),
-(16, 'D524', 755, 230),
-(17, 'D521', 755, 40),
-(18, 'D526', 640, 230),
-(19, 'D528', 640, 90),
-(20, 'CR(M)', 30, 145),
-(21, 'CR(F)', 765, 145);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `roomstatus`
---
-
-DROP TABLE IF EXISTS `roomstatus`;
-CREATE TABLE IF NOT EXISTS `roomstatus` (
-  `room_id` int NOT NULL,
-  `is_occupied` tinyint(1) DEFAULT '0',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`room_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `roomstatus`
---
-
-INSERT INTO `roomstatus` (`room_id`, `is_occupied`, `updated_at`) VALUES
-(1, 1, '2025-10-12 08:25:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `route`
---
-
-DROP TABLE IF EXISTS `route`;
-CREATE TABLE IF NOT EXISTS `route` (
-  `route_id` int NOT NULL AUTO_INCREMENT,
-  `from_room_id` int NOT NULL,
-  `to_room_id` int NOT NULL,
-  `distance` float NOT NULL,
-  `route_type_id` int NOT NULL,
-  PRIMARY KEY (`route_id`),
-  KEY `from_room_id` (`from_room_id`),
-  KEY `to_room_id` (`to_room_id`),
-  KEY `route_type_id` (`route_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `routetype`
---
-
-DROP TABLE IF EXISTS `routetype`;
-CREATE TABLE IF NOT EXISTS `routetype` (
-  `route_type_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`route_type_id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `routetype`
---
-
-INSERT INTO `routetype` (`route_type_id`, `name`) VALUES
-(2, 'emergency'),
-(1, 'normal');
+INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `wing`, `floor_id`, `room_type`, `room_image_path`) VALUES
+(1, 'D501', 48, 40, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(2, 'D502', 48, 210, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(3, 'D503', 48, 300, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(4, 'D504', 48, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(5, 'D505', 160, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(6, 'D506', 160, 250, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(7, 'D507', 160, 160, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(8, 'D508', 160, 70, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
+(9, 'D511', 240, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
+(10, 'D512', 320, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
+(11, 'D513', 400, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
+(12, 'D514', 480, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
+(13, 'D515', 560, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
+(14, 'D525', 640, 390, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(15, 'D522', 755, 370, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(16, 'D524', 755, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(17, 'D521', 755, 40, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(18, 'D526', 640, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(19, 'D528', 640, 90, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'classroom', NULL),
+(21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'classroom', NULL);
 
 --
 -- Constraints for dumped tables

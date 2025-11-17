@@ -346,4 +346,3 @@ textCanvas.addEventListener('mousedown', (event) => {
   const y = event.clientY - rect.top;
   console.log(`Clicked at: x=${x}, y=${y}`);
 });
-

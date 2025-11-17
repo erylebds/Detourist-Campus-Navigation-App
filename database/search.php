@@ -7,21 +7,21 @@ $dbname = "detourist";
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
-$roomCode = $_GET['room_code'] ?? '';
-$roomCode = $conn->real_escape_string($roomCode);
+$roomName = $_GET['room_code'] ?? '';
+$roomName = $conn->real_escape_string($roomName);
 
-//Fetch rooms based on room code (this query is connected to the map floor table)
-$sql = "SELECT r.room_id, r.room_code, r.floor_id, r.wing, r.room_image_path,
-               m.map_image_path AS floor_map
-        FROM room r
-        LEFT JOIN mapfloor m ON r.floor_id = m.floor_id
-        WHERE r.room_code LIKE '$roomCode%'
+//Fetch rooms based on name in roomlabel table
+$sql = "SELECT rl.id AS room_id, rl.name AS room_code, rl.floor_id, rl.wing, rl.room_image_path,
+               mf.map_image_path AS floor_map
+        FROM roomlabel rl
+        LEFT JOIN mapfloor mf ON rl.floor_id = mf.floor_id
+        WHERE rl.name LIKE '$roomName%'
         LIMIT 10";
 
 $result = $conn->query($sql);
 $rooms = [];
 
-//Show these images by default if the website was just opened or if there is an error with the image path of a room
+//Set default images if missing
 while ($row = $result->fetch_assoc()) {
     $row['room_image'] = !empty($row['room_image_path']) 
                          ? $row['room_image_path'] 

@@ -216,20 +216,18 @@ a {
   background-color: #f0f0f0;
 }
 
-
 .destination-details img {
   max-width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-
 .room-info img {
   display: block;
   margin: 10px auto 0;
   width: 100%;
   max-width: 500px;
-  height: auto;
+  height: 250px;
   object-fit: contain;
   border-radius: 8px;
 }
