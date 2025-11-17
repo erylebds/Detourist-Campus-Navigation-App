@@ -457,6 +457,84 @@ a {
   }
 }
 
+/* =======================================================
+  pop up room (placeholder)
+  =======================================================
+*/
+#room-popup {
+  position: absolute; 
+  width: 220px;
+  background-color: #fffdf8;
+  border: 1px solid #ffd6a5;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+#room-popup img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-bottom: 1px solid #ffd6a5;
+}
+
+#room-popup h3 {
+  font-size: 1.2rem;
+  color: #e67e22;
+  margin: 10px 15px 0;
+}
+
+#room-popup p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 4px 15px 12px;
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 1.1rem;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.popup-actions {
+  display: flex;
+  background-color: #fff8f0;
+  border-top: 1px solid #ffd6a5;
+}
+
+.popup-actions button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #2f4048;
+  transition: background-color 0.2s;
+}
+
+.popup-actions button:first-child {
+  border-right: 1px solid #ffd6a5;
+}
+
+.popup-actions button:hover {
+  background-color: #fbeedb;
+}
+
 /* ======== MOBILE VIEW ======== */
 @media (max-width: 600px) {
   #home {

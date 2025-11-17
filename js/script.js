@@ -82,16 +82,82 @@ document.getElementById("er-route").addEventListener("click", () => {
 })
 
 // Get label names and coordinates from the database then draw the labels on the map
+let allRoomLabels = [];
+const CLICK_HITBOX_RADIUS = 20;
+// Get label names and coordinates from the database then draw the labels on the map
 var textCanvas = document.getElementById("map-text-canvas");
 var textContext = textCanvas.getContext("2d");
 textContext.font = "15px Arial";
 fetch("../database/roomLabels.php")
   .then(res => res.json())
   .then(data => {
-    data.forEach(roomLabel => {
+    allRoomLabels = data; 
+    allRoomLabels.forEach(roomLabel => {
       textContext.fillText(roomLabel.name, roomLabel.x_coord, roomLabel.y_coord);
     });
   });
+
+textCanvas.addEventListener('click', (event) => {
+  const rect = textCanvas.getBoundingClientRect();
+  const scaleX = textCanvas.width / rect.width;
+  const scaleY = textCanvas.height / rect.height;
+  const x = (event.clientX - rect.left) * scaleX; 
+  const y = (event.clientY - rect.top) * scaleY; 
+
+  let closestRoom = null;
+  let minDistance = Infinity;
+
+  // Find the closest room to the click
+  allRoomLabels.forEach(room => {
+    const dist = Math.sqrt(Math.pow(room.x_coord - x, 2) + Math.pow(room.y_coord - y, 2));
+    if (dist < minDistance && dist < CLICK_HITBOX_RADIUS) {
+      minDistance = dist;
+      closestRoom = room;
+    }
+  });
+
+  // If we found a room, show the popup
+  if (closestRoom) {
+    showRoomPopup(closestRoom, event.clientX, event.clientY);
+  }
+});
+
+function showRoomPopup(room, clickX, clickY) {
+  const popup = document.getElementById('room-popup');
+  
+  // Get data from the room object (which matches your roomLabels.php)
+  document.getElementById('popup-room-name').textContent = room.name;
+
+  // Store the room name in the buttons so they know what room to set
+  document.getElementById('popup-set-source').dataset.roomName = room.name;
+  document.getElementById('popup-set-dest').dataset.roomName = room.name;
+
+  // Position the popup near the mouse click
+  popup.style.left = (clickX + 15) + 'px';
+  popup.style.top = (clickY - 20) + 'px';
+  popup.style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const popup = document.getElementById('room-popup');
+
+  // Close button
+  document.getElementById('popup-close-btn').addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  // Set as Source button
+  document.getElementById('popup-set-source').addEventListener('click', (e) => {
+    document.getElementById('source-room').value = e.target.dataset.roomName;
+    popup.style.display = 'none';
+  });
+
+  // Set as Destination button
+  document.getElementById('popup-set-dest').addEventListener('click', (e) => {
+    document.getElementById('destination-room').value = e.target.dataset.roomName;
+    popup.style.display = 'none';
+  });
+});
 
 function drawRoute(source, destination) {
   fetch("../database/mapNodes.php")
