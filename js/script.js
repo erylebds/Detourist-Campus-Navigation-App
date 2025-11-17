@@ -79,32 +79,16 @@ document.getElementById("er-route").addEventListener("click", () => {
 })
 
 // Get label names and coordinates from the database then draw the labels on the map
-var c = document.getElementById("map-text-canvas");
-var ctx = c.getContext("2d");
-ctx.font = "15px Arial";
+var textCanvas = document.getElementById("map-text-canvas");
+var textContext = textCanvas.getContext("2d");
+textContext.font = "15px Arial";
 fetch("database/roomLabels.php")
   .then(res => res.json())
   .then(data => {
     data.forEach(roomLabel => {
-      ctx.fillText(roomLabel.name, roomLabel.x_coord, roomLabel.y_coord);
+      textContext.fillText(roomLabel.name, roomLabel.x_coord, roomLabel.y_coord);
     });
   });
-
-/* Uncomment code below to visualize the map nodes */
-// fetch("database/mapNodes.php")
-//   .then(res => res.json())
-//   .then(data => {
-//     data.forEach(mapNode => {
-//       ctx.fillStyle = "red";
-//       ctx.fillRect(mapNode.x_coord, mapNode.y_coord, 3, 3);
-//     });
-//   });
-
-function clearLines() {
-  const canvas = document.getElementById("map-line-canvas");
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
 
 function drawRoute(source, destination) {
   fetch("database/mapNodes.php")
@@ -163,13 +147,12 @@ function drawBetweenEndPoints(nodeList, startNodes, endNodes, lineColor) {
   const visited = findShortestPath(nodeList, nearestStart.id,);
   const traceBackNode = findNodeById(visited, nearestEnd.id);
 
-  drawRouteLines(nearestStart.id, traceBackNode, lineColor);
+  drawRouteLines(traceBackNode, lineColor);
 }
 
 function findNearestEndPoints(startNodes, endNodes) {
   let shortestDistance = Infinity;
-  let nearestStart;
-  let nearestEnd;
+  let nearestStart, nearestEnd;
 
   startNodes.forEach(startNode => {
     endNodes.forEach(endNode => {
@@ -184,18 +167,61 @@ function findNearestEndPoints(startNodes, endNodes) {
   return { nearestStartingPoint: nearestStart, nearestEndingPoint: nearestEnd };
 }
 
-function drawRouteLines(startNodeId, currentNode, lineColor) {
-  clearLines();
-  const canvas = document.getElementById("map-line-canvas");
-  const ctx = canvas.getContext("2d");
-  while (currentNode.id != startNodeId) {
-    ctx.beginPath();
-    ctx.moveTo(currentNode.x_coord, currentNode.y_coord);
-    ctx.lineTo(currentNode.previous.x_coord, currentNode.previous.y_coord);
-    ctx.strokeStyle = lineColor;
-    ctx.stroke();
+var points, t;
+var lineCanvas = document.getElementById("map-line-canvas");
+var lineContext = lineCanvas.getContext("2d");
+function drawRouteLines(currentNode, lineColor) {
+  // Clear all lines and set the color
+  lineContext.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
+  lineContext.strokeStyle = lineColor;
+
+  // Get the x & y coordinates of each node and store them in order from start to end
+  let vertices = [];
+  while (currentNode) {
+    // Unshift instead of push because we are going backwards from the end node
+    vertices.unshift({
+      x: Number(currentNode.x_coord),
+      y: Number(currentNode.y_coord)
+    });
     currentNode = currentNode.previous;
   }
+
+  // Animate the drawing of the lines
+  points = calcWaypoints(vertices);
+  t = 1;
+  animate();
+}
+
+function animate() {
+  if (t < points.length - 1) {
+    requestAnimationFrame(animate);
+  }
+  // draw a line segment from the last waypoint
+  // to the current waypoint
+  lineContext.beginPath();
+  lineContext.moveTo(points[t - 1].x, points[t - 1].y);
+  lineContext.lineTo(points[t].x, points[t].y);
+  lineContext.stroke();
+  // increment "t" to get the next waypoint
+  t++;
+}
+
+// Create additional increments between the nodes for smoother animation
+function calcWaypoints(vertices) {
+  var waypoints = [];
+  for (var i = 1; i < vertices.length; i++) {
+    var point0 = vertices[i - 1];
+    var point1 = vertices[i];
+    var dx = point1.x - point0.x; // Change in x
+    var dy = point1.y - point0.y; // Change in y
+    for (var j = 0; j < 5; j++) {
+      waypoints.push({
+        x: (point0.x + (dx * (j / 5))),
+        y: (point0.y + (dy * (j / 5)))
+      });
+    }
+  }
+  return (waypoints);
 }
 
 function findNodeById(nodeList, targetId) {
@@ -208,8 +234,7 @@ function findNodeById(nodeList, targetId) {
   return result;
 }
 
-function findShortestPath(nodeList, sourceId) {
-  let unvisited = nodeList;
+function findShortestPath(unvisited, sourceId) {
   let visited = [];
   let currentNode;
 
@@ -315,8 +340,8 @@ function calculateDistanceBetween(node1, node2) {
 
 // Temporary function for help in finding coordinates (to be removed later)
 // Click on map then check console for coordinates
-c.addEventListener('mousedown', (event) => {
-  const rect = c.getBoundingClientRect();
+textCanvas.addEventListener('mousedown', (event) => {
+  const rect = textCanvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
   console.log(`Clicked at: x=${x}, y=${y}`);
