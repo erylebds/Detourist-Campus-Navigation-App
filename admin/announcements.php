@@ -10,15 +10,12 @@ if (!isset($_SESSION['admin_id'])) {
 require '../database/connectDB.php';
 
 // ---------- HANDLE FORM ACTIONS ----------
-
-// helper: normalize HTML datetime-local to MySQL DATETIME
 function normalizeDateTime($value) {
     $value = trim($value ?? '');
     if ($value === '') {
         return date('Y-m-d H:i:s');   // now()
     }
-    // datetime-local comes as "YYYY-MM-DDTHH:MM"
-    $value = str_replace('T', ' ', $value) . ':00'; // add seconds
+    $value = str_replace('T', ' ', $value) . ':00'; 
     return $value;
 }
 
