@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 17, 2025 at 02:04 PM
+-- Generation Time: Nov 17, 2025 at 07:49 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -67,7 +67,32 @@ CREATE TABLE IF NOT EXISTS `announcement` (
 INSERT INTO `announcement` (`announcement_id`, `title`, `message`, `created_at`) VALUES
 (1, 'Fire Drill', 'A fire drill will be conducted tomorrow at 10:00 AM. Please evacuate calmly.', '2025-10-11 14:00:00'),
 (2, 'System Maintenance', 'The system will be down for maintenance from 2 AM to 4 AM on Sunday.', '2025-10-10 09:00:00'),
-(3, 'New Lab Opening', 'The new computer lab on the 5th floor is now open for use.', '2025-10-12 07:00:00');
+(3, 'New Lab Opening', 'The new computer lab on the 5th floor is now open for use. testing', '2025-10-12 07:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client`
+--
+
+DROP TABLE IF EXISTS `client`;
+CREATE TABLE IF NOT EXISTS `client` (
+  `client_id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`client_id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `unique_username` (`username`),
+  UNIQUE KEY `unique_email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `client`
+--
+
+INSERT INTO `client` (`client_id`, `username`, `email`, `password`) VALUES
+(1, 'student1', 'student1@email.com', '123');
 
 -- --------------------------------------------------------
 
