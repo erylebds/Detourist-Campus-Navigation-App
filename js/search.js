@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            fetch(`database/search.php?room_code=${encodeURIComponent(query)}`)
+            fetch(`../database/search.php?room_code=${encodeURIComponent(query)}`)
                 .then(res => res.json())
                 .then(data => {
                     resultsDiv.innerHTML = ''; //Clear previous results
@@ -41,12 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
                             resultsDiv.innerHTML = '';
                             resultsDiv.style.display = 'none';
 
-                            //Will update the image
+                            // Update the images and text
                             if (imageContainer) {
                                 imageContainer.querySelector('h2').innerText = room.room_code; //Update room name
-                                imageContainer.querySelector('img').src = room.room_image; //Update room image
+
+                                const basePath = "../";
+
+                                // room image from DB (e.g. "assets/images/room.jpg")
+                                imageContainer.querySelector('img').src = basePath + room.room_image;
+
+                                // floor map image (e.g. "assets/images/floor5.png")
                                 const campusMapImg = document.querySelector('.campus-map img');
-                                campusMapImg.src = room.floor_map; //Update floor map
+                                campusMapImg.src = basePath + room.floor_map;
                             }
                         });
 
