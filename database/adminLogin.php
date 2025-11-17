@@ -8,7 +8,8 @@ $dbname = "detourist";
 
 $conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
 if ($conn->connect_error) {
-    die("<script>alert('Database connection failed');</script>");
+    echo "<script>alert('Database connection failed'); window.location.href = '../login.html';</script>";
+    exit();
 }
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -23,21 +24,39 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
 
+        // NOTE: for now this is plain-text password, same as your SQL
         if ($pass === $row['password']) {
+            // store admin info in the session
             $_SESSION['id'] = $row['admin_id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['email'] = $row['email'];
 
-            echo "<script>alert('Login successful');</script>";
+            // go to admin dashboard
+            echo "<script>
+                    alert('Login successful');
+                    window.location.href = '../admin/dashboard.php';
+                  </script>";
+            exit();
         } else {
-            echo "<script>alert('Incorrect password');</script>";
+            echo "<script>
+                    alert('Incorrect password');
+                    window.location.href = '../login.html';
+                  </script>";
+            exit();
         }
     } else {
-        echo "<script>alert('Username or email not found');</script>";
+        echo "<script>
+                alert('Username or email not found');
+                window.location.href = '../login.html';
+              </script>";
+        exit();
     }
-
 } else {
-    echo "<script>alert('Please enter username and password');</script>";
+    echo "<script>
+            alert('Please enter username and password');
+            window.location.href = '../login.html';
+          </script>";
+    exit();
 }
 
 $conn->close();
