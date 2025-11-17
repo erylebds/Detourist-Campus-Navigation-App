@@ -85,7 +85,7 @@ document.getElementById("er-route").addEventListener("click", () => {
 var textCanvas = document.getElementById("map-text-canvas");
 var textContext = textCanvas.getContext("2d");
 textContext.font = "15px Arial";
-fetch("database/roomLabels.php")
+fetch("../database/roomLabels.php")
   .then(res => res.json())
   .then(data => {
     data.forEach(roomLabel => {
@@ -94,7 +94,7 @@ fetch("database/roomLabels.php")
   });
 
 function drawRoute(source, destination) {
-  fetch("database/mapNodes.php")
+  fetch("../database/mapNodes.php")
     .then(res => res.json())
     .then(nodeList => {
       const startNodes = [];
@@ -113,7 +113,7 @@ function drawRoute(source, destination) {
 }
 
 function drawEmergencyRoute(source) {
-  fetch("database/mapNodes.php")
+  fetch("../database/mapNodes.php")
     .then(res => res.json())
     .then(nodeList => {
       const startNodes = [];
