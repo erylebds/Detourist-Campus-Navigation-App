@@ -103,7 +103,7 @@ function drawRoute(source, destination) {
       nodeList.forEach(node => {
         if (String(node.name).toLowerCase() == source.toLowerCase()) {
           startNodes.push(node);
-        } else if (String(node.name).toLowerCase() == String(destination).toLowerCase()) {
+        } else if (String(node.name).toLowerCase() == destination.toLowerCase()) {
           endNodes.push(node);
         }
       });
