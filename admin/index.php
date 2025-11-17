@@ -90,7 +90,6 @@ if (!isset($_SESSION['admin_id'])) {
     <hr><br>
 
     <h2>Welcome!</h2>
-    <p>This is the admin landing page for <strong>Detourist</strong>.</p>
 
     <div class="quick-links">
     <div class="card">
