@@ -44,15 +44,38 @@ document.querySelectorAll(".nav-links a").forEach(link => {
 // Draw route based on user input
 document.getElementById("norm-route").addEventListener("click", () => {
   const source = document.getElementById("source-room").value;
+  if (!String(source).trim()) {
+    alert("The name of the source room was not given.");
+    return;
+  }
+
   const destination = document.getElementById("destination-room").value;
-  clearLines();
-  drawRoute(source, destination);
+  if (!String(destination).trim()) {
+    alert("The name of the destination room was not given.");
+    return;
+  }
+
+  try {
+    drawRoute(source, destination);
+  } catch (err) {
+    alert(err);
+    return;
+  }
 });
 
 document.getElementById("er-route").addEventListener("click", () => {
   const source = document.getElementById("source-room").value;
-  clearLines();
-  drawEmergencyRoute(source);
+  if (!String(source).trim()) {
+    alert("The name of the source room was not given.");
+    return;
+  }
+
+  try {
+    drawEmergencyRoute(source);
+  } catch (err) {
+    alert(err);
+    return;
+  }
 })
 
 // Get label names and coordinates from the database then draw the labels on the map
@@ -93,7 +116,7 @@ function drawRoute(source, destination) {
       nodeList.forEach(node => {
         if (String(node.name).toLowerCase() == String(source).toLowerCase()) {
           startNodes.push(node);
-        } else if (node.name == destination) {
+        } else if (String(node.name).toLowerCase() == String(destination).toLowerCase()) {
           endNodes.push(node);
         }
       });
@@ -121,8 +144,16 @@ function drawEmergencyRoute(source) {
     });
 }
 
+// Account for rooms with multiple entrances
 function drawBetweenEndPoints(nodeList, startNodes, endNodes, lineColor) {
-  // Account for rooms with multiple entrances
+  if (startNodes.length == 0) {
+    throw "The source room was not found.";
+  }
+
+  if (endNodes.length == 0) {
+    throw "The destination room was not found.";
+  }
+
   let nearestEndPoints = findNearestEndPoints(startNodes, endNodes);
   let nearestStart = nearestEndPoints.nearestStartingPoint;
   let nearestEnd = nearestEndPoints.nearestEndingPoint;
@@ -152,6 +183,7 @@ function findNearestEndPoints(startNodes, endNodes) {
 }
 
 function drawRouteLines(startNodeId, currentNode, lineColor) {
+  clearLines();
   const canvas = document.getElementById("map-line-canvas");
   const ctx = canvas.getContext("2d");
   while (currentNode.id != startNodeId) {
