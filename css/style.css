@@ -420,6 +420,10 @@ a {
   cursor: pointer;
 }
 
+#nightMode {
+  font-size: 1.8rem;
+}
+
 @media (max-width: 1024px) {
   #home {
     flex-direction: column;

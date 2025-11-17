@@ -43,15 +43,20 @@ document.querySelectorAll(".nav-links a").forEach(link => {
 // ===== Map Routing =====
 // Draw route based on user input
 document.getElementById("norm-route").addEventListener("click", () => {
-  const source = document.getElementById("source-room").value;
-  if (!String(source).trim()) {
+  const source = String(document.getElementById("source-room").value).trim();
+  if (!source) {
     alert("The name of the source room was not given.");
     return;
   }
 
-  const destination = document.getElementById("destination-room").value;
-  if (!String(destination).trim()) {
+  const destination = String(document.getElementById("destination-room").value).trim();
+  if (!destination) {
     alert("The name of the destination room was not given.");
+    return;
+  }
+
+  if (source == destination) {
+    alert("The source and the destination rooms cannot be the same.");
     return;
   }
 
@@ -59,13 +64,12 @@ document.getElementById("norm-route").addEventListener("click", () => {
     drawRoute(source, destination);
   } catch (err) {
     alert(err);
-    return;
   }
 });
 
 document.getElementById("er-route").addEventListener("click", () => {
-  const source = document.getElementById("source-room").value;
-  if (!String(source).trim()) {
+  const source = String(document.getElementById("source-room").value).trim();
+  if (!source) {
     alert("The name of the source room was not given.");
     return;
   }
@@ -74,7 +78,6 @@ document.getElementById("er-route").addEventListener("click", () => {
     drawEmergencyRoute(source);
   } catch (err) {
     alert(err);
-    return;
   }
 })
 
@@ -98,9 +101,9 @@ function drawRoute(source, destination) {
       const endNodes = [];
 
       nodeList.forEach(node => {
-        if (String(node.name).toLowerCase() == String(source).toLowerCase()) {
+        if (String(node.name).toLowerCase() == source.toLowerCase()) {
           startNodes.push(node);
-        } else if (String(node.name).toLowerCase() == String(destination).toLowerCase()) {
+        } else if (String(node.name).toLowerCase() == destination.toLowerCase()) {
           endNodes.push(node);
         }
       });
@@ -117,7 +120,7 @@ function drawEmergencyRoute(source) {
       const endNodes = [];
 
       nodeList.forEach(node => {
-        if (String(node.name).toLowerCase() == String(source).toLowerCase()) {
+        if (String(node.name).toLowerCase() == source.toLowerCase()) {
           startNodes.push(node);
         } else if (node.type == "exit") {
           endNodes.push(node);
