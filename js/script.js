@@ -98,7 +98,7 @@ function drawRoute(source, destination) {
         }
       });
 
-      drawBetweenEndPoints(nodeList, startNodes, endNodes);
+      drawBetweenEndPoints(nodeList, startNodes, endNodes, "blue");
     });
 }
 
@@ -117,11 +117,11 @@ function drawEmergencyRoute(source) {
         }
       });
 
-      drawBetweenEndPoints(nodeList, startNodes, endNodes);
+      drawBetweenEndPoints(nodeList, startNodes, endNodes, "red");
     });
 }
 
-function drawBetweenEndPoints(nodeList, startNodes, endNodes) {
+function drawBetweenEndPoints(nodeList, startNodes, endNodes, lineColor) {
   // Account for rooms with multiple entrances
   let nearestEndPoints = findNearestEndPoints(startNodes, endNodes);
   let nearestStart = nearestEndPoints.nearestStartingPoint;
@@ -130,7 +130,7 @@ function drawBetweenEndPoints(nodeList, startNodes, endNodes) {
   const visited = findShortestPath(nodeList, nearestStart.id,);
   const traceBackNode = findNodeById(visited, nearestEnd.id);
 
-  drawRouteLines(nearestStart.id, traceBackNode);
+  drawRouteLines(nearestStart.id, traceBackNode, lineColor);
 }
 
 function findNearestEndPoints(startNodes, endNodes) {
@@ -151,14 +151,14 @@ function findNearestEndPoints(startNodes, endNodes) {
   return { nearestStartingPoint: nearestStart, nearestEndingPoint: nearestEnd };
 }
 
-function drawRouteLines(startNodeId, currentNode) {
+function drawRouteLines(startNodeId, currentNode, lineColor) {
   const canvas = document.getElementById("map-line-canvas");
   const ctx = canvas.getContext("2d");
   while (currentNode.id != startNodeId) {
     ctx.beginPath();
     ctx.moveTo(currentNode.x_coord, currentNode.y_coord);
     ctx.lineTo(currentNode.previous.x_coord, currentNode.previous.y_coord);
-    ctx.strokeStyle = "blue";
+    ctx.strokeStyle = lineColor;
     ctx.stroke();
     currentNode = currentNode.previous;
   }
