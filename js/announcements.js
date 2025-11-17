@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalBody = document.getElementById("modal-body");
   const modalClose = document.querySelector(".modal-close-btn");
 
-  fetch("database/announcements.php")
+  fetch("../database/announcements.php")
     .then((res) => res.json())
     .then((data) => {
       announcementList.innerHTML = "";
