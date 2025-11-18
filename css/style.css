@@ -458,6 +458,110 @@ a {
   }
 }
 
+/* =========================
+   // Temporary UI Popup Styles
+========================= */
+.map-popup {
+  position: absolute; 
+  width: 260px;
+  background-color: #fff8f0; 
+  border: 2px solid #2f4048; 
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(47, 64, 72, 0.3);
+  z-index: 1000;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.popup-img-container {
+  width: 100%;
+  height: 140px;
+  background-color: #ddd;
+  border-bottom: 2px solid #2f4048;
+}
+
+.popup-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popup-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.popup-content h3 {
+  color: #e67e22; 
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.popup-content p {
+  color: #2f4048;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.popup-actions button {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#btn-set-source {
+  background-color: transparent;
+  border: 2px solid #e67e22;
+  color: #e67e22;
+}
+
+#btn-set-source:hover {
+  background-color: #e67e22;
+  color: white;
+}
+
+#btn-set-dest {
+  background-color: #2f4048;
+  border: 2px solid #2f4048;
+  color: white;
+}
+
+#btn-set-dest:hover {
+  background-color: #1a252b;
+}
+
+.popup-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  background-color: rgba(47, 64, 72, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 26px; 
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.popup-close:hover {
+  background-color: #e67e22;
+}
+
 /* ======== MOBILE VIEW ======== */
 @media (max-width: 600px) {
   #home {
