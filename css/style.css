@@ -222,18 +222,16 @@ a {
   background-color: #f0f0f0;
 }
 
-.destination-details img {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
+/* Maintain image aspect ratio for any room image from the database */
+.room-img-wrapper {
+  width: 100%;
+  aspect-ratio: 192 / 119;
 }
 
 .room-info img {
-  max-width: 500px;
-  max-height: 40vh;
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   border-radius: 8px;
 }
 
