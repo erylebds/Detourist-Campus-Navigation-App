@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 18, 2025 at 04:29 AM
--- Server version: 9.1.0
+-- Generation Time: Nov 18, 2025 at 01:20 PM
+-- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `announcement` (
 INSERT INTO `announcement` (`announcement_id`, `title`, `message`, `created_at`) VALUES
 (1, 'Fire Drill', 'A fire drill will be conducted tomorrow at 10:00 AM. Please evacuate calmly.', '2025-10-11 14:00:00'),
 (2, 'System Maintenance', 'The system will be down for maintenance from 2 AM to 4 AM on Sunday.', '2025-10-10 09:00:00'),
-(3, 'New Lab Opening', 'The new computer lab on the 5th floor is now open for use. testing', '2025-10-12 07:00:00');
+(3, 'New Lab Opening', 'The new computer lab on the 5th floor is now open for use.', '2025-10-12 07:00:00');
 
 -- --------------------------------------------------------
 
@@ -315,27 +315,27 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
 --
 
 INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `wing`, `floor_id`, `room_type`, `room_image_path`) VALUES
-(1, 'D501', 48, 40, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(2, 'D502', 48, 210, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(3, 'D503', 48, 300, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(4, 'D504', 48, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(5, 'D505', 160, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(6, 'D506', 160, 250, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(7, 'D507', 160, 160, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(8, 'D508', 160, 70, 'Devesse', 0, 5, 'classroom', 'assets/images/classroom.jpg'),
-(9, 'D511', 240, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
-(10, 'D512', 320, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
-(11, 'D513', 400, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
-(12, 'D514', 480, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
-(13, 'D515', 560, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/classroom.jpg'),
-(14, 'D525', 640, 390, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(1, 'D501', 48, 40, 'Devesse', 0, 5, 'classroom', 'assets/images/D501.jpg'),
+(2, 'D502', 48, 210, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(3, 'D503', 48, 300, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(4, 'D504', 48, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(5, 'D505', 160, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(6, 'D506', 160, 250, 'Devesse', 0, 5, 'classroom', 'assets/images/D506.jpg'),
+(7, 'D507', 160, 160, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(8, 'D508', 160, 70, 'Devesse', 0, 5, 'classroom', 'assets/images/D508.jpg'),
+(9, 'D511', 240, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D511.jpg'),
+(10, 'D512', 320, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D512.jpg'),
+(11, 'D513', 400, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(12, 'D514', 480, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D514.jpg'),
+(13, 'D515', 560, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(14, 'D525', 640, 390, 'Devesse', 2, 5, 'classroom', 'assets/images/D525.jpg'),
 (15, 'D522', 755, 370, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
 (16, 'D524', 755, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
-(17, 'D521', 755, 40, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
+(17, 'D521', 755, 40, 'Devesse', 2, 5, 'classroom', 'assets/images/D521.jpg'),
 (18, 'D526', 640, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
-(19, 'D528', 640, 90, 'Devesse', 2, 5, 'classroom', 'assets/images/room.jpg'),
-(20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'classroom', NULL),
-(21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'classroom', NULL);
+(19, 'D528', 640, 90, 'Devesse', 2, 5, 'classroom', 'assets/images/D528.jpg'),
+(20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'comfort_room', NULL),
+(21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'comfort_room', NULL);
 
 --
 -- Constraints for dumped tables
