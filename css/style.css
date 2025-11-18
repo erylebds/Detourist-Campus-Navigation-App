@@ -162,6 +162,7 @@ a {
 }
 
 .destination-details {
+  min-width: 310px;
   width: 38%;
   padding: 35px;
   display: flex;
@@ -271,6 +272,7 @@ a {
   font-size: 1rem;
   color: #F8F8FF;
   background-color: #e67e22;
+  flex: 1 1 0;
 }
 
 #er-route {
@@ -278,6 +280,7 @@ a {
   border: 2px solid #2f4048;
   color: #2f4048;
   gap: 20px;
+  flex: 2 1 0;
 }
 
 #er-route:hover {
