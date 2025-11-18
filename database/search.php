@@ -1,11 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "detourist";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+require 'connectDB.php';
 
 $roomName = $_GET['room_code'] ?? '';
 $roomName = $conn->real_escape_string($roomName);
@@ -23,16 +17,15 @@ $rooms = [];
 
 //Set default images if missing
 while ($row = $result->fetch_assoc()) {
-    $row['room_image'] = !empty($row['room_image_path']) 
-                         ? $row['room_image_path'] 
-                         : 'assets/images/room.jpg';
-    
-    $row['floor_map'] = !empty($row['floor_map']) 
-                        ? $row['floor_map'] 
-                        : 'assets/images/floor5.png';
+    $row['room_image'] = !empty($row['room_image_path'])
+        ? $row['room_image_path']
+        : 'assets/images/room.jpg';
+
+    $row['floor_map'] = !empty($row['floor_map'])
+        ? $row['floor_map']
+        : 'assets/images/floor5.png';
 
     $rooms[] = $row;
 }
 
 echo json_encode($rooms);
-?>

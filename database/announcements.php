@@ -1,11 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "detourist";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+require 'connectDB.php';
 
 $sql = "SELECT * FROM announcement ORDER BY created_at DESC";
 $result = $conn->query($sql);
@@ -16,4 +10,3 @@ while ($row = $result->fetch_assoc()) {
 }
 
 echo json_encode($announcements);
-?>

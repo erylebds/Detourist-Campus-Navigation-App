@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbname = "detourist";
-
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
-if ($conn->connect_error) {
-    echo "<script>alert('Database connection failed'); window.location.href = '../login.html';</script>";
-    exit();
-}
+require 'connectDB.php';
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $user = $_POST['username'];
@@ -73,11 +64,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     // 3) NOT FOUND IN EITHER TABLE
     echo "<script>alert('Username or email not found'); window.location.href = '../login.html';</script>";
     exit();
-
 } else {
     echo "<script>alert('Please enter username and password'); window.location.href = '../login.html';</script>";
     exit();
 }
 
 $conn->close();
-?>

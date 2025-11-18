@@ -1,13 +1,5 @@
  <?php
-    $servername = "localhost";
-    $dbUsername = "root";
-    $dbPassword = "";
-    $dbname = "detourist";
-
-    $conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
-    if ($conn->connect_error) {
-        die("<script>alert('Database connection failed');</script>");
-    }
+    require 'connectDB.php';
 
     $sql = "SELECT name, x_coord, y_coord FROM roomlabel";
     $result = $conn->query($sql);

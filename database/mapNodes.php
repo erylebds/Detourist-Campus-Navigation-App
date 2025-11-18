@@ -1,4 +1,7 @@
  <?php
+
+    require 'connectDB.php';
+
     function get_column_array($conn, $query, $column)
     {
         $mysqliResult = $conn->query($query);
@@ -7,16 +10,6 @@
             $result[] = $row[$column];
         }
         return $result;
-    }
-
-    $servername = "localhost";
-    $dbUsername = "root";
-    $dbPassword = "";
-    $dbname = "detourist";
-
-    $conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
-    if ($conn->connect_error) {
-        die("<script>alert('Database connection failed');</script>");
     }
 
     $nodesQuery = "SELECT mapnode.id, roomlabel.name, mapnode.type, mapnode.x_coord, mapnode.y_coord 
