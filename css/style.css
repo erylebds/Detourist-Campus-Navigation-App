@@ -1072,6 +1072,22 @@ a {
   }
 }
 
+.back-to-client {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.back-to-client a {
+    color: #ff9f43;
+    font-size: 0.95rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-to-client a:hover {
+    text-decoration: underline;
+}
+
 /* =========================
    Admin Layout
 ========================= */
