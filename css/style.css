@@ -831,7 +831,8 @@ a {
   gap: 10px;
 }
 
-.login-actions>button {
+.login-actions>button,
+.login-actions>a {
   border: none;
   font-size: 0.95rem;
   color: #F8F8FF;
@@ -839,6 +840,7 @@ a {
   border-radius: 3px;
   width: 100%;
   cursor: pointer;
+  text-align: center;
 }
 
 .login-actions>.login-btn {
@@ -849,6 +851,12 @@ a {
   border: solid #2f4048 2px;
   color: #2f4048;
   background-color: transparent;
+  transition: 0.2s;
+}
+
+.login-actions>.guest-btn:hover {
+  color: #F8F8FF;
+  background-color: #2f4048;
 }
 
 .forgot {
