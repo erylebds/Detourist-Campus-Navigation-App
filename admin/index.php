@@ -7,7 +7,8 @@ if (!isset($_SESSION['admin_id'])) {
 
 require '../database/connectDB.php';
 
-function normalizeDateTime($value) {
+function normalizeDateTime($value)
+{
     $value = trim($value ?? '');
     if ($value === '') {
         return date('Y-m-d H:i:s');
@@ -199,6 +200,7 @@ $activeTab = $_GET['tab'] ?? 'announcements';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Detourist Admin</title>
@@ -208,12 +210,15 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             font-family: 'Poppins', sans-serif;
             background-color: #fff8f0;
         }
+
         .admin-layout {
             display: flex;
             min-height: 100vh;
         }
+
         .admin-sidebar {
-            width: 260px;               /* wider sidebar */
+            width: 260px;
+            /* wider sidebar */
             background-color: #162d48;
             color: #f8f8ff;
             padding: 24px 20px;
@@ -221,20 +226,24 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             flex-direction: column;
             align-items: stretch;
         }
+
         .admin-logo {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .admin-logo img {
             width: 150px;
             height: auto;
             border-radius: 8px;
             margin-bottom: 10px;
         }
+
         .admin-logo h2 {
             font-size: 1.3rem;
             margin: 0;
         }
+
         .admin-logo p {
             font-size: 0.9rem;
             margin: 0;
@@ -245,6 +254,7 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             margin-top: 10px;
             flex: 1;
         }
+
         .admin-nav button {
             width: 100%;
             display: flex;
@@ -256,44 +266,48 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             border: none;
             background: transparent;
             color: #f8f8ff;
-            font-size: 0.95rem;        /* bigger, more readable */
+            font-size: 0.95rem;
+            /* bigger, more readable */
             cursor: pointer;
             text-align: left;
         }
+
         .admin-nav button span.icon {
             font-size: 1.1rem;
         }
+
         .admin-nav button.active {
             background-color: #ff9f43;
             color: #162d48;
             font-weight: 600;
         }
 
-        .admin-sidebar .logout-link {
-            margin-top: 10px;
-            font-size: 0.95rem;
-        }
-        .admin-sidebar .logout-link a {
-            color: #ffb27a;
-        }
-
         .admin-main {
             flex: 1;
             padding: 25px 40px;
         }
+
         .admin-topbar {
             display: flex;
             justify-content: flex-end;
+            gap: 15px;
             font-size: 0.95rem;
             margin-bottom: 10px;
         }
+
         .admin-topbar strong {
             color: #e67e22;
+        }
+
+        .admin-topbar .logout-link {
+            color: #5e95a1;
+            text-decoration: underline;
         }
 
         .admin-tab {
             display: none;
         }
+
         .admin-tab.active {
             display: block;
         }
@@ -311,13 +325,16 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             padding: 18px 20px;
             margin-bottom: 25px;
         }
+
         .card-box h2 {
             margin-top: 0;
             font-size: 1.2rem;
         }
+
         label {
             font-size: 0.95rem;
         }
+
         input[type="text"],
         input[type="datetime-local"],
         input[type="password"],
@@ -332,10 +349,12 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             margin-bottom: 10px;
             font-family: inherit;
         }
+
         textarea {
             resize: none;
             height: 150px;
         }
+
         .btn-primary {
             background: #e67e22;
             color: #fff;
@@ -345,6 +364,7 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             font-size: 0.95rem;
             cursor: pointer;
         }
+
         .btn-secondary {
             background: #f0f0f0;
             border: 1px solid #ccc;
@@ -353,20 +373,24 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             font-size: 0.9rem;
             cursor: pointer;
         }
+
         table.admin-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.9rem;
         }
+
         table.admin-table th,
         table.admin-table td {
             border-bottom: 1px solid #ffd6a5;
             padding: 8px 10px;
         }
+
         table.admin-table th {
             background: #fffdf8;
             text-align: left;
         }
+
         .msg-success {
             margin-bottom: 10px;
             padding: 8px 10px;
@@ -375,6 +399,7 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             color: #155724;
             font-size: 0.9rem;
         }
+
         .msg-error {
             margin-bottom: 10px;
             padding: 8px 10px;
@@ -390,198 +415,197 @@ $activeTab = $_GET['tab'] ?? 'announcements';
         }
     </style>
 </head>
+
 <body>
 
-<div class="admin-layout">
-    <!-- SIDEBAR -->
-    <aside class="admin-sidebar">
-        <div class="admin-logo">
-            <img src="../assets/images/logoD.png" alt="Detourist logo">
-            <h2>Detourist</h2>
-            <p>Admin Navigation</p>
-        </div>
+    <div class="admin-layout">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <img src="../assets/images/logoD.png" alt="Detourist logo">
+                <h2>Detourist</h2>
+                <p>Admin Navigation</p>
+            </div>
 
-        <nav class="admin-nav">
-            <form method="get" id="tabForm">
-                <!-- We use buttons with JS to switch tab + query param -->
-            </form>
-            <button type="button"
+            <nav class="admin-nav">
+                <form method="get" id="tabForm">
+                    <!-- We use buttons with JS to switch tab + query param -->
+                </form>
+                <button type="button"
                     class="<?= $activeTab === 'announcements' ? 'active' : '' ?>"
                     onclick="window.location.href='index.php?tab=announcements'">
-                <span class="icon">🔔</span> Announcements
-            </button>
-            <button type="button"
+                    <span class="icon">🔔</span> Announcements
+                </button>
+                <button type="button"
                     class="<?= $activeTab === 'rooms' ? 'active' : '' ?>"
                     onclick="window.location.href='index.php?tab=rooms'">
-                <span class="icon">🏫</span> Rooms
-            </button>
-            <button type="button"
+                    <span class="icon">🏫</span> Rooms
+                </button>
+                <button type="button"
                     class="<?= $activeTab === 'routes' ? 'active' : '' ?>"
                     onclick="window.location.href='index.php?tab=routes'">
-                <span class="icon">🧭</span> Routes
-            </button>
-            <button type="button"
+                    <span class="icon">🧭</span> Routes
+                </button>
+                <button type="button"
                     class="<?= $activeTab === 'account' ? 'active' : '' ?>"
                     onclick="window.location.href='index.php?tab=account'">
-                <span class="icon">👤</span> Account
-            </button>
-        </nav>
+                    <span class="icon">👤</span> Account
+                </button>
+            </nav>
+        </aside>
 
-        <div class="logout-link">
-            <a href="logout.php">Log Out</a>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="admin-main">
-        <div class="admin-topbar">
-            Logged in as: <strong>&nbsp;<?= htmlspecialchars($_SESSION['admin_username']); ?></strong>
-        </div>
-
-        <!-- ANNOUNCEMENTS TAB -->
-        <section class="admin-tab <?= $activeTab === 'announcements' ? 'active' : '' ?>" id="tab-announcements">
-            <h1 class="section-title">Announcements</h1>
-
-            <?php if ($annMsg): ?>
-                <div class="msg-success"><?= htmlspecialchars($annMsg) ?></div>
-            <?php endif; ?>
-
-            <div class="card-box">
-                <h2><?= $editAnnouncement ? 'Edit Announcement' : 'Add New Announcement' ?></h2>
-                <form method="POST">
-                    <input type="hidden" name="form_type" value="announcement">
-                    <?php if ($editAnnouncement): ?>
-                        <input type="hidden" name="announcement_id"
-                               value="<?= (int)$editAnnouncement['announcement_id'] ?>">
-                    <?php endif; ?>
-
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required
-                           value="<?= $editAnnouncement ? htmlspecialchars($editAnnouncement['title']) : '' ?>">
-
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" required><?= $editAnnouncement ? htmlspecialchars($editAnnouncement['message']) : '' ?></textarea>
-
-                    <label for="created_at">Date &amp; Time:</label>
-                    <input type="datetime-local" id="created_at" name="created_at"
-                           value="<?= $editAnnouncement
-                               ? date('Y-m-d\TH:i', strtotime($editAnnouncement['created_at']))
-                               : date('Y-m-d\TH:i') ?>">
-
-                    <button type="submit" class="btn-primary">Save Announcement</button>
-                    <?php if ($editAnnouncement): ?>
-                        <a href="index.php?tab=announcements" class="btn-secondary">Cancel</a>
-                    <?php endif; ?>
-                </form>
+        <!-- MAIN CONTENT -->
+        <main class="admin-main">
+            <div class="admin-topbar">
+                <p>Logged in as: <strong>&nbsp;<?= htmlspecialchars($_SESSION['admin_username']); ?></strong></p>
+                <a class="logout-link" href="logout.php">Log Out</a>
             </div>
 
-            <div class="card-box">
-                <h2>Existing Announcements</h2>
-                <table class="admin-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Message</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($announcements as $a): ?>
-                        <tr>
-                            <td><?= (int)$a['announcement_id'] ?></td>
-                            <td><?= htmlspecialchars($a['title']) ?></td>
-                            <td><?= htmlspecialchars($a['message']) ?></td>
-                            <td><?= htmlspecialchars($a['created_at']) ?></td>
-                            <td>
-                                <a href="index.php?tab=announcements&edit=<?= (int)$a['announcement_id'] ?>">Edit</a> |
-                                <a href="index.php?tab=announcements&delete=<?= (int)$a['announcement_id'] ?>"
-                                   onclick="return confirm('Delete this announcement?');"
-                                   style="color:#e74c3c;">Delete</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+            <!-- ANNOUNCEMENTS TAB -->
+            <section class="admin-tab <?= $activeTab === 'announcements' ? 'active' : '' ?>" id="tab-announcements">
+                <h1 class="section-title">Announcements</h1>
 
-        <!-- ROOMS TAB (placeholder as per document) -->
-        <section class="admin-tab <?= $activeTab === 'rooms' ? 'active' : '' ?>" id="tab-rooms">
-            <h1 class="section-title">Rooms</h1>
-            <div class="card-box">
-                <p>Rooms management UI will be added here later (map + list) as shown in the document.</p>
-            </div>
-        </section>
+                <?php if ($annMsg): ?>
+                    <div class="msg-success"><?= htmlspecialchars($annMsg) ?></div>
+                <?php endif; ?>
 
-        <!-- ROUTES TAB (placeholder) -->
-        <section class="admin-tab <?= $activeTab === 'routes' ? 'active' : '' ?>" id="tab-routes">
-            <h1 class="section-title">Routes</h1>
-            <div class="card-box">
-                <p>Routes management will be added here later as shown in the document.</p>
-            </div>
-        </section>
+                <div class="card-box">
+                    <h2><?= $editAnnouncement ? 'Edit Announcement' : 'Add New Announcement' ?></h2>
+                    <form method="POST">
+                        <input type="hidden" name="form_type" value="announcement">
+                        <?php if ($editAnnouncement): ?>
+                            <input type="hidden" name="announcement_id"
+                                value="<?= (int)$editAnnouncement['announcement_id'] ?>">
+                        <?php endif; ?>
 
-        <!-- ACCOUNT TAB -->
-        <section class="admin-tab <?= $activeTab === 'account' ? 'active' : '' ?>" id="tab-account">
-            <h1 class="section-title">Account</h1>
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required
+                            value="<?= $editAnnouncement ? htmlspecialchars($editAnnouncement['title']) : '' ?>">
 
-            <?php if ($accError): ?>
-                <div class="msg-error"><?= htmlspecialchars($accError) ?></div>
-            <?php endif; ?>
-            <?php if ($accMsg): ?>
-                <div class="msg-success"><?= htmlspecialchars($accMsg) ?></div>
-            <?php endif; ?>
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" required><?= $editAnnouncement ? htmlspecialchars($editAnnouncement['message']) : '' ?></textarea>
 
-            <div class="card-box account-info">
-                <h2>Account Information</h2>
-                <p><strong>Username:</strong> <?= htmlspecialchars($currentAdmin['username']) ?></p>
-                <p><strong>Email:</strong> <?= htmlspecialchars($currentAdmin['email']) ?></p>
-            </div>
+                        <label for="created_at">Date &amp; Time:</label>
+                        <input type="datetime-local" id="created_at" name="created_at"
+                            value="<?= $editAnnouncement
+                                        ? date('Y-m-d\TH:i', strtotime($editAnnouncement['created_at']))
+                                        : date('Y-m-d\TH:i') ?>">
 
-            <div class="card-box">
-                <h2>Change Password</h2>
-                <form method="POST">
-                    <input type="hidden" name="form_type" value="password">
+                        <button type="submit" class="btn-primary">Save Announcement</button>
+                        <?php if ($editAnnouncement): ?>
+                            <a href="index.php?tab=announcements" class="btn-secondary">Cancel</a>
+                        <?php endif; ?>
+                    </form>
+                </div>
 
-                    <label for="cp_username">Enter Username:</label>
-                    <input type="text" id="cp_username" name="cp_username" required>
+                <div class="card-box">
+                    <h2>Existing Announcements</h2>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Message</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($announcements as $a): ?>
+                                <tr>
+                                    <td><?= (int)$a['announcement_id'] ?></td>
+                                    <td><?= htmlspecialchars($a['title']) ?></td>
+                                    <td><?= htmlspecialchars($a['message']) ?></td>
+                                    <td><?= htmlspecialchars($a['created_at']) ?></td>
+                                    <td>
+                                        <a href="index.php?tab=announcements&edit=<?= (int)$a['announcement_id'] ?>">Edit</a> |
+                                        <a href="index.php?tab=announcements&delete=<?= (int)$a['announcement_id'] ?>"
+                                            onclick="return confirm('Delete this announcement?');"
+                                            style="color:#e74c3c;">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-                    <label for="old_password">Enter Old Password:</label>
-                    <input type="password" id="old_password" name="old_password" required>
+            <!-- ROOMS TAB (placeholder as per document) -->
+            <section class="admin-tab <?= $activeTab === 'rooms' ? 'active' : '' ?>" id="tab-rooms">
+                <h1 class="section-title">Rooms</h1>
+                <div class="card-box">
+                    <p>Rooms management UI will be added here later (map + list) as shown in the document.</p>
+                </div>
+            </section>
 
-                    <label for="new_password">Enter New Password:</label>
-                    <input type="password" id="new_password" name="new_password" required>
+            <!-- ROUTES TAB (placeholder) -->
+            <section class="admin-tab <?= $activeTab === 'routes' ? 'active' : '' ?>" id="tab-routes">
+                <h1 class="section-title">Routes</h1>
+                <div class="card-box">
+                    <p>Routes management will be added here later as shown in the document.</p>
+                </div>
+            </section>
 
-                    <label for="new_password2">Enter Again New Password:</label>
-                    <input type="password" id="new_password2" name="new_password2" required>
+            <!-- ACCOUNT TAB -->
+            <section class="admin-tab <?= $activeTab === 'account' ? 'active' : '' ?>" id="tab-account">
+                <h1 class="section-title">Account</h1>
 
-                    <button type="submit" class="btn-primary">Save</button>
-                </form>
-            </div>
+                <?php if ($accError): ?>
+                    <div class="msg-error"><?= htmlspecialchars($accError) ?></div>
+                <?php endif; ?>
+                <?php if ($accMsg): ?>
+                    <div class="msg-success"><?= htmlspecialchars($accMsg) ?></div>
+                <?php endif; ?>
 
-            <div class="card-box">
-                <h2>Change Username</h2>
-                <form method="POST">
-                    <input type="hidden" name="form_type" value="username">
+                <div class="card-box account-info">
+                    <h2>Account Information</h2>
+                    <p><strong>Username:</strong> <?= htmlspecialchars($currentAdmin['username']) ?></p>
+                    <p><strong>Email:</strong> <?= htmlspecialchars($currentAdmin['email']) ?></p>
+                </div>
 
-                    <label for="old_username">Enter Old Username:</label>
-                    <input type="text" id="old_username" name="old_username" required>
+                <div class="card-box">
+                    <h2>Change Password</h2>
+                    <form method="POST">
+                        <input type="hidden" name="form_type" value="password">
 
-                    <label for="new_username">Enter New Username:</label>
-                    <input type="text" id="new_username" name="new_username" required>
+                        <label for="cp_username">Enter Username:</label>
+                        <input type="text" id="cp_username" name="cp_username" required>
 
-                    <label for="cu_password">Enter Password:</label>
-                    <input type="password" id="cu_password" name="cu_password" required>
+                        <label for="old_password">Enter Old Password:</label>
+                        <input type="password" id="old_password" name="old_password" required>
 
-                    <button type="submit" class="btn-primary">Save</button>
-                </form>
-            </div>
-        </section>
+                        <label for="new_password">Enter New Password:</label>
+                        <input type="password" id="new_password" name="new_password" required>
 
-    </main>
-</div>
+                        <label for="new_password2">Enter Again New Password:</label>
+                        <input type="password" id="new_password2" name="new_password2" required>
+
+                        <button type="submit" class="btn-primary">Save</button>
+                    </form>
+                </div>
+
+                <div class="card-box">
+                    <h2>Change Username</h2>
+                    <form method="POST">
+                        <input type="hidden" name="form_type" value="username">
+
+                        <label for="old_username">Enter Old Username:</label>
+                        <input type="text" id="old_username" name="old_username" required>
+
+                        <label for="new_username">Enter New Username:</label>
+                        <input type="text" id="new_username" name="new_username" required>
+
+                        <label for="cu_password">Enter Password:</label>
+                        <input type="password" id="cu_password" name="cu_password" required>
+
+                        <button type="submit" class="btn-primary">Save</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
 
 </body>
+
 </html>
