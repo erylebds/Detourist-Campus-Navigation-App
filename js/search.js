@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
               resultsDiv.style.display = 'none';
 
               if (imageContainer && searchInput.id == "destination-room") {
-                imageContainer.querySelector('h2').innerText = room.room_code;
+                imageContainer.querySelector('h2').innerText = `Destination: ${room.room_code}`;
 
                 const basePath = ""; // index.html is at root
 
