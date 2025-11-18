@@ -105,20 +105,85 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     }
   });
 
-  // ----- Draw room labels from DB -----
+  // ----- Draw room labels from DB & Handle Clicks -----
   const textContext = textCanvas.getContext("2d");
-  textContext.font = "15px Arial";
+  textContext.font = "15px Arial"; 
+  let mapLabelsData = []; 
 
-  // IMPORTANT: root-relative path (no ../ now)
-  fetch("database/roomlabels.php")
+  // Fetch the room data
+  fetch("database/roomLabels.php")
     .then(res => res.json())
     .then(data => {
+      mapLabelsData = data; 
       data.forEach(roomLabel => {
         textContext.fillText(roomLabel.name, roomLabel.x_coord, roomLabel.y_coord);
       });
     })
     .catch(err => console.error("Error loading room labels:", err));
 
+  textCanvas.addEventListener('click', (e) => {
+    const rect = textCanvas.getBoundingClientRect();
+
+    const scaleX = textCanvas.width / rect.width;
+    const scaleY = textCanvas.height / rect.height;
+    const clickX = (e.clientX - rect.left) * scaleX;
+    const clickY = (e.clientY - rect.top) * scaleY;
+
+    const hitbox = 25; 
+    let clickedRoom = null;
+
+    // Check if we clicked near any room label
+    mapLabelsData.forEach(room => {
+      const dist = Math.sqrt( Math.pow(room.x_coord - clickX, 2) + Math.pow(room.y_coord - clickY, 2) );
+      
+      if (dist < hitbox) {
+        clickedRoom = room;
+      }
+    });
+
+    if (clickedRoom) {
+      showPopup(clickedRoom, e.pageX, e.pageY);
+    } else {
+      document.getElementById('map-popup').style.display = 'none';
+    }
+  });
+
+  // Helper function to display the popup with correct data
+  function showPopup(room, pageX, pageY) {
+    const popup = document.getElementById('map-popup');
+    document.getElementById('popup-title').innerText = room.name;
+  
+    let info = room.building_name || "Campus";
+    
+    if(room.wing && room.wing != "0") {
+        info += ` • Wing ${room.wing}`;
+    }
+    document.getElementById('popup-desc').innerText = info;
+
+    const imgPath = room.room_image_path ? room.room_image_path : 'assets/images/room.jpg';
+    document.getElementById('popup-img').src = imgPath;
+
+    popup.style.left = (pageX + 15) + 'px';
+    popup.style.top = (pageY - 100) + 'px';
+    popup.style.display = 'block';
+
+    document.getElementById('btn-set-source').onclick = function() {
+      document.getElementById('source-room').value = room.name;
+      popup.style.display = 'none';
+    };
+
+    // Set Destination Input
+    document.getElementById('btn-set-dest').onclick = function() {
+      document.getElementById('destination-room').value = room.name;
+      popup.style.display = 'none';
+    };
+    
+    // Close Button
+    document.getElementById('popup-close').onclick = function() {
+      popup.style.display = 'none';
+    };
+  }
+  
   // =======================
   // Routing functions
   // =======================
