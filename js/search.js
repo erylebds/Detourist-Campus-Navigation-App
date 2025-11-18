@@ -61,6 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             });
 
+            document.addEventListener('click', () => {
+              resultsDiv.innerHTML = '';
+              resultsDiv.style.display = 'none';
+            });
+
             resultsDiv.appendChild(div);
           });
 
