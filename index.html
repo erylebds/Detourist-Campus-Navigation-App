@@ -244,6 +244,25 @@
   <script src="js/search.js"></script>
   <script src="js/announcements.js"></script>
 
+  <!-- ===== POP-UP (temporary) ===== -->
+  <div id="map-popup" class="map-popup" style="display: none;">
+  <button id="popup-close" class="popup-close">&times;</button>
+  
+  <div class="popup-img-container">
+    <img id="popup-img" src="assets/images/room.jpg" alt="Room Image">
+  </div>
+  
+  <div class="popup-content">
+    <h3 id="popup-title">Room Name</h3>
+    <p id="popup-desc">Building Info</p>
+    
+    <div class="popup-actions">
+      <button id="btn-set-source">Start Here</button>
+      <button id="btn-set-dest">Go Here</button>
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>
