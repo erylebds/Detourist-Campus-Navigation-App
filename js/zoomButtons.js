@@ -55,19 +55,19 @@ if (mapContainer) {
     isDragging = false;
   });
 
-  document.getElementById("nightMode")
+  document.getElementById("darkMode")
     .addEventListener("click", () => {
       let mapWrapper = document.getElementById("mapWrapper");
       if (!mapWrapper) return;
       if (mapWrapper.style.filter === "invert(1)") {
         mapWrapper.style.filter = "none";
         document.getElementById("map-line-canvas").style.filter = "none";
-        document.getElementById("nightMode").innerHTML = "☼";
+        document.getElementById("darkMode").innerHTML = "☼";
       } else {
         mapWrapper.style.filter = "invert(1)";
         // Invert the lines on the map again to retain their original color
         document.getElementById("map-line-canvas").style.filter = "invert(1)";
-        document.getElementById("nightMode").innerHTML = "☾";
+        document.getElementById("darkMode").innerHTML = "☾";
       }
     });
 }
