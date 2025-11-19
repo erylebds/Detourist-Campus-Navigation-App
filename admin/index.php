@@ -323,14 +323,14 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             <section class="admin-tab <?= $activeTab === 'rooms' ? 'active' : '' ?>" id="tab-rooms">
                 <h1 class="section-title">Rooms</h1>
                 <div class="card-box">
-                    <p>Rooms management UI will be added here later (map + list) as shown in the document.</p>
+                    <p>Rooms management (to follow)</p>
                 </div>
             </section>
 
             <section class="admin-tab <?= $activeTab === 'routes' ? 'active' : '' ?>" id="tab-routes">
                 <h1 class="section-title">Routes</h1>
                 <div class="card-box">
-                    <p>Routes management will be added here later as shown in the document.</p>
+                    <p>Routes management (to follow)</p>
                 </div>
             </section>
 
@@ -394,5 +394,6 @@ $activeTab = $_GET['tab'] ?? 'announcements';
     </div>
 
 </body>
+
 
 </html>
