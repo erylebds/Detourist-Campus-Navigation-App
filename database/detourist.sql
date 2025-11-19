@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 19, 2025 at 03:28 AM
+-- Generation Time: Nov 19, 2025 at 04:52 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -316,26 +316,26 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
 
 INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `wing`, `floor_id`, `room_type`, `room_image_path`) VALUES
 (1, 'D501', 48, 40, 'Devesse', 0, 5, 'classroom', 'assets/images/D501.jpg'),
-(2, 'D502', 48, 210, 'Devesse', 0, 5, 'classroom', 'assets/images/D502.jpg'),
-(3, 'D503', 48, 300, 'Devesse', 0, 5, 'classroom', 'assets/images/D503.jpg'),
-(4, 'D504', 48, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/D504.jpg'),
-(5, 'D505', 160, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/D505.jpg'),
+(2, 'D502', 48, 210, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(3, 'D503', 48, 300, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(4, 'D504', 48, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(5, 'D505', 160, 390, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
 (6, 'D506', 160, 250, 'Devesse', 0, 5, 'classroom', 'assets/images/D506.jpg'),
-(7, 'D507', 160, 160, 'Devesse', 0, 5, 'classroom', 'assets/images/D507.jpg'),
+(7, 'D507', 160, 160, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
 (8, 'D508', 160, 70, 'Devesse', 0, 5, 'classroom', 'assets/images/D508.jpg'),
 (9, 'D511', 240, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D511.jpg'),
 (10, 'D512', 320, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D512.jpg'),
-(11, 'D513', 400, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D513.jpg'),
+(11, 'D513', 400, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
 (12, 'D514', 480, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D514.jpg'),
 (13, 'D515', 560, 390, 'Devesse', 1, 5, 'classroom', 'assets/images/D515.jpg'),
 (14, 'D525', 640, 390, 'Devesse', 2, 5, 'classroom', 'assets/images/D525.jpg'),
-(15, 'D522', 755, 370, 'Devesse', 2, 5, 'classroom', 'assets/images/D522.jpg'),
-(16, 'D524', 755, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/D524.jpg'),
+(15, 'D522', 755, 370, 'Devesse', 2, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(16, 'D524', 755, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
 (17, 'D521', 755, 40, 'Devesse', 2, 5, 'classroom', 'assets/images/D521.jpg'),
-(18, 'D526', 640, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/D526.jpg'),
+(18, 'D526', 640, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
 (19, 'D528', 640, 90, 'Devesse', 2, 5, 'classroom', 'assets/images/D528.jpg'),
-(20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'classroom', NULL),
-(21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'classroom', NULL);
+(20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'classroom', 'assets/images/maryheights-campus.jpg');
 
 --
 -- Constraints for dumped tables
