@@ -24,7 +24,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['admin_email'] = $row['email'];
 
             echo "<script>
-                    alert('Admin login successful');
                     window.location.href = '../admin/index.php';
                   </script>";
             exit();
