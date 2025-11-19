@@ -1,3 +1,12 @@
+/*
+    - Global styles: font, background, form inputs, buttons.
+    - Sidebar: fixed width, logo, navigation buttons, active state styling.
+    - Main content area: topbar, sections, cards, and tabs.
+    - Tables: simple border and spacing styling.
+    - Messages: success and error alerts.
+    - Forms: inputs, textareas, and buttons with consistent styling.
+*/
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #fff8f0;
@@ -10,7 +19,6 @@ body {
 
 .admin-sidebar {
     width: 260px;
-    /* wider sidebar */
     background-color: #162d48;
     color: #f8f8ff;
     padding: 24px 20px;
@@ -59,7 +67,6 @@ body {
     background: transparent;
     color: #f8f8ff;
     font-size: 0.95rem;
-    /* bigger, more readable */
     cursor: pointer;
     text-align: left;
 }

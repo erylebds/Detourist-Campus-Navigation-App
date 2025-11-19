@@ -1,4 +1,17 @@
 <?php
+    /**
+     * - Session validation: only accessible by logged-in admins.
+     * - Announcement management: add, edit, delete, and list announcements.
+     * - Admin account management: update username and password with validation.
+     * - Tabbed UI for managing announcements, rooms, routes, and account info.
+     * - Handles POST requests for form submissions and GET requests for deletion/editing.
+     * - Sanitizes input and outputs, with basic error and success messaging.
+     * - Integrates with database via prepared statements to prevent SQL injection.
+     * - Dynamically renders HTML with sections activated based on the current tab.
+ */
+?>
+
+<?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
     header("Location: ../login.html");
@@ -13,7 +26,6 @@ function normalizeDateTime($value)
     if ($value === '') {
         return date('Y-m-d H:i:s');
     }
-    // from datetime-local: 2025-11-18T04:16
     $value = str_replace('T', ' ', $value) . ':00';
     return $value;
 }
@@ -23,10 +35,8 @@ $annMsg = '';
 $accMsg  = '';
 $accError = '';
 
-// --- HANDLE POST ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
 
-    // ANNOUNCEMENTS (add / edit)
     if ($_POST['form_type'] === 'announcement') {
         $title   = trim($_POST['title'] ?? '');
         $message = trim($_POST['message'] ?? '');
@@ -62,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
         exit();
     }
 
-    // CHANGE PASSWORD
     if ($_POST['form_type'] === 'password') {
         $enterUsername = trim($_POST['cp_username'] ?? '');
         $oldPass       = trim($_POST['old_password'] ?? '');
@@ -100,7 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
         exit();
     }
 
-    // CHANGE USERNAME
     if ($_POST['form_type'] === 'username') {
         $oldUsername = trim($_POST['old_username'] ?? '');
         $newUsername = trim($_POST['new_username'] ?? '');
@@ -109,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
         if ($oldUsername === '' || $newUsername === '' || $password === '') {
             $accError = 'All fields are required.';
         } else {
-            // current admin
             $stmt = $conn->prepare("SELECT username, password FROM admin WHERE admin_id = ?");
             $stmt->bind_param("i", $adminId);
             $stmt->execute();
@@ -122,7 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
             } elseif ($password !== $row['password']) {
                 $accError = 'Password is incorrect.';
             } else {
-                // ensure new username not taken
                 $stmt = $conn->prepare("SELECT admin_id FROM admin WHERE username = ? AND admin_id <> ?");
                 $stmt->bind_param("si", $newUsername, $adminId);
                 $stmt->execute();
@@ -149,7 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
     }
 }
 
-// DELETE announcement
 if (isset($_GET['delete'])) {
     $delId = (int)$_GET['delete'];
     $stmt = $conn->prepare("DELETE FROM announcement WHERE announcement_id = ?");
@@ -160,14 +165,12 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
-// LOAD announcements
 $announcements = [];
 $result = $conn->query("SELECT * FROM announcement ORDER BY created_at DESC");
 while ($row = $result->fetch_assoc()) {
     $announcements[] = $row;
 }
 
-// for editing a specific announcement
 $editAnnouncement = null;
 if (isset($_GET['edit'])) {
     $editId = (int)$_GET['edit'];
@@ -179,7 +182,6 @@ if (isset($_GET['edit'])) {
     }
 }
 
-// CURRENT ADMIN INFO
 $stmt = $conn->prepare("SELECT username, email FROM admin WHERE admin_id = ?");
 $stmt->bind_param("i", $adminId);
 $stmt->execute();
@@ -211,7 +213,6 @@ $activeTab = $_GET['tab'] ?? 'announcements';
 <body>
 
     <div class="admin-layout">
-        <!-- SIDEBAR -->
         <aside class="admin-sidebar">
             <div class="admin-logo">
                 <img src="../assets/images/logoD.png" alt="Detourist logo">
@@ -221,7 +222,6 @@ $activeTab = $_GET['tab'] ?? 'announcements';
 
             <nav class="admin-nav">
                 <form method="get" id="tabForm">
-                    <!-- We use buttons with JS to switch tab + query param -->
                 </form>
                 <button type="button"
                     class="<?= $activeTab === 'announcements' ? 'active' : '' ?>"
@@ -246,14 +246,12 @@ $activeTab = $_GET['tab'] ?? 'announcements';
             </nav>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="admin-main">
             <div class="admin-topbar">
                 <p>Logged in as: <strong>&nbsp;<?= htmlspecialchars($_SESSION['admin_username']); ?></strong></p>
                 <a class="logout-link" href="logout.php">Log Out</a>
             </div>
 
-            <!-- ANNOUNCEMENTS TAB -->
             <section class="admin-tab <?= $activeTab === 'announcements' ? 'active' : '' ?>" id="tab-announcements">
                 <h1 class="section-title">Announcements</h1>
 
@@ -322,7 +320,6 @@ $activeTab = $_GET['tab'] ?? 'announcements';
                 </div>
             </section>
 
-            <!-- ROOMS TAB (placeholder as per document) -->
             <section class="admin-tab <?= $activeTab === 'rooms' ? 'active' : '' ?>" id="tab-rooms">
                 <h1 class="section-title">Rooms</h1>
                 <div class="card-box">
@@ -330,7 +327,6 @@ $activeTab = $_GET['tab'] ?? 'announcements';
                 </div>
             </section>
 
-            <!-- ROUTES TAB (placeholder) -->
             <section class="admin-tab <?= $activeTab === 'routes' ? 'active' : '' ?>" id="tab-routes">
                 <h1 class="section-title">Routes</h1>
                 <div class="card-box">
@@ -338,7 +334,6 @@ $activeTab = $_GET['tab'] ?? 'announcements';
                 </div>
             </section>
 
-            <!-- ACCOUNT TAB -->
             <section class="admin-tab <?= $activeTab === 'account' ? 'active' : '' ?>" id="tab-account">
                 <h1 class="section-title">Account</h1>
 

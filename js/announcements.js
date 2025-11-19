@@ -1,3 +1,9 @@
+/**
+  - Fetches announcement data via AJAX (JSON).
+  - Builds clickable announcement cards with message previews.
+  - Opens a modal showing the full message when a card is clicked.
+  - Supports closing the modal via close button or backdrop click.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   const announcementList = document.getElementById("announcementList");
   const modal = document.getElementById("announcement-modal");
@@ -7,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!announcementList || !modal || !modalTitle || !modalBody || !modalClose) return;
 
-  // IMPORTANT: root-relative path
   fetch("database/announcements.php")
     .then((res) => res.json())
     .then((data) => {

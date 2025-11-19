@@ -1,7 +1,24 @@
 <?php
+/*
+    - Session check to ensure only logged-in admins can access.
+    - Connects to the database using 'connectDB.php'.
+    - Handles CRUD operations:
+        - Add a new announcement with title, message, and optional datetime.
+        - Update an existing announcement.
+        - Delete an announcement.
+    - Normalizes date/time input to MySQL format.
+    - Fetches all announcements from the database, ordered by creation date.
+    - Supports editing by populating form fields with selected announcement data.
+    - Outputs an HTML page with:
+        - A form for adding/updating announcements.
+        - A table listing existing announcements with edit/delete actions.
+    - Includes inline CSS for layout and styling.
+*/
+?>
+
+<?php
 session_start();
 
-// only admins can access
 if (!isset($_SESSION['admin_id'])) {
     header("Location: ../login.html");
     exit();
@@ -9,20 +26,15 @@ if (!isset($_SESSION['admin_id'])) {
 
 require '../database/connectDB.php';
 
-// ---------- HANDLE FORM ACTIONS ----------
-
-// helper: normalize HTML datetime-local to MySQL DATETIME
 function normalizeDateTime($value) {
     $value = trim($value ?? '');
     if ($value === '') {
-        return date('Y-m-d H:i:s');   // now()
+        return date('Y-m-d H:i:s');
     }
-    // datetime-local comes as "YYYY-MM-DDTHH:MM"
-    $value = str_replace('T', ' ', $value) . ':00'; // add seconds
+    $value = str_replace('T', ' ', $value) . ':00';
     return $value;
 }
 
-// ADD / UPDATE
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $title   = trim($_POST['title']   ?? '');
     $message = trim($_POST['message'] ?? '');
@@ -30,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $id      = $_POST['id'] ?? null;
 
     if ($_POST['action'] === 'add') {
-        // INSERT -> directly creates a new row in detourist.announcement
         if ($title !== '' && $message !== '') {
             $stmt = $conn->prepare(
                 "INSERT INTO announcement (title, message, created_at)
@@ -43,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 
     if ($_POST['action'] === 'update' && !empty($id)) {
-        // UPDATE -> directly modifies the existing row
         if ($title !== '' && $message !== '') {
             $stmt = $conn->prepare(
                 "UPDATE announcement
@@ -60,11 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     exit();
 }
 
-// DELETE
 if (isset($_GET['delete'])) {
     $deleteId = (int) $_GET['delete'];
 
-    // DELETE -> removes row from detourist.announcement
     $stmt = $conn->prepare(
         "DELETE FROM announcement WHERE announcement_id = ?"
     );
@@ -76,7 +84,6 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
-// ---------- LOAD DATA FOR DISPLAY ----------
 $result = $conn->query(
     "SELECT * FROM announcement ORDER BY created_at DESC"
 );
@@ -86,7 +93,6 @@ while ($row = $result->fetch_assoc()) {
 }
 $conn->close();
 
-// for edit mode
 $editAnnouncement = null;
 if (isset($_GET['edit'])) {
     $editId = (int) $_GET['edit'];

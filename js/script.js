@@ -1,15 +1,20 @@
-// =======================
-// Navbar color on scroll
-// =======================
+/*
+- Navbar style change on scroll
+- Announcement modal open/close logic
+- Mobile navigation toggle behavior
+- Route generation (normal/emergency) with error checks
+- Canvas label rendering and clickable room detection
+- Popup display with room info and quick-set buttons
+- Pathfinding using a Dijkstra-like algorithm
+- Smooth route line animation between map nodes
+*/
+
 window.addEventListener("scroll", () => {
   const navbar = document.getElementById("navbar");
   if (!navbar) return;
   navbar.classList.toggle("scrolled", window.scrollY > 50);
 });
 
-// =======================
-// Announcement modal (for static fallback cards)
-// =======================
 const modal = document.getElementById("announcement-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
@@ -30,9 +35,6 @@ if (modal && modalTitle && modalBody && closeBtn) {
   });
 }
 
-// =======================
-// Hamburger Menu
-// =======================
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.querySelector(".nav-links");
 
@@ -50,11 +52,6 @@ if (hamburger && navLinks) {
   });
 }
 
-// =======================
-// Map Routing
-// =======================
-
-// Only run the routing code if the elements exist (avoids errors on other pages)
 const normRouteBtn = document.getElementById("norm-route");
 const erRouteBtn = document.getElementById("er-route");
 const sourceInput = document.getElementById("source-room");
@@ -63,7 +60,6 @@ const textCanvas = document.getElementById("map-text-canvas");
 const lineCanvas = document.getElementById("map-line-canvas");
 
 if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && lineCanvas) {
-  // ----- Route buttons -----
   normRouteBtn.addEventListener("click", () => {
     const source = String(sourceInput.value).trim();
     if (!source) {
@@ -105,12 +101,10 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     }
   });
 
-  // ----- Draw room labels from DB & Handle Clicks -----
   const textContext = textCanvas.getContext("2d");
   textContext.font = "15px Arial"; 
   let mapLabelsData = []; 
 
-  // Fetch the room data
   fetch("database/roomLabels.php")
     .then(res => res.json())
     .then(data => {
@@ -132,7 +126,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     const hitbox = 25; 
     let clickedRoom = null;
 
-    // Check if we clicked near any room label
     mapLabelsData.forEach(room => {
       const dist = Math.sqrt( Math.pow(room.x_coord - clickX, 2) + Math.pow(room.y_coord - clickY, 2) );
       
@@ -148,7 +141,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     }
   });
 
-  // Helper function to display the popup with correct data
   function showPopup(room, pageX, pageY) {
     const popup = document.getElementById('map-popup');
     document.getElementById('popup-title').innerText = room.name;
@@ -172,21 +164,16 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
       popup.style.display = 'none';
     };
 
-    // Set Destination Input
     document.getElementById('btn-set-dest').onclick = function() {
       document.getElementById('destination-room').value = room.name;
       popup.style.display = 'none';
     };
     
-    // Close Button
     document.getElementById('popup-close').onclick = function() {
       popup.style.display = 'none';
     };
   }
-  
-  // =======================
-  // Routing functions
-  // =======================
+
 
   function drawRoute(source, destination) {
     fetch("database/mapNodes.php")
@@ -234,7 +221,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
       });
   }
 
-  // Account for rooms with multiple entrances
   function drawBetweenEndPoints(nodeList, startNodes, endNodes, lineColor) {
     if (startNodes.length === 0) {
       alert("The source room was not found.");
@@ -276,11 +262,9 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
   const lineContext = lineCanvas.getContext("2d");
 
   function drawRouteLines(currentNode, lineColor) {
-    // Clear all lines and set the color
     lineContext.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
     lineContext.strokeStyle = lineColor;
 
-    // Get the x & y coordinates of each node and store them in order from start to end
     let vertices = [];
     while (currentNode) {
       vertices.unshift({
@@ -290,7 +274,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
       currentNode = currentNode.previous;
     }
 
-    // Animate the drawing of the lines
     points = calcWaypoints(vertices);
     t = 1;
     animate();
@@ -307,7 +290,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     t++;
   }
 
-  // Create additional increments between the nodes for smoother animation
   function calcWaypoints(vertices) {
     const waypoints = [];
     for (let i = 1; i < vertices.length; i++) {
@@ -339,7 +321,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     const visited = [];
     let currentNode;
 
-    // Assign tentative distances to each node
     unvisited.forEach(node => {
       if (node.id == sourceId) {
         currentNode = node;
@@ -350,7 +331,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     });
 
     do {
-      // For the current node, calculate the distances to all unvisited neighbors
       currentNode.adjacent_node_ids.forEach(nodeId => {
         const adjacentNode = getNodeFromId(unvisited, nodeId);
         if (adjacentNode !== undefined) {
@@ -360,7 +340,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
         }
       });
 
-      // Mark current node as visited and remove from unvisited
       visited.push(currentNode);
       for (let i = 0; i < unvisited.length; i++) {
         if (unvisited[i].id == currentNode.id) {
@@ -423,7 +402,6 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
     return Math.abs(distance);
   }
 
-  // Helper for finding coords on canvas (debug)
   textCanvas.addEventListener('mousedown', (event) => {
     const rect = textCanvas.getBoundingClientRect();
     const x = event.clientX - rect.left;

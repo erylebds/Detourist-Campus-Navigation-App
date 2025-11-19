@@ -1,3 +1,10 @@
+/*
+  - Tracks scale and translation for zooming and panning the map.
+  - Zoom buttons, mouse wheel, and double-click adjust scale.
+  - Mouse drag updates translation for panning.
+  - Dark mode toggles CSS filter inversion for map and overlay canvas.
+*/
+
 const mapContainer = document.getElementById("campusMap");
 let scale = 1;
 let translateX = 0;
@@ -11,19 +18,16 @@ function updateTransform() {
 }
 
 if (mapContainer) {
-  // ZOOM IN
   document.getElementById('zoomIn').addEventListener("click", () => {
     scale += 0.1;
     updateTransform();
   });
 
-  // ZOOM OUT
   document.getElementById('zoomOut').addEventListener("click", () => {
     if (scale > 0.3) scale -= 0.1;
     updateTransform();
   });
 
-  // ZOOM USING MOUSE SCROLL WHEEL
   mapContainer.addEventListener("wheel", (e) => {
     e.preventDefault();
     if (e.deltaY < 0) scale += 0.1;
@@ -31,13 +35,11 @@ if (mapContainer) {
     updateTransform();
   });
 
-  // DOUBLE CLICK FOR ZOOM IN
   mapContainer.addEventListener("dblclick", (e) => {
     scale += 0.2;
     updateTransform();
   });
 
-  // DRAG MAP
   mapContainer.addEventListener("mousedown", (e) => {
     isDragging = true;
     startX = e.clientX - translateX;
@@ -65,7 +67,6 @@ if (mapContainer) {
         document.getElementById("darkMode").innerHTML = "☼";
       } else {
         mapWrapper.style.filter = "invert(1)";
-        // Invert the lines on the map again to retain their original color
         document.getElementById("map-line-canvas").style.filter = "invert(1)";
         document.getElementById("darkMode").innerHTML = "☾";
       }

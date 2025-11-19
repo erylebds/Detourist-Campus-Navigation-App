@@ -1,17 +1,23 @@
+<!--
+  - A responsive navbar with links and mobile hamburger menu
+  - A home section with search fields, route buttons, and interactive map canvases
+  - Announcements displayed as cards with modal expansion
+  - An about section describing the system
+  - A footer with social and contact information
+  - Additional popup UI for room details
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <!-- ===== Metadata ===== -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Detourist - Campus Navigation System" />
   <title>Detourist Navigation</title>
 
-  <!-- ===== Styles ===== -->
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- ===== Fonts & Icons ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -20,7 +26,6 @@
 </head>
 
 <body>
-  <!-- ===== NAVIGATION BAR ===== -->
   <nav class="navbar" id="navbar">
     <a class="navbar-left" href="#home">
       <img src="assets/images/logoD.png" alt="Detourist logo" class="navbar-logo" />
@@ -40,10 +45,8 @@
     </div>
 
     <div class="navbar-right">
-      <!-- Button goes to login page -->
       <a href="login.html" class="btn-login">Login</a>
 
-      <!-- Hamburger -->
       <div class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
         <span></span>
@@ -52,7 +55,6 @@
     </div>
   </nav>
 
-  <!-- ===== HOME SECTION ===== -->
   <header>
     <section id="home">
       <div class="destination-details">
@@ -107,12 +109,10 @@
   </header>
 
   <main id="main-content">
-    <!-- ===== ANNOUNCEMENTS ===== -->
     <section class="announcements-section" id="announcements">
       <h2>Announcements</h2>
 
       <div class="announcement-list" id="announcementList">
-        <!-- These starter cards are fine; JS will overwrite when DB is used -->
         <article class="announcement-card" data-title="Campus Maintenance Notice"
           data-body="Power will be temporarily interrupted on October 26, from 8AM to 10AM for scheduled maintenance. Please save your work before this time.">
           <h3>Campus Maintenance Notice</h3>
@@ -139,7 +139,6 @@
       </div>
     </section>
 
-    <!-- ===== MODAL ===== -->
     <div class="modal" id="announcement-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
       aria-describedby="modal-body">
       <div class="modal-content">
@@ -149,7 +148,6 @@
       </div>
     </div>
 
-    <!-- ===== ABOUT ===== -->
     <section class="about-section" id="about">
       <div class="about-container">
         <figure class="about-image">
@@ -175,10 +173,8 @@
     </section>
   </main>
 
-  <!-- ===== FOOTER ===== -->
   <footer class="footer" id="contact">
     <div class="footer-container">
-      <!-- Brand -->
       <div class="footer-brand">
         <div class="brand-logo">
           <img src="assets/images/logo-transparent.png" alt="Logo">
@@ -189,7 +185,6 @@
         </div>
       </div>
 
-      <!-- Contact Links -->
       <div class="footer-links">
         <a href="https://instagram.com/detouristph" target="_blank" class="contact-item">
           <i class="fab fa-instagram"></i>
@@ -238,13 +233,11 @@
     </div>
   </footer>
 
-  <!-- ===== SCRIPTS ===== -->
   <script src="js/script.js" defer></script>
   <script src="js/zoomButtons.js"></script>
   <script src="js/search.js"></script>
   <script src="js/announcements.js"></script>
 
-  <!-- ===== POP-UP (temporary) ===== -->
   <div id="map-popup" class="map-popup" style="display: none;">
   <button id="popup-close" class="popup-close">&times;</button>
   

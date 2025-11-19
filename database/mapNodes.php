@@ -1,3 +1,13 @@
+<?php
+/*
+    - Connects to the database via connectDB.php.
+    - Defines a helper function `get_column_array` to extract a single column from a query result as an array.
+    - Queries `mapnode` and joins with `roomlabel` to get node details (ID, name, type, coordinates).
+    - For each node, fetches its adjacent nodes from the `mapedge` table in both directions.
+    - Combines node data with adjacency information and outputs as JSON.
+    - Closes the database connection at the end.
+*/
+?>
  <?php
 
     require 'connectDB.php';

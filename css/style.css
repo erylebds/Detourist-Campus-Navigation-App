@@ -1,6 +1,14 @@
-/* =========================
-   Base Styles
-========================= */
+/*
+  - Global resets and typography.
+  - Navbar with responsive hamburger menu and scroll effects.
+  - Home page layout: destination details panel and interactive campus map with markers, popups, and zoom controls.
+  - Login page with responsive grid, branding, and form elements.
+  - Announcement, modal, and about sections with responsive adjustments.
+  - Footer with branding, links, and contact info.
+  - Admin dashboard layout: sidebar, main content, forms, tables, buttons, and alerts with responsive behavior.
+  - Utility classes for buttons, inputs, and responsive media queries.
+*/
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -34,9 +42,6 @@ a {
 }
 
 
-/* =========================
-   Navbar
-========================= */
 .navbar {
   width: 100%;
   height: 70px;
@@ -112,9 +117,6 @@ a {
 }
 
 
-/* =========================
-   Hamburger Menu
-========================= */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -133,7 +135,6 @@ a {
   transition: all 0.3s ease;
 }
 
-/* Animation when active */
 .hamburger.active span:nth-child(1) {
   transform: translateY(7.5px) rotate(45deg);
 }
@@ -147,9 +148,6 @@ a {
 }
 
 
-/* =========================
-   Home Section
-========================= */
 #home {
   width: 100%;
   min-height: 100svh;
@@ -222,7 +220,6 @@ a {
   background-color: #f0f0f0;
 }
 
-/* Maintain image aspect ratio for any room image from the database */
 .room-img-wrapper {
   width: 100%;
   aspect-ratio: 192 / 119;
@@ -358,15 +355,12 @@ a {
   left: 0;
   z-index: 1;
 
-  /* minimize blurriness of canvas lines & text */
-  /* multiple values to ensure compatibility with most browsers */
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
 
-/* Map Markers */
 .room-marker {
   width: 12px;
   height: 12px;
@@ -458,9 +452,6 @@ a {
   }
 }
 
-/* =========================
-   // Temporary UI Popup Styles
-========================= */
 .map-popup {
   position: absolute;
   width: 260px;
@@ -562,7 +553,6 @@ a {
   background-color: #e67e22;
 }
 
-/* ======== MOBILE VIEW ======== */
 @media (max-width: 600px) {
   #home {
     flex-direction: column;
@@ -598,9 +588,6 @@ a {
 }
 
 
-/* =========================
-   Announcements
-========================= */
 .announcements-section {
   max-width: 900px;
   margin: 120px auto 50px;
@@ -635,9 +622,7 @@ a {
   box-shadow: 0 5px 10px rgba(255, 159, 67, 0.2);
 }
 
-/* =========================
-   Modal
-========================= */
+
 .modal {
   display: none;
   position: fixed;
@@ -673,9 +658,6 @@ a {
 }
 
 
-/* =========================
-   About Section
-========================= */
 .about-section {
   display: flex;
   flex-wrap: wrap;
@@ -707,9 +689,7 @@ a {
   color: #e67e22;
 }
 
-/* =========================
-   Footer / Contact
-========================= */
+
 .footer {
   background: #fff8f0;
   color: #111;
@@ -725,7 +705,6 @@ a {
   gap: 30px;
 }
 
-/* Brand */
 .footer-brand {
   display: flex;
   align-items: center;
@@ -761,7 +740,6 @@ a {
   margin-top: 2px;
 }
 
-/* Contact Section */
 .footer-links {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -806,7 +784,6 @@ a {
   text-align: left;
 }
 
-/* Footer Bottom */
 .footer-bottom {
   text-align: center;
   margin-top: 40px;
@@ -817,9 +794,6 @@ a {
 }
 
 
-/* =========================
-   Login Section
-========================= */
 .login-overlay {
   border-image: linear-gradient(rgba(229, 219, 200, 0.75)) fill 1;
 }
@@ -973,12 +947,8 @@ a {
 }
 
 
-/* =========================
-   Responsive Design
-========================= */
 @media screen and (max-width: 768px) {
 
-  /* Navbar mobile */
   .nav-links {
     position: fixed;
     top: 70px;
@@ -1013,7 +983,6 @@ a {
     width: 0;
   }
 
-  /* About section */
   .about-container {
     flex-direction: column;
     text-align: center;
@@ -1024,7 +993,6 @@ a {
     max-width: 280px;
   }
 
-  /* Footer */
   .footer {
     padding: 40px 20px;
   }
@@ -1043,7 +1011,6 @@ a {
     justify-content: center;
   }
 
-  /* Login page */
   .login-grid {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -1088,9 +1055,6 @@ a {
   text-decoration: underline;
 }
 
-/* =========================
-   Admin Layout
-========================= */
 
 .admin-page {
   background-color: #fff8f0;
@@ -1102,7 +1066,6 @@ a {
   min-height: 100vh;
 }
 
-/* Sidebar */
 .admin-sidebar {
   width: 240px;
   background-color: #162d48;
@@ -1159,7 +1122,6 @@ a {
   text-align: center;
 }
 
-/* Main content */
 .admin-main {
   flex: 1;
   padding: 30px 40px;
@@ -1170,7 +1132,6 @@ a {
   margin-top: 0;
 }
 
-/* Shared card style */
 .admin-card {
   background: #ffffff;
   border: 1px solid #ffd6a5;
@@ -1178,7 +1139,6 @@ a {
   padding: 20px;
 }
 
-/* Tabs */
 .admin-tab {
   display: none;
 }
@@ -1187,7 +1147,6 @@ a {
   display: block;
 }
 
-/* Form controls inside admin cards */
 .admin-label {
   display: block;
   margin-top: 10px;
@@ -1209,7 +1168,6 @@ a {
   resize: vertical;
 }
 
-/* Buttons */
 .btn-primary,
 .btn-secondary {
   display: inline-block;
@@ -1232,7 +1190,6 @@ a {
   border: 1px solid #e67e22;
 }
 
-/* Table */
 .admin-table-wrapper {
   overflow-x: auto;
 }
@@ -1256,7 +1213,6 @@ a {
   text-align: left;
 }
 
-/* Account tab */
 .account-summary h2 {
   margin-top: 0;
 }
@@ -1297,7 +1253,6 @@ a {
   font-weight: 500;
 }
 
-/* Messages */
 .alert {
   padding: 10px 12px;
   border-radius: 6px;
@@ -1315,7 +1270,6 @@ a {
   color: #721c24;
 }
 
-/* Responsive admin layout */
 @media (max-width: 900px) {
   .admin-layout {
     flex-direction: column;
