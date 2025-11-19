@@ -462,10 +462,10 @@ a {
    // Temporary UI Popup Styles
 ========================= */
 .map-popup {
-  position: absolute; 
+  position: absolute;
   width: 260px;
-  background-color: #fff8f0; 
-  border: 2px solid #2f4048; 
+  background-color: #fff8f0;
+  border: 2px solid #2f4048;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(47, 64, 72, 0.3);
   z-index: 1000;
@@ -492,7 +492,7 @@ a {
 }
 
 .popup-content h3 {
-  color: #e67e22; 
+  color: #e67e22;
   font-size: 1.4rem;
   margin-bottom: 5px;
   line-height: 1.2;
@@ -553,7 +553,7 @@ a {
   border: none;
   border-radius: 50%;
   font-size: 1.2rem;
-  line-height: 26px; 
+  line-height: 26px;
   cursor: pointer;
   z-index: 1001;
 }
@@ -1073,19 +1073,19 @@ a {
 }
 
 .back-to-client {
-    margin-top: 15px;
-    text-align: center;
+  margin-top: 15px;
+  text-align: center;
 }
 
 .back-to-client a {
-    color: #ff9f43;
-    font-size: 0.95rem;
-    text-decoration: none;
-    font-weight: 500;
+  color: #2f4048;
+  font-size: 0.95rem;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .back-to-client a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* =========================
