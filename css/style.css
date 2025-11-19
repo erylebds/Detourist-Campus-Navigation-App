@@ -55,10 +55,6 @@ a {
   z-index: 100;
 }
 
-.navbar.scrolled {
-  box-shadow: 0 3px 10px rgba(85, 85, 85, 0.25);
-}
-
 .navbar-left {
   display: flex;
   align-items: center;

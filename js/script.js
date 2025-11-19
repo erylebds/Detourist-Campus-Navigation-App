@@ -1,5 +1,4 @@
 /*
-- Navbar style change on scroll
 - Announcement modal open/close logic
 - Mobile navigation toggle behavior
 - Route generation (normal/emergency) with error checks
@@ -8,12 +7,6 @@
 - Pathfinding using a Dijkstra-like algorithm
 - Smooth route line animation between map nodes
 */
-
-window.addEventListener("scroll", () => {
-  const navbar = document.getElementById("navbar");
-  if (!navbar) return;
-  navbar.classList.toggle("scrolled", window.scrollY > 50);
-});
 
 const modal = document.getElementById("announcement-modal");
 const modalTitle = document.getElementById("modal-title");
