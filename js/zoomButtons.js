@@ -60,15 +60,14 @@ if (mapContainer) {
   document.getElementById("darkMode")
     .addEventListener("click", () => {
       let mapWrapper = document.getElementById("mapWrapper");
+      let darkModeBtn = document.getElementById("darkMode");
       if (!mapWrapper) return;
       if (mapWrapper.style.filter === "invert(1)") {
         mapWrapper.style.filter = "none";
-        document.getElementById("map-line-canvas").style.filter = "none";
-        document.getElementById("darkMode").innerHTML = "☼";
+        darkModeBtn.innerHTML = "☼";
       } else {
         mapWrapper.style.filter = "invert(1)";
-        document.getElementById("map-line-canvas").style.filter = "invert(1)";
-        document.getElementById("darkMode").innerHTML = "☾";
+        darkModeBtn.innerHTML = "☾";
       }
     });
 }
