@@ -334,7 +334,7 @@ INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `w
 (17, 'D521', 755, 40, 'Devesse', 2, 5, 'classroom', 'assets/images/D521.jpg'),
 (18, 'D526', 640, 230, 'Devesse', 2, 5, 'classroom', 'assets/images/D526.jpg'),
 (19, 'D528', 640, 90, 'Devesse', 2, 5, 'classroom', 'assets/images/D528.jpg'),
-(20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'classroom', 'assets/images/maryheights-campus.jpg'),
+(20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'classroom', 'assets/images/CR(M).jpg'),
 (21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'classroom', 'assets/images/CR(F).jpg');
 
 --
