@@ -1,13 +1,14 @@
 <?php
-    /**
-     * - Session validation: only accessible by logged-in admins.
-     * - Announcement management: add, edit, delete, and list announcements.
-     * - Admin account management: update username and password with validation.
-     * - Tabbed UI for managing announcements, rooms, routes, and account info.
-     * - Handles POST requests for form submissions and GET requests for deletion/editing.
-     * - Sanitizes input and outputs, with basic error and success messaging.
-     * - Integrates with database via prepared statements to prevent SQL injection.
-     * - Dynamically renders HTML with sections activated based on the current tab.
+
+/**
+ * - Session validation: only accessible by logged-in admins.
+ * - Announcement management: add, edit, delete, and list announcements.
+ * - Admin account management: update username and password with validation.
+ * - Tabbed UI for managing announcements, rooms, routes, and account info.
+ * - Handles POST requests for form submissions and GET requests for deletion/editing.
+ * - Sanitizes input and outputs, with basic error and success messaging.
+ * - Integrates with database via prepared statements to prevent SQL injection.
+ * - Dynamically renders HTML with sections activated based on the current tab.
  */
 ?>
 
@@ -215,7 +216,7 @@ $activeTab = $_GET['tab'] ?? 'announcements';
     <div class="admin-layout">
         <aside class="admin-sidebar">
             <div class="admin-logo">
-                <img src="../assets/images/logoD.png" alt="Detourist logo">
+                <img src="../assets/icons/logoD.png" alt="Detourist logo">
                 <h2>Detourist</h2>
                 <p>Admin Navigation</p>
             </div>

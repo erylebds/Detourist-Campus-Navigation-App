@@ -26,11 +26,12 @@ $rooms = [];
 while ($row = $result->fetch_assoc()) {
     $row['room_image'] = !empty($row['room_image_path'])
         ? $row['room_image_path']
-        : 'assets/images/room.jpg';
+        // Default if the room image is not available
+        : 'assets/backgrounds/maryheights-campus.jpg';
 
     $row['floor_map'] = !empty($row['floor_map'])
         ? $row['floor_map']
-        : 'assets/images/floor5.png';
+        : 'assets/floors/floor5.png';
 
     $rooms[] = $row;
 }
