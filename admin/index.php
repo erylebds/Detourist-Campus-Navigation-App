@@ -74,12 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
     }
 
     if ($_POST['form_type'] === 'password') {
-        $enterUsername = trim($_POST['cp_username'] ?? '');
         $oldPass       = trim($_POST['old_password'] ?? '');
         $newPass       = trim($_POST['new_password'] ?? '');
         $newPass2      = trim($_POST['new_password2'] ?? '');
 
-        if ($enterUsername === '' || $oldPass === '' || $newPass === '' || $newPass2 === '') {
+        if ($oldPass === '' || $newPass === '' || $newPass2 === '') {
             $accError = 'All fields are required.';
         } elseif ($newPass !== $newPass2) {
             $accError = 'New passwords do not match.';
@@ -91,9 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type'])) {
             $row = $res->fetch_assoc();
             $stmt->close();
 
-            if (!$row || $enterUsername !== $row['username']) {
-                $accError = 'Incorrect username.';
-            } elseif ($oldPass !== $row['password']) {
+            if ($oldPass !== $row['password']) {
                 $accError = 'Old password is incorrect.';
             } else {
                 $stmt = $conn->prepare("UPDATE admin SET password = ? WHERE admin_id = ?");
@@ -355,9 +352,6 @@ $activeTab = $_GET['tab'] ?? 'announcements';
                     <h2>Change Password</h2>
                     <form method="POST">
                         <input type="hidden" name="form_type" value="password">
-
-                        <label for="cp_username">Enter Username:</label>
-                        <input type="text" id="cp_username" name="cp_username" required>
 
                         <label for="old_password">Enter Old Password:</label>
                         <input type="password" id="old_password" name="old_password" required>
