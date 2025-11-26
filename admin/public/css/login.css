@@ -1,0 +1,216 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+  background-color: #fff8f0;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+.login-overlay {
+  border-image: linear-gradient(rgba(229, 219, 200, 0.75)) fill 1;
+}
+
+.login-grid {
+  padding: 0;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  background-image: url('../assets/backgrounds/slubakakeng.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-items: center;
+}
+
+.login-left-bg {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #162d48;
+}
+
+.login-left-bg>img {
+  width: 430px;
+  height: 430px;
+}
+
+.login-left-bg-text>p {
+  position: relative;
+  top: -50px;
+  width: fit-content;
+  margin: auto;
+  font-size: 1.7rem;
+  color: #e5dbc8;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.login-left-bg-text>p:first-of-type {
+  font-size: 3rem;
+  color: #e67e22;
+  font-weight: 600;
+}
+
+.login-box {
+  width: 450px;
+  height: 450px;
+  margin-left: 100px;
+  color: #F8F8FF;
+  background-color: #5e95a1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: dotted #2f4048 2px;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.fade-in {
+  scale: 0.8;
+  opacity: 0;
+  animation: fade-in linear forwards;
+  animation-duration: 0.8s;
+}
+
+@keyframes fade-in {
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+.login-mobile-logo {
+  display: none;
+}
+
+.login-box>h1 {
+  text-align: center;
+  width: 80%;
+  border-bottom: #2f4048 solid 2px;
+  box-shadow: 0 2px 2px -2px lightgray;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.login-field,
+.login-actions {
+  width: 280px;
+}
+
+.login-field {
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.login-field>* {
+  display: block;
+  width: 100%;
+}
+
+.login-field>input {
+  padding: 5px;
+}
+
+.login-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.login-actions>button,
+.login-actions>a {
+  border: none;
+  font-size: 0.95rem;
+  color: #F8F8FF;
+  padding: 6px;
+  border-radius: 3px;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.login-actions>.login-btn {
+  background-color: #e67e22;
+}
+
+.login-actions>.guest-btn {
+  border: solid #2f4048 2px;
+  color: #2f4048;
+  background-color: transparent;
+  transition: 0.2s;
+}
+
+.login-actions>.guest-btn:hover {
+  color: #F8F8FF;
+  background-color: #2f4048;
+}
+
+.forgot {
+  color: #F8F8FF;
+  font-size: 0.9rem;
+}
+
+.forgot:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  .login-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-content: center;
+  }
+
+  .login-left-bg {
+    display: none;
+  }
+
+  .login-box {
+    width: 360px;
+    margin: 0;
+  }
+
+  .login-mobile-logo {
+    display: block;
+    position: absolute;
+    top: -60px;
+    width: 160px;
+    height: 160px;
+  }
+
+  .login-box>h1 {
+    width: 95%;
+  }
+}
+
+.back-to-client {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.back-to-client a {
+  color: #2f4048;
+  font-size: 0.95rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-to-client a:hover {
+  text-decoration: underline;
+}

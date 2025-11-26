@@ -16,7 +16,7 @@
   <meta name="description" content="Detourist - Campus Navigation System" />
   <title>Detourist Navigation</title>
 
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="client/css/style.css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +28,7 @@
 <body>
   <nav class="navbar" id="navbar">
     <a class="navbar-left" href="#home">
-      <img src="assets/icons/logoD.png" alt="Detourist logo" class="navbar-logo" />
+      <img src="admin/public/assets/icons/logoD.png" alt="Detourist logo" class="navbar-logo" />
       <div class="navbar-title">
         <h1>Detourist</h1>
         <p>Campus Navigation</p>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="navbar-right">
-      <a href="login.html" class="btn-login">Login</a>
+      <a href="http://localhost:3000/login" class="btn-login">Login</a>
 
       <div class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
@@ -61,7 +61,7 @@
         <div class="room-info">
           <h2>Maryheights Bakakeng</h2>
           <div class="room-img-wrapper">
-            <img src="assets/backgrounds/maryheights-campus.jpg" alt="Room preview" width="960px" height="595px" />
+            <img src="admin/public/assets/backgrounds/maryheights-campus.jpg" alt="Room preview" width="960px" height="595px" />
           </div>
         </div>
 
@@ -85,7 +85,7 @@
         </div>
 
         <div class="current-location-details">
-          <img src="assets/icons/location.png" alt="location">
+          <img src="admin/public/assets/icons/location.png" alt="location">
           <div id="details">
             <p id="loc-header">Current Location: <span id="loc-info">5th Floor</span></p>
           </div>
@@ -94,7 +94,7 @@
 
       <div class="map-wrapper" id="mapWrapper">
         <div class="campus-map" id="campusMap">
-          <img src="assets/floors/floor5.png" alt="Campus map" class="map-img" draggable="false" />
+          <img src="admin/public/assets/floors/floor5.png" alt="Campus map" class="map-img" draggable="false" />
           <canvas width="838px" height="458px" id="map-line-canvas"></canvas>
           <canvas width="838px" height="458px" id="map-text-canvas"></canvas>
         </div>
@@ -151,7 +151,7 @@
     <section class="about-section" id="about">
       <div class="about-container">
         <figure class="about-image">
-          <img src="assets/icons/logoD.png" alt="Detourist application preview" />
+          <img src="admin/public/assets/icons/logoD.png" alt="Detourist application preview" />
         </figure>
         <div class="about-info">
           <h2>About</h2>
@@ -177,7 +177,7 @@
     <div class="footer-container">
       <div class="footer-brand">
         <div class="brand-logo">
-          <img src="assets/icons/logo-transparent.png" alt="Logo">
+          <img src="admin/public/assets/icons/logo-transparent.png" alt="Logo">
         </div>
         <div class="brand-text">
           <h2>Detourist</h2>
@@ -233,16 +233,16 @@
     </div>
   </footer>
 
-  <script src="js/script.js" defer></script>
-  <script src="js/zoomButtons.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/announcements.js"></script>
+  <script src="client/js/script.js" defer></script>
+  <script src="client/js/zoomButtons.js"></script>
+  <script src="client/js/search.js"></script>
+  <script src="client/js/announcements.js"></script>
 
   <div id="map-popup" class="map-popup" style="display: none;">
     <button id="popup-close" class="popup-close">&times;</button>
 
     <div class="popup-img-container">
-      <img id="popup-img" src="assets/backgrounds/maryheights-campus.jpg" alt="Room Image">
+      <img id="popup-img" src="admin/public/assets/backgrounds/maryheights-campus.jpg" alt="Room Image">
     </div>
 
     <div class="popup-content">
