@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!announcementList || !modal || !modalTitle || !modalBody || !modalClose) return;
 
-  fetch("database/announcements.php")
+  fetch("client/database/announcements.php")
     .then((res) => res.json())
     .then((data) => {
       announcementList.innerHTML = "";

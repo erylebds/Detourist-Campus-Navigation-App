@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      fetch(`database/search.php?room_code=${encodeURIComponent(query)}`)
+      fetch(`client/database/search.php?room_code=${encodeURIComponent(query)}`)
         .then(res => res.json())
         .then(data => {
           resultsDiv.innerHTML = '';

@@ -98,7 +98,7 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
   textContext.font = "15px Arial";
   let mapLabelsData = [];
 
-  fetch("database/roomLabels.php")
+  fetch("client/database/roomLabels.php")
     .then(res => res.json())
     .then(data => {
       mapLabelsData = data;
@@ -169,7 +169,7 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
 
 
   function drawRoute(source, destination) {
-    fetch("database/mapNodes.php")
+    fetch("client/database/mapNodes.php")
       .then(res => res.json())
       .then(nodeList => {
         const startNodes = [];
