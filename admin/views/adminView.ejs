@@ -51,68 +51,11 @@
 
             <!-- Announcements Tab -->
             <section class="admin-tab <%= activeTab === 'announcements' ? 'active' : '' %>" id="tab-announcements">
-                <h1 class="section-title">Announcements</h1>
-
-                <% if (annMsg) { %>
-                    <div class="msg-success"><%= annMsg %></div>
-                <% } %>
-
-                <div class="card-box">
-                    <h2><%= editAnnouncement ? 'Edit Announcement' : 'Add New Announcement' %></h2>
-                    <form method="POST" action="/admin/announcements">
-                        <input type="hidden" name="form_type" value="announcement">
-                        <% if (editAnnouncement) { %>
-                            <input type="hidden" name="announcement_id" value="<%= editAnnouncement.announcement_id %>">
-                        <% } %>
-
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" required
-                            value="<%= editAnnouncement ? editAnnouncement.title : '' %>">
-
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message" required><%= editAnnouncement ? editAnnouncement.message : '' %></textarea>
-
-                        <label for="created_at">Date &amp; Time:</label>
-                        <input type="datetime-local" id="created_at" name="created_at"
-                            value="<%= editAnnouncement ? editAnnouncement.created_at : new Date().toISOString().slice(0,16) %>">
-
-                        <button type="submit" class="btn-primary">Save Announcement</button>
-                        <% if (editAnnouncement) { %>
-                            <a href="/admin?tab=announcements" class="btn-secondary">Cancel</a>
-                        <% } %>
-                    </form>
-                </div>
-
-                <div class="card-box">
-                    <h2>Existing Announcements</h2>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Message</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% announcements.forEach(a => { %>
-                                <tr>
-                                    <td><%= a.announcement_id %></td>
-                                    <td><%= a.title %></td>
-                                    <td><%= a.message %></td>
-                                    <td><%= a.created_at %></td>
-                                    <td>
-                                        <a href="/admin/announcements/edit/<%= a.announcement_id %>">Edit</a> |
-                                        <a href="/admin/announcements/delete/<%= a.announcement_id %>"
-                                            onclick="return confirm('Delete this announcement?');"
-                                            style="color:#e74c3c;">Delete</a>
-                                    </td>
-                                </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                </div>
+                <%- include("announcements", { 
+                    annMsg: annMsg,
+                    announcements: announcements,
+                    editAnnouncement: editAnnouncement
+                }) %>
             </section>
 
             <!-- Rooms Tab -->

@@ -13,9 +13,8 @@ app.use(express.static("public")); //access static files
 app.set("view engine", "ejs"); //render ejs to html
 app.set("views", path.join(__dirname, "views"));
 
-//For login sessions
 app.use(session({
-    secret:"detourist-secret", //secure cookies
+    secret:"detourist-secret",
     resave: false, //prevent saving unchanged sessions
     saveUninitialized: false //prevent creating session until there's data to store
 }));
