@@ -3,6 +3,7 @@ const router = express.Router();
 
 const adminService = require("../controllers/adminController");
 const announcementController = require("../controllers/announcementController");
+const requireAdmin = require("../middleware/requireAdmin");
 
 router.get("/login", (req, res) => {
     res.render("login", {loginError: req.session.loginError});
@@ -26,6 +27,7 @@ router.post("/login", async (req, res) => {
             req.session.adminId = admin.admin_id;
             req.session.adminUsername = admin.username;
             req.session.adminEmail = admin.email;
+            req.session.isAdmin = true;
             return res.redirect("/admin");
         }
 
@@ -37,12 +39,6 @@ router.post("/login", async (req, res) => {
         res.send("Server error.")
     }
 });
-
-//Don't let users who are not admins access the admin side of the website
-function requireAdmin(req, res, next) {
-    if (!req.session || !req.session.adminId) return res.redirect("/login");
-    next();
-}
 
 //Protect admin dashboard
 router.get("/admin", requireAdmin, async (req, res) => {

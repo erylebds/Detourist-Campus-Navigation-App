@@ -1,6 +1,8 @@
 const express = require("express"); //import node express framework for server creation
 const session = require("express-session"); //track user requests
 const path = require("path");
+const multer = require('multer');
+const upload = multer();
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.use(session({
 
 app.use("/", require("./routes/authRoutes"));
 app.use("/rooms", require("./routes/roomRoutes"));
+app.use("/", require("./routes/announcementRoutes"));
 
 //start the server and listen to port
 app.listen(3000, () => console.log("Admin server is running on port 3000..."));
