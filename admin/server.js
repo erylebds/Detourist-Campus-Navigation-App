@@ -24,6 +24,8 @@ app.use(session({
 app.use("/", require("./routes/authRoutes"));
 app.use("/rooms", require("./routes/roomRoutes"));
 app.use("/", require("./routes/announcementRoutes"));
+app.use("/", require("./routes/accountRoutes"));
+
 
 //start the server and listen to port
 app.listen(3000, () => console.log("Admin server is running on port 3000..."));
