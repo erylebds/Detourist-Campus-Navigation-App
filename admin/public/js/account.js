@@ -40,23 +40,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // my account
+    // MY ACCOUNT - username change
     const myUsernameForm = document.getElementById("myUsernameForm");
+
     myUsernameForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        const newUsername = myUsernameForm.new_username.value.trim();
+        const currentPassword = myUsernameForm.cu_password.value.trim();
+        const oldUsername = document.getElementById("currentUsername").textContent.trim();
+        const usernameErrorDiv = document.getElementById("usernameFormError");
+
+        if (!newUsername || !currentPassword) {
+            usernameErrorDiv.textContent = "Please fill out all fields.";
+            usernameErrorDiv.style.display = "block";
+            return;
+        }
+
+        if (newUsername === oldUsername) {
+            usernameErrorDiv.textContent = "New username is the same as current username.";
+            usernameErrorDiv.style.display = "block";
+            return;
+        }
+
+        usernameErrorDiv.style.display = "none";
+
         const formData = new FormData();
         formData.append("form_type", "username");
-        formData.append("old_username", document.querySelector('strong').textContent.trim());
-        formData.append("new_username", myUsernameForm.new_username.value);
-        formData.append("cu_password", prompt("Enter your current password:"));
+        formData.append("old_username", oldUsername);
+        formData.append("new_username", newUsername);
+        formData.append("cu_password", currentPassword);
 
         const data = await ajaxPost("/admin/account/username", formData);
+
         if (data.success) {
             Swal.fire("Success", data.message, "success");
+            document.querySelector('p strong').textContent = newUsername;
             myUsernameForm.reset();
-            document.querySelector('strong').textContent = ' ' + data.newUsername;
             document.getElementById("changeUsernameModal").style.display = "none";
-        } else Swal.fire("Error", data.message, "error");
+        } else {
+            usernameErrorDiv.textContent = data.message;
+            usernameErrorDiv.style.display = "block";
+        }
     });
 
     const myEmailForm = document.getElementById("myEmailForm");

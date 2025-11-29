@@ -10,7 +10,8 @@
 <!-- my account -->
 <div class="card-box">
     <h2>My Account</h2>
-    <p><strong>Username:</strong> <%= currentAdmin.username %></p>
+    <p><strong>Username:</strong> <span id="currentUsername"><%= currentAdmin.username %></span></p>
+
     <p><strong>Email:</strong> <%= currentAdmin.email %></p>
     <div class="account-buttons">
         <button class="btn-primary" data-modal="changeUsernameModal">Change Username</button>
@@ -59,10 +60,17 @@
             <form id="myUsernameForm">
                 <label>New Username:</label>
                 <input type="text" name="new_username" required>
+
+                <label>Current Password:</label>
+                <input type="password" name="cu_password" required placeholder="Enter current password">
+
+                <div id="usernameFormError" style="color:red; display:none; margin-top:5px;"></div>
+
                 <button type="submit" class="btn-primary">Save</button>
             </form>
         </div>
     </div>
+
 
     <!-- change email modal -->
     <div class="modal" id="changeEmailModal">

@@ -38,6 +38,32 @@ async function deleteAdmin(id) {
     return result.affectedRows;
 }
 
+async function updateEmail({ id, newEmail }) {
+    const [result] = await pool.query(
+        "UPDATE admin SET email = ? WHERE admin_id = ?",
+        [newEmail, id]
+    );
+    return result.affectedRows;
+}
+
+async function updateAdmin({ id, username, email, password }) {
+    let query = "UPDATE admin SET username = ?, email = ?";
+    const params = [username, email];
+
+    if (password) {
+        const hash = await bcrypt.hash(password, 10);
+        query += ", password = ?";
+        params.push(hash);
+    }
+
+    query += " WHERE admin_id = ?";
+    params.push(id);
+
+    const [result] = await pool.query(query, params);
+    return result.affectedRows;
+}
+
+
 module.exports = {
     getAllAdmins,
     getAdminById,
@@ -45,5 +71,7 @@ module.exports = {
     createAdmin,
     updateUsername,
     updatePassword,
+    updateEmail,
+    updateAdmin,
     deleteAdmin
 };

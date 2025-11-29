@@ -3,7 +3,6 @@ const router = express.Router();
 
 const adminService = require("../controllers/adminController");
 const adminModel = require("../models/adminModel");
-const accountModel = require("../models/accountModel");
 const announcementController = require("../controllers/announcementController");
 const requireAdmin = require("../middleware/requireAdmin");
 
