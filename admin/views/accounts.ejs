@@ -1,0 +1,137 @@
+<h1 class="section-title">Accounts</h1>
+
+<% if (accError) { %>
+    <div class="msg-error"><%= accError %></div>
+<% } %>
+<% if (accMsg) { %>
+    <div class="msg-success"><%= accMsg %></div>
+<% } %>
+
+<!-- my account -->
+<div class="card-box">
+    <h2>My Account</h2>
+    <p><strong>Username:</strong> <%= currentAdmin.username %></p>
+    <p><strong>Email:</strong> <%= currentAdmin.email %></p>
+    <p><strong>Created At:</strong> N/A</p>
+    <div class="account-buttons">
+        <button class="btn-primary" data-modal="changeUsernameModal">Change Username</button>
+        <button class="btn-primary" data-modal="changeEmailModal">Change Email</button>
+        <button class="btn-primary" data-modal="changePasswordModal">Change Password</button>
+    </div>
+</div>
+
+<!-- OTHER ADMINS -->
+<div class="card-box">
+    <h2>Other Admin Accounts</h2>
+    <button class="btn-primary mb-2" id="addAdminBtn">+ Add New Admin</button>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% otherAdmins.forEach(admin => { %>
+            <tr data-id="<%= admin.admin_id %>">
+                <td><%= admin.admin_id %></td>
+                <td><%= admin.username %></td>
+                <td><%= admin.email %></td>
+                <td>
+                    <a href="#" class="edit-admin-link" data-id="<%= admin.admin_id %>">Edit</a> |
+                    <a href="#" class="delete-admin-link" data-id="<%= admin.admin_id %>" style="color:#e74c3c;">Delete</a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<!-- modals -->
+<div id="modals-container">
+
+    <!-- change username modal -->
+    <div class="modal" id="changeUsernameModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Change Username</h3>
+            <form id="myUsernameForm">
+                <label>New Username:</label>
+                <input type="text" name="new_username" required>
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- change email modal -->
+    <div class="modal" id="changeEmailModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Change Email</h3>
+            <form id="myEmailForm">
+                <label>New Email:</label>
+                <input type="email" name="new_email" required>
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- change aassword modal -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Change Password</h3>
+            <form id="myPasswordForm">
+                <label>Old Password:</label>
+                <input type="password" name="old_password" required>
+                <label>New Password:</label>
+                <input type="password" name="new_password" required>
+                <label>Confirm New Password:</label>
+                <input type="password" name="new_password2" required>
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- edit other admin modal -->
+    <div class="modal" id="editAdminModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Edit Admin Account</h3>
+            <form id="editAdminForm">
+                <input type="hidden" name="admin_id">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+                <label>Email:</label>
+                <input type="email" name="email" required>
+                <label>Password:</label>
+                <input type="password" name="password" placeholder="Leave blank to keep current">
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- add new admin modal -->
+    <div class="modal" id="addAdminModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Add New Admin</h3>
+            <form id="addAdminForm">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+                <label>Email:</label>
+                <input type="email" name="email" required>
+                <label>Password:</label>
+                <input type="password" name="password" required>
+                <button type="submit" class="btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- load JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/account.js"></script>

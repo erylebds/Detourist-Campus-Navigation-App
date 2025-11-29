@@ -2,8 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const adminService = require("../controllers/adminController");
+const adminModel = require("../models/adminModel");
+const accountModel = require("../models/accountModel");
 const announcementController = require("../controllers/announcementController");
 const requireAdmin = require("../middleware/requireAdmin");
+
+const bcrypt = require("bcrypt");
 
 router.get("/login", (req, res) => {
     res.render("login", {loginError: req.session.loginError});
@@ -13,7 +17,6 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
-    //Login validation
     try {
         const admin = await adminService.findAdminByUsernameOrEmail(username);
 
@@ -22,25 +25,25 @@ router.post("/login", async (req, res) => {
             return res.redirect("/login");
         }
 
-        //Get admin information if the login process is successful
-        if (password === admin.password) {
-            req.session.adminId = admin.admin_id;
-            req.session.adminUsername = admin.username;
-            req.session.adminEmail = admin.email;
-            req.session.isAdmin = true;
-            return res.redirect("/admin");
+        const match = await bcrypt.compare(password, admin.password);
+        if (!match) {
+            req.session.loginError = "Invalid password";
+            return res.redirect("/login");
         }
 
-        req.session.loginError = "Invalid password";
-        return res.redirect("/login");
-
+        // success
+        req.session.adminId = admin.admin_id;
+        req.session.adminUsername = admin.username;
+        req.session.adminEmail = admin.email;
+        req.session.isAdmin = true;
+        return res.redirect("/admin");
     } catch (err) {
         console.error(err);
-        res.send("Server error.")
+        res.send("Server error.");
     }
 });
 
-//Protect admin dashboard
+// protect admin dashboard
 router.get("/admin", requireAdmin, async (req, res) => {
     try {
         const tab = req.query.tab || "announcements";
@@ -59,10 +62,13 @@ router.get("/admin", requireAdmin, async (req, res) => {
             accError: req.session.accerror || null,
             currentAdmin: {
                 username: req.session.adminUsername,
-                email: req.session.adminEmail || ""
-            }
+                email: req.session.adminEmail || "",
+                created_at: req.session.adminCreatedAt || "N/A"
+            },
+                otherAdmins: await adminModel.getAllAdmins().then(admins =>
+                admins.filter(a => a.admin_id !== req.session.adminId)
+                )
         });
-
         req.session.annMsg = null;
         req.session.editAnnouncement = null;
         req.session.accMsg = null;
@@ -73,7 +79,7 @@ router.get("/admin", requireAdmin, async (req, res) => {
     }
 });
 
-//Logout
+// logout
 router.get("/admin/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/login");

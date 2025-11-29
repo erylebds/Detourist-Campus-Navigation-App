@@ -1,11 +1,10 @@
-const pool = require("./connectDB");
+const adminModel = require("../models/adminModel");
 
 async function findAdminByUsernameOrEmail(identifier) {
-  const sql = "SELECT * FROM admin WHERE username = ? OR email = ? LIMIT 1";
-  const [rows] = await pool.query(sql, [identifier, identifier]);
-  return rows[0] || null;
+    return await adminModel.findByUsernameOrEmail(identifier);
 }
 
 module.exports = {
-  findAdminByUsernameOrEmail
+    findAdminByUsernameOrEmail
 };
+

@@ -76,59 +76,12 @@
 
             <!-- Account Tab -->
             <section class="admin-tab <%= activeTab === 'account' ? 'active' : '' %>" id="tab-account">
-                <h1 class="section-title">Account</h1>
-
-                <% if (accError) { %>
-                    <div class="msg-error"><%= accError %></div>
-                <% } %>
-                <% if (accMsg) { %>
-                    <div class="msg-success"><%= accMsg %></div>
-                <% } %>
-
-                <div class="card-box account-info">
-                    <h2>Account Information</h2>
-                    <p><strong>Username:</strong> <%= currentAdmin.username %></p>
-                    <p><strong>Email:</strong> <%= currentAdmin.email %></p>
-                </div>
-
-                <div class="card-box">
-                    <h2>Change Password</h2>
-                    <form method="POST" action="/admin/account/password">
-                        <input type="hidden" name="form_type" value="password">
-
-                        <label for="old_password">Enter Old Password:</label>
-                        <input type="password" id="old_password" name="old_password" required>
-
-                        <label for="new_password">Enter New Password:</label>
-                        <input type="password" id="new_password" name="new_password" required>
-
-                        <label for="new_password2">Enter Again New Password:</label>
-                        <input type="password" id="new_password2" name="new_password2" required>
-
-                        <button type="submit" class="btn-primary">Save</button>
-                    </form>
-                </div>
-
-                <div class="card-box">
-                    <h2>Change Username</h2>
-                    <form method="POST" action="/admin/account/username">
-                        <input type="hidden" name="form_type" value="username">
-
-                        <label for="old_username">Enter Old Username:</label>
-                        <input type="text" id="old_username" name="old_username" required>
-
-                        <label for="new_username">Enter New Username:</label>
-                        <input type="text" id="new_username" name="new_username" required>
-
-                        <label for="cu_password">Enter Password:</label>
-                        <input type="password" id="cu_password" name="cu_password" required>
-
-                        <button type="submit" class="btn-primary">Save</button>
-                    </form>
-                </div>
+                <%- include("accounts", { 
+                    accError: accError,
+                    accMsg: accMsg,
+                    currentAdmin: currentAdmin,
+                    otherAdmins: otherAdmins
+                }) %>
             </section>
-
-        </main>
-    </div>
-</body>
+    </body>
 </html>
