@@ -124,6 +124,33 @@ document.addEventListener("DOMContentLoaded", () => {
         } else Swal.fire("Error", data.message, "error");
     });
 
+        // Password strength meter
+    const passwordInput = document.querySelector("input[name='new_password']");
+    const strengthBar = document.createElement("div");
+    strengthBar.id = "strengthBar";
+    strengthBar.style.height = "8px";
+    strengthBar.style.width = "0%";
+    strengthBar.style.borderRadius = "4px";
+    strengthBar.style.marginTop = "5px";
+    strengthBar.style.background = "#ddd";
+    passwordInput?.parentNode.appendChild(strengthBar);
+
+    passwordInput?.addEventListener("input", (e) => {
+        const p = e.target.value;
+        let score = 0;
+        if (p.length >= 8) score++;
+        if (/[A-Z]/.test(p)) score++;
+        if (/[a-z]/.test(p)) score++;
+        if (/\d/.test(p)) score++;
+        if (/[\W_]/.test(p)) score++;
+        const percent = (score / 5) * 100;
+        strengthBar.style.width = percent + "%";
+        if (percent < 40) strengthBar.style.background = "red";
+        else if (percent < 70) strengthBar.style.background = "orange";
+        else strengthBar.style.background = "green";
+    });
+
+
     // OTHER ADMIN ACTIONS
     // edit admin
     document.querySelectorAll(".edit-admin-link").forEach(link => {

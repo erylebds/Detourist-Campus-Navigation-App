@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 27, 2025 at 02:47 PM
+-- Generation Time: Nov 30, 2025 at 03:58 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `old_passwords` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`admin_id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -41,9 +42,9 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`) VALUES
-(1, 'admin', 'admin@gmail.com', '123'),
-(2, 'admin2', 'admin2@gmail.com', '123');
+INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`, `old_passwords`) VALUES
+(1, 'admin', 'admin@gmail.com', '$2b$10$lVJX1Di/R1LsVRLOclhyqexF2Y4EloNMMf/r2HpGMndM6h9XduxU2', NULL),
+(2, 'admin2', 'admin2@gmail.com', '$2b$10$N54JbSkEcNOcnlKcQAGOxOT9LIjnBA2EiQOKRrQ4YDlNJ1Sg/LdG2', NULL);
 
 -- --------------------------------------------------------
 

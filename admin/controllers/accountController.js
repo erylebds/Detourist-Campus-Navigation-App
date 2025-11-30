@@ -6,7 +6,6 @@ function isValidEmail(email) {
     return /^(?!.*\.\.)[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(email.trim());
 }
 
-
 function minLen(str, len) {
     return typeof str === "string" && str.trim().length >= len;
 }
@@ -15,6 +14,29 @@ function isStrongPassword(pass) {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(pass);
 }
 
+function passwordPreviouslyUsed(newPass, oldList = []) {
+    for (const oldHash of oldList) {
+        if (bcrypt.compareSync(newPass, oldHash)) return true;
+    }
+    return false;
+}
+
+// ===== BRUTE-FORCE LOCK =====
+function recordFailedAttempt(req) {
+    req.session.failedLogins = (req.session.failedLogins || 0) + 1;
+    req.session.lastFailed = Date.now();
+}
+
+function isLocked(req) {
+    const attempts = req.session.failedLogins || 0;
+    const last = req.session.lastFailed || 0;
+    if (attempts >= 5) {
+        const lockMinutes = 10;
+        if (Date.now() - last < lockMinutes * 60000) return true;
+        req.session.failedLogins = 0;
+    }
+    return false;
+}
 
 // GET ALL ADMINS
 exports.getAdmins = async (req, res) => {
@@ -42,26 +64,14 @@ exports.createAdmin = async (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid email format." });
 
         if (!isStrongPassword(password))
-            return res.status(400).json({
-                success: false,
-                message: "Password must be at least 8 characters with uppercase, lowercase, number, and a special character."
-            });
+            return res.status(400).json({ success: false, message: "Password must be at least 8 characters with uppercase, lowercase, number, and a special character." });
 
-        if (password.toLowerCase() === username.trim().toLowerCase() ||
-            password.toLowerCase() === email.trim().toLowerCase()) {
-            return res.status(400).json({
-                success: false,
-                message: "Password cannot be the same as username or email."
-            });
-        }
-
-        if (!minLen(password, 6))
-            return res.status(400).json({ success: false, message: "Password must be at least 6 characters." });
+        if (password.toLowerCase() === username.trim().toLowerCase() || password.toLowerCase() === email.trim().toLowerCase())
+            return res.status(400).json({ success: false, message: "Password cannot be username or email." });
 
         if (password !== password2)
             return res.status(400).json({ success: false, message: "Passwords do not match." });
 
-        // check duplicate username/email
         const existingUser = await adminModel.findByUsernameOrEmail(username);
         const existingEmail = await adminModel.findByUsernameOrEmail(email);
 
@@ -70,7 +80,7 @@ exports.createAdmin = async (req, res) => {
 
         const id = await adminModel.createAdmin({ username: username.trim(), email: email.trim(), password });
 
-        return res.json({ success: true, message: "Admin created successfully.", id });
+        res.json({ success: true, message: "Admin created successfully.", id });
 
     } catch (err) {
         console.error(err);
@@ -154,6 +164,8 @@ exports.updateEmail = async (req, res) => {
 exports.updatePassword = async (req, res) => {
     try {
         const { old_password, new_password, new_password2 } = req.body;
+        const adminId = req.session.adminId;
+        if (!adminId) return res.status(401).json({ success: false, message: "Unauthorized." });
 
         if (!old_password || !new_password || !new_password2)
             return res.status(400).json({ success: false, message: "All fields are required." });
@@ -161,41 +173,34 @@ exports.updatePassword = async (req, res) => {
         if (new_password !== new_password2)
             return res.status(400).json({ success: false, message: "Passwords do not match." });
 
-        const adminId = req.session.adminId;
-        if (!adminId)
-            return res.status(401).json({ success: false, message: "Unauthorized." });
-
         const admin = await adminModel.getAdminById(adminId);
-        if (!admin)
-            return res.status(404).json({ success: false, message: "Admin not found." });
+        if (!admin) return res.status(404).json({ success: false, message: "Admin not found." });
 
         // verify old password
-        const match = await bcrypt.compare(old_password, admin.password);
-        if (!match)
+        if (!await bcrypt.compare(old_password, admin.password))
             return res.status(400).json({ success: false, message: "Old password is incorrect." });
 
-        // prevent setting the same password
-        const isSamePassword = await bcrypt.compare(new_password, admin.password);
-        if (isSamePassword)
+        // prevent setting same password
+        if (await bcrypt.compare(new_password, admin.password))
             return res.status(400).json({ success: false, message: "New password cannot be the same as old password." });
 
-        // strong password rule
+        // check password history
+        const oldPasswords = admin.old_passwords ? JSON.parse(admin.old_passwords) : [];
+        if (passwordPreviouslyUsed(new_password, oldPasswords))
+            return res.status(400).json({ success: false, message: "You cannot reuse a previous password." });
+
         if (!isStrongPassword(new_password))
-            return res.status(400).json({
-                success: false,
-                message: "Password must be at least 8 characters with uppercase, lowercase, number, and a special character."
-            });
+            return res.status(400).json({ success: false, message: "Password must be at least 8 characters with uppercase, lowercase, number, and a special character." });
 
-        // prevent password matching username or email
-        if (new_password.toLowerCase() === admin.username.toLowerCase() ||
-            new_password.toLowerCase() === admin.email.toLowerCase()) {
-            return res.status(400).json({
-                success: false,
-                message: "Password cannot be your username or email."
-            });
-        }
+        if (new_password.toLowerCase() === admin.username.toLowerCase() || new_password.toLowerCase() === admin.email.toLowerCase())
+            return res.status(400).json({ success: false, message: "Password cannot be username or email." });
 
-        await adminModel.updatePassword({ id: adminId, newPassword: new_password });
+        // update password & history
+        const newHash = await bcrypt.hash(new_password, 10);
+        oldPasswords.unshift(admin.password);
+        oldPasswords.splice(3); // last 3 passwords
+
+        await adminModel.updatePassword({ id: adminId, newPassword: newHash, oldPasswords: JSON.stringify(oldPasswords) });
 
         res.json({ success: true, message: "Password updated successfully." });
 

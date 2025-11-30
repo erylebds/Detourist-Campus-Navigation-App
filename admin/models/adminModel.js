@@ -27,9 +27,11 @@ async function updateUsername({ id, newUsername }) {
     return result.affectedRows;
 }
 
-async function updatePassword({ id, newPassword }) {
-    const hash = await bcrypt.hash(newPassword, 10);
-    const [result] = await pool.query("UPDATE admin SET password = ? WHERE admin_id = ?", [hash, id]);
+async function updatePasswordWithHistory(id, newHash, oldPasswordsJSON) {
+    const [result] = await pool.query(
+        "UPDATE admin SET password = ?, old_passwords = ? WHERE admin_id = ?",
+        [newHash, oldPasswordsJSON, id]
+    );
     return result.affectedRows;
 }
 
@@ -70,7 +72,7 @@ module.exports = {
     findByUsernameOrEmail,
     createAdmin,
     updateUsername,
-    updatePassword,
+    updatePassword: updatePasswordWithHistory,
     updateEmail,
     updateAdmin,
     deleteAdmin
