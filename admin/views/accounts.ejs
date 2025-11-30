@@ -1,4 +1,4 @@
-<h1 class="section-title">accounts</h1>
+<h1 class="section-title">Accounts</h1>
 
 <!-- show messages -->
 <% if (accError) { %>
@@ -10,27 +10,27 @@
 
 <!-- my account section -->
 <div class="card-box">
-    <h2>my account</h2>
-    <p><strong>username:</strong> <span id="currentUsername"><%= currentAdmin.username %></span></p>
-    <p><strong>email:</strong> <%= currentAdmin.email %></p>
+    <h2>My Account</h2>
+    <p><strong>Username:</strong> <span id="currentUsername"><%= currentAdmin.username %></span></p>
+    <p><strong>Email:</strong> <%= currentAdmin.email %></p>
     <div class="account-buttons">
-        <button class="btn-primary" data-modal="changeUsernameModal">change username</button>
-        <button class="btn-primary" data-modal="changeEmailModal">change email</button>
-        <button class="btn-primary" data-modal="changePasswordModal">change password</button>
+        <button class="btn-primary" data-modal="changeUsernameModal">Change username</button>
+        <button class="btn-primary" data-modal="changeEmailModal">Change email</button>
+        <button class="btn-primary" data-modal="changePasswordModal">Change password</button>
     </div>
 </div>
 
 <!-- other admin accounts section -->
 <div class="card-box">
-    <h2>other admin accounts</h2>
-    <button class="btn-primary mb-2" id="addAdminBtn">+ add new admin</button>
+    <h2>Other Admin Accounts</h2>
+    <button class="btn-primary mb-2" id="addAdminBtn">+ Add New Admin</button>
     <table class="admin-table">
         <thead>
             <tr>
-                <th>id</th>
-                <th>username</th>
-                <th>email</th>
-                <th>actions</th>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -57,13 +57,13 @@
     <div class="modal" id="changeUsernameModal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>change username</h3>
+            <h3>Change Username</h3>
             <form id="myUsernameForm">
-                <label>new username:</label>
+                <label>New Username:</label>
                 <input type="text" name="new_username" required>
-                <label>current password:</label>
-                <input type="password" name="cu_password" required placeholder="enter current password">
-                <button type="submit" class="btn-primary">save</button>
+                <label>Current Password:</label>
+                <input type="password" name="cu_password" required>
+                <button type="submit" class="btn-primary">Save</button>
             </form>
         </div>
     </div>
@@ -72,11 +72,11 @@
     <div class="modal" id="changeEmailModal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>change email</h3>
+            <h3>Change Email</h3>
             <form id="myEmailForm">
-                <label>new email:</label>
+                <label>New Email:</label>
                 <input type="email" name="new_email" required>
-                <button type="submit" class="btn-primary">save</button>
+                <button type="submit" class="btn-primary">Save</button>
             </form>
         </div>
     </div>
@@ -85,13 +85,13 @@
     <div class="modal" id="changePasswordModal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>change password</h3>
+            <h3>Change Password</h3>
             <form id="myPasswordForm">
-                <label>old password:</label>
+                <label>Old Password:</label>
                 <input type="password" name="old_password" required>
-                <label>new password:</label>
+                <label>New Password:</label>
                 <input type="password" name="new_password" required>
-                <label>confirm new password:</label>
+                <label>Confirm New Password:</label>
                 <input type="password" name="new_password2" required>
                 <button type="submit" class="btn-primary">save</button>
             </form>
@@ -102,14 +102,14 @@
     <div class="modal" id="editAdminModal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>edit admin account</h3>
+            <h3>Edit Admin Account</h3>
             <form id="editAdminForm">
                 <input type="hidden" name="admin_id">
-                <label>username:</label>
+                <label>Username:</label>
                 <input type="text" name="username" required>
-                <label>email:</label>
+                <label>Email:</label>
                 <input type="email" name="email" required>
-                <label>password:</label>
+                <label>Password:</label>
                 <input type="password" name="password" placeholder="leave blank to keep current">
                 <button type="submit" class="btn-primary">save</button>
             </form>
@@ -120,13 +120,13 @@
     <div class="modal" id="addAdminModal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>add new admin</h3>
+            <h3>Add New Admin</h3>
             <form id="addAdminForm">
-                <label>username:</label>
+                <label>Username:</label>
                 <input type="text" name="username" required>
-                <label>email:</label>
+                <label>Email:</label>
                 <input type="email" name="email" required>
-                <label>password:</label>
+                <label>Password:</label>
                 <input type="password" name="password" required>
                 <button type="submit" class="btn-primary">create</button>
             </form>
