@@ -1,10 +1,7 @@
 /*
-    - Global styles: font, background, form inputs, buttons.
-    - Sidebar: fixed width, logo, navigation buttons, active state styling.
-    - Main content area: topbar, sections, cards, and tabs.
-    - Tables: simple border and spacing styling.
-    - Messages: success and error alerts.
-    - Forms: inputs, textareas, and buttons with consistent styling.
+    global styles
+    - set font, background, and smooth scrolling
+    - apply box sizing and reset margins/padding
 */
 * {
   box-sizing: border-box;
@@ -26,11 +23,13 @@ body {
   scroll-padding-top: 80px;
 }
 
+/* layout */
 .admin-layout {
     display: flex;
     min-height: 100vh;
 }
 
+/* sidebar styles */
 .admin-sidebar {
     width: 260px;
     background-color: #162d48;
@@ -64,6 +63,7 @@ body {
     opacity: 0.8;
 }
 
+/* navigation buttons */
 .admin-nav {
     margin-top: 10px;
     flex: 1;
@@ -95,6 +95,7 @@ body {
     font-weight: 600;
 }
 
+/* main content area */
 .admin-main {
     flex: 1;
     padding: 25px 40px;
@@ -117,6 +118,7 @@ body {
     text-decoration: underline;
 }
 
+/* tabs */
 .admin-tab {
     display: none;
 }
@@ -125,17 +127,19 @@ body {
     display: block;
 }
 
+/* section titles */
 h1.section-title {
     color: #e67e22;
     font-size: 1.8rem;
     margin-bottom: 15px;
 }
 
+/* cards */
 .card-box {
     background: #ffffff;
     border: 1px solid #ffd6a5;
     border-radius: 8px;
-    padding: 18px 20px;
+    padding: 20px;
     margin-bottom: 25px;
 }
 
@@ -144,6 +148,7 @@ h1.section-title {
     font-size: 1.2rem;
 }
 
+/* labels and inputs */
 label {
     font-size: 0.95rem;
 }
@@ -168,6 +173,7 @@ textarea {
     height: 150px;
 }
 
+/* buttons */
 .btn-primary {
     background: #e67e22;
     color: #fff;
@@ -187,6 +193,7 @@ textarea {
     cursor: pointer;
 }
 
+/* tables */
 table.admin-table {
     width: 100%;
     border-collapse: collapse;
@@ -196,12 +203,24 @@ table.admin-table {
 table.admin-table th,
 table.admin-table td {
     border-bottom: 1px solid #ffd6a5;
-    padding: 8px 10px;
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+
+table.admin-table td a,
+table.admin-table td button {
+    margin-right: 8px;
+    text-decoration: none;
 }
 
 table.admin-table th {
     background: #fffdf8;
     text-align: left;
+}
+
+/* success and error messages */
+.swal2-html-container {
+    word-break: break-word;
 }
 
 .msg-success {
@@ -227,7 +246,7 @@ table.admin-table th {
     margin: 4px 0;
 }
 
-/* Modal Styles */
+/* modal styles */
 .modal {
     display: none;
     position: fixed;
@@ -239,17 +258,33 @@ table.admin-table th {
     overflow: auto;
     background-color: rgba(0,0,0,0.5);
 }
+
 .modal-content {
     background-color: #fefefe;
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 20px;
     border-radius: 8px;
-    width: 400px;
+    width: 90%;
+    max-width: 500px;
     position: relative;
 }
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .modal-content h3 {
     margin-top: 0;
 }
+
+.swal2-input {
+    width: 250px !important;
+    margin: 20px auto !important;
+    display: block;
+}
+
 .close {
     color: #aaa;
     position: absolute;
@@ -259,11 +294,94 @@ table.admin-table th {
     font-weight: bold;
     cursor: pointer;
 }
+
 .close:hover {
     color: #000;
 }
+
+/* account buttons */
 .account-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
+}
+
+/* hamburger button */
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: #162d48;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.admin-sidebar {
+    transition: transform 0.3s ease-in-out;
+}
+
+.admin-sidebar.mobile-hidden {
+    transform: translateX(-100%);
+}
+
+#sidebarOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 100;
+}
+
+.admin-sidebar.mobile-active {
+    transform: translateX(0);
+}
+
+#sidebarOverlay.active {
+    display: block;
+}
+
+/* show hamburger only on mobile */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 260px;
+        z-index: 1050;
+        transform: translateX(-100%);
+    }
+    .admin-sidebar.mobile-active {
+        transform: translateX(0);
+    }
+
+    #sidebarOverlay {
+        display: none;
+    }
+
+    #sidebarOverlay.active {
+        display: block;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .admin-main {
+        padding: 15px 20px;
+    }
 }
