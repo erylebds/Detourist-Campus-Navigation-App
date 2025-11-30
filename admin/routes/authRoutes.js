@@ -5,32 +5,36 @@ const adminService = require("../controllers/adminController");
 const adminModel = require("../models/adminModel");
 const announcementController = require("../controllers/announcementController");
 const requireAdmin = require("../middleware/requireAdmin");
-
 const bcrypt = require("bcrypt");
 
+// show login page
 router.get("/login", (req, res) => {
     res.render("login", {loginError: req.session.loginError});
     delete req.session.loginError;
 });
 
+// handle login submission
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     try {
+        // find admin by username or email
         const admin = await adminService.findAdminByUsernameOrEmail(username);
 
+        // if not found, show error
         if (!admin) {
-            req.session.loginError = "Username or email not found";
+            req.session.loginError = "username or email not found";
             return res.redirect("/login");
         }
 
+        // compare password
         const match = await bcrypt.compare(password, admin.password);
         if (!match) {
-            req.session.loginError = "Invalid password";
+            req.session.loginError = "invalid password";
             return res.redirect("/login");
         }
 
-        // success
+        // login success, store session data
         req.session.adminId = admin.admin_id;
         req.session.adminUsername = admin.username;
         req.session.adminEmail = admin.email;
@@ -38,19 +42,23 @@ router.post("/login", async (req, res) => {
         return res.redirect("/admin");
     } catch (err) {
         console.error(err);
-        res.send("Server error.");
+        res.send("server error");
     }
 });
 
-// protect admin dashboard
+// show admin dashboard, protect with requireAdmin
 router.get("/admin", requireAdmin, async (req, res) => {
     try {
         const tab = req.query.tab || "announcements";
+
+        // get all announcements
         const announcements = await announcementController.getAllAnnouncements();
 
+        // check if editing a specific announcement
         const editId = req.query.edit ? Number(req.query.edit) : null;
         const editAnnouncement = editId ? await announcementController.getAnnouncementById(editId) : null;
 
+        // render admin view with data
         res.render("adminView", {
             activeTab: tab,
             adminUsername: req.session.adminUsername,
@@ -62,23 +70,25 @@ router.get("/admin", requireAdmin, async (req, res) => {
             currentAdmin: {
                 username: req.session.adminUsername,
                 email: req.session.adminEmail || "",
-                created_at: req.session.adminCreatedAt || "N/A"
+                created_at: req.session.adminCreatedAt || "n/a"
             },
-                otherAdmins: await adminModel.getAllAdmins().then(admins =>
+            otherAdmins: await adminModel.getAllAdmins().then(admins =>
                 admins.filter(a => a.admin_id !== req.session.adminId)
-                )
+            )
         });
+
+        // reset temporary session messages
         req.session.annMsg = null;
         req.session.editAnnouncement = null;
         req.session.accMsg = null;
         req.session.accerror = null;
     } catch (err) {
-        console.error("Render admin error:", err);
-        res.setMaxListeners(500).send("Server error");
+        console.error("render admin error:", err);
+        res.setMaxListeners(500).send("server error");
     }
 });
 
-// logout
+// handle logout
 router.get("/admin/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/login");
