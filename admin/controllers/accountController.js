@@ -11,6 +11,11 @@ function minLen(str, len) {
     return typeof str === "string" && str.trim().length >= len;
 }
 
+function isStrongPassword(pass) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(pass);
+}
+
+
 // GET ALL ADMINS
 exports.getAdmins = async (req, res) => {
     try {
@@ -35,6 +40,20 @@ exports.createAdmin = async (req, res) => {
 
         if (!isValidEmail(email))
             return res.status(400).json({ success: false, message: "Invalid email format." });
+
+        if (!isStrongPassword(password))
+            return res.status(400).json({
+                success: false,
+                message: "Password must be at least 8 characters with uppercase, lowercase, number, and a special character."
+            });
+
+        if (password.toLowerCase() === username.trim().toLowerCase() ||
+            password.toLowerCase() === email.trim().toLowerCase()) {
+            return res.status(400).json({
+                success: false,
+                message: "Password cannot be the same as username or email."
+            });
+        }
 
         if (!minLen(password, 6))
             return res.status(400).json({ success: false, message: "Password must be at least 6 characters." });
@@ -131,6 +150,60 @@ exports.updateEmail = async (req, res) => {
     }
 };
 
+//UPDATE CURRENT PASSWORD
+exports.updatePassword = async (req, res) => {
+    try {
+        const { old_password, new_password, new_password2 } = req.body;
+
+        if (!old_password || !new_password || !new_password2)
+            return res.status(400).json({ success: false, message: "All fields are required." });
+
+        if (new_password !== new_password2)
+            return res.status(400).json({ success: false, message: "Passwords do not match." });
+
+        const adminId = req.session.adminId;
+        if (!adminId)
+            return res.status(401).json({ success: false, message: "Unauthorized." });
+
+        const admin = await adminModel.getAdminById(adminId);
+        if (!admin)
+            return res.status(404).json({ success: false, message: "Admin not found." });
+
+        // verify old password
+        const match = await bcrypt.compare(old_password, admin.password);
+        if (!match)
+            return res.status(400).json({ success: false, message: "Old password is incorrect." });
+
+        // prevent setting the same password
+        const isSamePassword = await bcrypt.compare(new_password, admin.password);
+        if (isSamePassword)
+            return res.status(400).json({ success: false, message: "New password cannot be the same as old password." });
+
+        // strong password rule
+        if (!isStrongPassword(new_password))
+            return res.status(400).json({
+                success: false,
+                message: "Password must be at least 8 characters with uppercase, lowercase, number, and a special character."
+            });
+
+        // prevent password matching username or email
+        if (new_password.toLowerCase() === admin.username.toLowerCase() ||
+            new_password.toLowerCase() === admin.email.toLowerCase()) {
+            return res.status(400).json({
+                success: false,
+                message: "Password cannot be your username or email."
+            });
+        }
+
+        await adminModel.updatePassword({ id: adminId, newPassword: new_password });
+
+        res.json({ success: true, message: "Password updated successfully." });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+};
 
 
 exports.editAdmin = async (req, res) => {
@@ -160,41 +233,6 @@ exports.editAdmin = async (req, res) => {
         });
 
         res.json({ success: true, message: "Admin updated successfully." });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: "Server error." });
-    }
-};
-
-
-// UPDATE CURRENT ADMIN PASSWORD
-exports.updatePassword = async (req, res) => {
-    try {
-        const { old_password, new_password, new_password2 } = req.body;
-
-        if (!old_password || !new_password || !new_password2)
-            return res.status(400).json({ success: false, message: "All fields are required." });
-
-        if (!minLen(new_password, 6))
-            return res.status(400).json({ success: false, message: "New password must be at least 6 characters." });
-
-        if (new_password !== new_password2)
-            return res.status(400).json({ success: false, message: "Passwords do not match." });
-
-        const adminId = req.session.adminId;
-        if (!adminId) return res.status(401).json({ success: false, message: "Unauthorized." });
-
-        const admin = await adminModel.getAdminById(adminId);
-        if (!admin) return res.status(404).json({ success: false, message: "Admin not found." });
-
-        // verify old password
-        const match = await bcrypt.compare(old_password, admin.password);
-        if (!match) return res.status(400).json({ success: false, message: "Old password is incorrect." });
-
-        await adminModel.updatePassword({ id: adminId, newPassword: new_password });
-
-        res.json({ success: true, message: "Password updated successfully." });
 
     } catch (err) {
         console.error(err);
