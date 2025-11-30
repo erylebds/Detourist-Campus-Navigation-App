@@ -87,10 +87,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const myEmailForm = document.getElementById("myEmailForm");
     myEmailForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        const newEmail = myEmailForm.new_email.value.trim();
+        const currentEmail = "<%= currentAdmin.email %>"; // printed from server
+
+        if (newEmail === currentEmail) {
+            Swal.fire("Error", "New email is the same as current email.", "error");
+            return;
+        }
+
         const formData = new FormData(myEmailForm);
         formData.append("form_type", "email");
 
         const data = await ajaxPost("/admin/account/email", formData);
+
         if (data.success) {
             Swal.fire("Success", data.message, "success");
             myEmailForm.reset();

@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 
 // simple validators
 function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^(?!.*\.\.)[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(email.trim());
 }
+
+
 function minLen(str, len) {
     return typeof str === "string" && str.trim().length >= len;
 }
@@ -94,6 +96,7 @@ exports.updateUsername = async (req, res) => {
     }
 };
 
+//UPDATE CURRENT ADMIN EMAIL
 exports.updateEmail = async (req, res) => {
     try {
         const { new_email } = req.body;
@@ -105,8 +108,16 @@ exports.updateEmail = async (req, res) => {
         if (!isValidEmail(new_email))
             return res.status(400).json({ success: false, message: "Invalid email format." });
 
+        const admin = await adminModel.getAdminById(adminId);
+        if (!admin)
+            return res.status(404).json({ success: false, message: "Admin not found." });
+
+        if (admin.email === new_email.trim())
+            return res.status(400).json({ success: false, message: "New email is the same as current email." });
+
         const exists = await adminModel.findByUsernameOrEmail(new_email);
-        if (exists) return res.status(400).json({ success: false, message: "Email already in use." });
+        if (exists && exists.admin_id !== adminId)
+            return res.status(400).json({ success: false, message: "Email already in use." });
 
         await adminModel.updateEmail({ id: adminId, newEmail: new_email.trim() });
 
@@ -119,6 +130,7 @@ exports.updateEmail = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error." });
     }
 };
+
 
 
 exports.editAdmin = async (req, res) => {
