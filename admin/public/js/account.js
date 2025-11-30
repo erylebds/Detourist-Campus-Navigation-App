@@ -49,22 +49,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const newUsername = myUsernameForm.new_username.value.trim();
         const currentPassword = myUsernameForm.cu_password.value.trim();
         const oldUsername = document.getElementById("currentUsername").textContent.trim();
-        const usernameErrorDiv = document.getElementById("usernameFormError");
 
+        // Validate
         if (!newUsername || !currentPassword) {
-            usernameErrorDiv.textContent = "Please fill out all fields.";
-            usernameErrorDiv.style.display = "block";
+            Swal.fire("Error", "Please fill out all fields.", "error");
+            return;
+        }
+
+        if (newUsername.length < 3) {
+            Swal.fire("Error", "Username must be at least 3 characters.", "error");
             return;
         }
 
         if (newUsername === oldUsername) {
-            usernameErrorDiv.textContent = "New username is the same as current username.";
-            usernameErrorDiv.style.display = "block";
+            Swal.fire("Error", "New username is the same as your current username.", "error");
             return;
         }
 
-        usernameErrorDiv.style.display = "none";
-
+        // Prepare data
         const formData = new FormData();
         formData.append("form_type", "username");
         formData.append("old_username", oldUsername);
@@ -75,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.success) {
             Swal.fire("Success", data.message, "success");
-            document.querySelector('p strong').textContent = newUsername;
+            document.querySelector("p strong").textContent = newUsername;
             myUsernameForm.reset();
             document.getElementById("changeUsernameModal").style.display = "none";
         } else {
-            usernameErrorDiv.textContent = data.message;
-            usernameErrorDiv.style.display = "block";
+            Swal.fire("Error", data.message, "error");
         }
     });
+
 
     const myEmailForm = document.getElementById("myEmailForm");
     myEmailForm?.addEventListener("submit", async (e) => {
