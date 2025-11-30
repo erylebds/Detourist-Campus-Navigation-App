@@ -52,33 +52,54 @@ exports.getAdmins = async (req, res) => {
 // CREATE ADMIN
 exports.createAdmin = async (req, res) => {
     try {
-        const { username, email, password, password2 } = req.body;
+        const { username, email, password } = req.body;
 
-        if (!username || !email || !password || !password2)
+        // basic empty checks
+        if (!username || !email || !password)
             return res.status(400).json({ success: false, message: "All fields are required." });
 
-        if (!minLen(username, 3))
+        const cleanUsername = username.trim();
+        const cleanEmail = email.trim();
+
+        // username validation
+        if (!minLen(cleanUsername, 3))
             return res.status(400).json({ success: false, message: "Username must be at least 3 characters." });
 
-        if (!isValidEmail(email))
+        // email validation
+        if (!isValidEmail(cleanEmail))
             return res.status(400).json({ success: false, message: "Invalid email format." });
 
+        // strong password
         if (!isStrongPassword(password))
-            return res.status(400).json({ success: false, message: "Password must be at least 8 characters with uppercase, lowercase, number, and a special character." });
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Password must be at least 8 characters and include uppercase, lowercase, number, and special character."
+            });
 
-        if (password.toLowerCase() === username.trim().toLowerCase() || password.toLowerCase() === email.trim().toLowerCase())
-            return res.status(400).json({ success: false, message: "Password cannot be username or email." });
+        // password cannot equal username or email
+        if (password.toLowerCase() === cleanUsername.toLowerCase() ||
+            password.toLowerCase() === cleanEmail.toLowerCase())
+            return res.status(400).json({
+                success: false,
+                message: "Password cannot be the same as username or email."
+            });
 
-        if (password !== password2)
-            return res.status(400).json({ success: false, message: "Passwords do not match." });
+        // check duplicates
+        const existingUser = await adminModel.findByUsernameOrEmail(cleanUsername);
+        if (existingUser)
+            return res.status(400).json({ success: false, message: "Username already in use." });
 
-        const existingUser = await adminModel.findByUsernameOrEmail(username);
-        const existingEmail = await adminModel.findByUsernameOrEmail(email);
+        const existingEmail = await adminModel.findByUsernameOrEmail(cleanEmail);
+        if (existingEmail)
+            return res.status(400).json({ success: false, message: "Email already in use." });
 
-        if (existingUser || existingEmail)
-            return res.status(400).json({ success: false, message: "Username or email already in use." });
-
-        const id = await adminModel.createAdmin({ username: username.trim(), email: email.trim(), password });
+        // create admin
+        const id = await adminModel.createAdmin({
+            username: cleanUsername,
+            email: cleanEmail,
+            password
+        });
 
         res.json({ success: true, message: "Admin created successfully.", id });
 

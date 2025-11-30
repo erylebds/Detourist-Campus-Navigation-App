@@ -213,9 +213,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const addAdminForm = document.getElementById("addAdminForm");
     addAdminForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        const username = addAdminForm.username.value.trim();
+        const email = addAdminForm.email.value.trim();
+        const password = addAdminForm.password.value.trim();
+
+        // Username validation
+        if (username.length < 3) {
+            Swal.fire("Error", "Username must be at least 3 characters.", "error");
+            return;
+        }
+
+        // Email format validation
+        const emailRegex = /^(?!.*\.\.)[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+        if (!emailRegex.test(email)) {
+            Swal.fire("Error", "Invalid email format.", "error");
+            return;
+        }
+
+        // Strong password validation
+        const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        if (!strongPassword.test(password)) {
+            Swal.fire("Error", "Password must be at least 8 characters with uppercase, lowercase, number, and a special character.", "error");
+            return;
+        }
+
+        // Password cannot equal username or email
+        if (password.toLowerCase() === username.toLowerCase() ||
+            password.toLowerCase() === email.toLowerCase()) {
+
+            Swal.fire("Error", "Password cannot be the same as username or email.", "error");
+            return;
+        }
+
+        // Submit via AJAX
         const data = await ajaxPost("/admin/account/create", new FormData(addAdminForm));
-        if (data.success) Swal.fire("Success", data.message, "success").then(() => location.reload());
-        else Swal.fire("Error", data.message, "error");
+
+        if (data.success) {
+            Swal.fire("Success", data.message, "success").then(() => location.reload());
+        } else {
+            Swal.fire("Error", data.message, "error");
+        }
     });
 
 });

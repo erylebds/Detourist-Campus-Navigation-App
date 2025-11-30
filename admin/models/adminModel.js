@@ -18,7 +18,10 @@ async function findByUsernameOrEmail(identifier) {
 
 async function createAdmin({ username, email, password }) {
     const hash = await bcrypt.hash(password, 10);
-    const [result] = await pool.query("INSERT INTO admin (username, email, password, created_at) VALUES (?, ?, ?, NOW())", [username, email, hash]);
+    const [result] = await pool.query(
+        "INSERT INTO admin (username, email, password) VALUES (?, ?, ?)",
+        [username, email, hash]
+    );
     return result.insertId;
 }
 
