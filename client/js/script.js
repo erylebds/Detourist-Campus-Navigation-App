@@ -178,7 +178,7 @@ if (normRouteBtn && erRouteBtn && sourceInput && destInput && textCanvas && line
   }
 
   function drawEmergencyRoute(source) {
-    fetch("database/mapNodes.php")
+    fetch("client/database/mapNodes.php")
       .then(res => res.json())
       .then(nodeList => {
         const startNodes = [];
