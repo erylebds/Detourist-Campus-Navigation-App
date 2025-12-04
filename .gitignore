@@ -1,0 +1,2 @@
+# Including this will unnecessarily increase the size of the repository. It is better to use npm install.
+admin/node_modules/
