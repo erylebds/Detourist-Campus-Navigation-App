@@ -4,9 +4,34 @@
 - Route generation (normal/emergency) with error checks
 - Canvas label rendering and clickable room detection
 - Popup display with room info and quick-set buttons
-- Pathfinding using a Dijkstra-like algorithm
+- Pathfinding using a Dijkstra's algorithm
 - Smooth route line animation between map nodes
 */
+
+var currentFloor = 5;
+const upFloorBtn = document.getElementById("upFloor");
+const downFloorBtn = document.getElementById("downFloor");
+
+upFloorBtn.addEventListener('click', goToUpperFloor);
+downFloorBtn.addEventListener('click', goToLowerFloor);
+
+function goToUpperFloor() {
+  if (currentFloor != 6) {
+    currentFloor++;
+  }
+  updateFloorView();
+}
+
+function goToLowerFloor() {
+  if (currentFloor != 4) {
+    currentFloor--;
+  }
+  updateFloorView();
+}
+
+function updateFloorView() {
+  document.getElementById("floor-number").innerHTML = currentFloor;
+}
 
 const modal = document.getElementById("announcement-modal");
 const modalTitle = document.getElementById("modal-title");
