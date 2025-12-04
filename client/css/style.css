@@ -310,6 +310,12 @@ a {
   font-size: 1rem;
 }
 
+.floor-arrows {
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+}
+
 .map-wrapper {
   width: 100%;
   position: relative;
@@ -380,7 +386,7 @@ a {
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 50px;
 }
 
 .map-buttons button {
@@ -393,6 +399,18 @@ a {
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.upper-buttons,
+.middle-buttons,
+.lower-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#downFloor {
+  transform: rotate(180deg);
 }
 
 #darkMode {
