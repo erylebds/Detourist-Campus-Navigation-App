@@ -1,6 +1,4 @@
 /*
-- Announcement modal open/close logic
-- Mobile navigation toggle behavior
 - Route generation (normal/emergency) with error checks
 - Canvas label rendering and clickable room detection
 - Popup display with room info and quick-set buttons
@@ -31,43 +29,6 @@ function goToLowerFloor() {
 
 function updateFloorView() {
   document.getElementById("floor-number").innerHTML = currentFloor;
-}
-
-const modal = document.getElementById("announcement-modal");
-const modalTitle = document.getElementById("modal-title");
-const modalBody = document.getElementById("modal-body");
-const closeBtn = document.querySelector(".modal-close-btn");
-
-if (modal && modalTitle && modalBody && closeBtn) {
-  document.querySelectorAll(".announcement-card").forEach(card => {
-    card.addEventListener("click", () => {
-      modalTitle.textContent = card.dataset.title;
-      modalBody.textContent = card.dataset.body;
-      modal.classList.add("active");
-    });
-  });
-
-  closeBtn.addEventListener("click", () => modal.classList.remove("active"));
-  window.addEventListener("click", e => {
-    if (e.target === modal) modal.classList.remove("active");
-  });
-}
-
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.querySelector(".nav-links");
-
-if (hamburger && navLinks) {
-  hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navLinks.classList.toggle("open");
-  });
-
-  document.querySelectorAll(".nav-links a").forEach(link => {
-    link.addEventListener("click", () => {
-      hamburger.classList.remove("active");
-      navLinks.classList.remove("open");
-    });
-  });
 }
 
 const normRouteBtn = document.getElementById("norm-route");

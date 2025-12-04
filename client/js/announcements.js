@@ -1,9 +1,31 @@
 /**
+  - Announcement modal open/close logic
   - Fetches announcement data via AJAX (JSON).
   - Builds clickable announcement cards with message previews.
   - Opens a modal showing the full message when a card is clicked.
   - Supports closing the modal via close button or backdrop click.
  */
+
+const modal = document.getElementById("announcement-modal");
+const modalTitle = document.getElementById("modal-title");
+const modalBody = document.getElementById("modal-body");
+const closeBtn = document.querySelector(".modal-close-btn");
+
+if (modal && modalTitle && modalBody && closeBtn) {
+  document.querySelectorAll(".announcement-card").forEach(card => {
+    card.addEventListener("click", () => {
+      modalTitle.textContent = card.dataset.title;
+      modalBody.textContent = card.dataset.body;
+      modal.classList.add("active");
+    });
+  });
+
+  closeBtn.addEventListener("click", () => modal.classList.remove("active"));
+  window.addEventListener("click", e => {
+    if (e.target === modal) modal.classList.remove("active");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const announcementList = document.getElementById("announcementList");
   const modal = document.getElementById("announcement-modal");

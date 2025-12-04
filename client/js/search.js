@@ -6,79 +6,78 @@
  * Reusable through setupSearch(), initialized for source and destination fields on DOM load.
  */
 
-document.addEventListener("DOMContentLoaded", () => {
-  function setupSearch(inputId, resultsId, excludeInputId = null, imageContainerSelector = null) {
-    const searchInput = document.getElementById(inputId);
-    const resultsDiv = document.getElementById(resultsId);
-    const excludeInput = excludeInputId ? document.getElementById(excludeInputId) : null;
-    const imageContainer = imageContainerSelector ? document.querySelector(imageContainerSelector) : null;
+function setupSearch(inputId, resultsId, excludeInputId = null, imageContainerSelector = null) {
+  const searchInput = document.getElementById(inputId);
+  const resultsDiv = document.getElementById(resultsId);
+  const excludeInput = excludeInputId ? document.getElementById(excludeInputId) : null;
+  const imageContainer = imageContainerSelector ? document.querySelector(imageContainerSelector) : null;
 
-    if (!searchInput || !resultsDiv) return;
+  if (!searchInput || !resultsDiv) return;
 
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.trim();
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim();
 
-      if (query.length === 0) {
+    if (query.length === 0) {
+      resultsDiv.innerHTML = '';
+      resultsDiv.style.display = 'none';
+      return;
+    }
+
+    fetch(`client/database/search.php?room_code=${encodeURIComponent(query)}`)
+      .then(res => res.json())
+      .then(data => {
         resultsDiv.innerHTML = '';
-        resultsDiv.style.display = 'none';
-        return;
-      }
 
-      fetch(`client/database/search.php?room_code=${encodeURIComponent(query)}`)
-        .then(res => res.json())
-        .then(data => {
-          resultsDiv.innerHTML = '';
+        if (data.length === 0) {
+          resultsDiv.style.display = 'none';
+          return;
+        }
 
-          if (data.length === 0) {
+        const filteredData = excludeInput
+          ? data.filter(room => room.room_code !== excludeInput.value)
+          : data;
+
+        filteredData.forEach(room => {
+          const div = document.createElement('div');
+          div.classList.add('autocomplete-item');
+          div.textContent = room.room_code;
+
+          div.addEventListener('click', () => {
+            searchInput.value = room.room_code;
+            resultsDiv.innerHTML = '';
             resultsDiv.style.display = 'none';
-            return;
-          }
 
-          const filteredData = excludeInput
-            ? data.filter(room => room.room_code !== excludeInput.value)
-            : data;
+            if (imageContainer && searchInput.id == "destination-room") {
+              imageContainer.querySelector('h2').innerText = `Destination: ${room.room_code}`;
 
-          filteredData.forEach(room => {
-            const div = document.createElement('div');
-            div.classList.add('autocomplete-item');
-            div.textContent = room.room_code;
+              const basePath = "";
 
-            div.addEventListener('click', () => {
-              searchInput.value = room.room_code;
-              resultsDiv.innerHTML = '';
-              resultsDiv.style.display = 'none';
+              imageContainer.querySelector('img').src = basePath + room.room_image;
 
-              if (imageContainer && searchInput.id == "destination-room") {
-                imageContainer.querySelector('h2').innerText = `Destination: ${room.room_code}`;
-
-                const basePath = "";
-
-                imageContainer.querySelector('img').src = basePath + room.room_image;
-
-                const campusMapImg = document.querySelector('.campus-map img');
-                if (campusMapImg) {
-                  campusMapImg.src = basePath + room.floor_map;
-                }
+              const campusMapImg = document.querySelector('.campus-map img');
+              if (campusMapImg) {
+                campusMapImg.src = basePath + room.floor_map;
               }
-            });
-
-            document.addEventListener('click', () => {
-              resultsDiv.innerHTML = '';
-              resultsDiv.style.display = 'none';
-            });
-
-            resultsDiv.appendChild(div);
+            }
           });
 
-          resultsDiv.style.display = filteredData.length > 0 ? 'block' : 'none';
-        })
-        .catch(err => {
-          console.error(err);
-          resultsDiv.style.display = 'none';
-        });
-    });
-  }
+          document.addEventListener('click', () => {
+            resultsDiv.innerHTML = '';
+            resultsDiv.style.display = 'none';
+          });
 
-  setupSearch("source-room", "sourceResults", "destination-room");
-  setupSearch("destination-room", "destinationResults", "source-room", ".room-info");
-});
+          resultsDiv.appendChild(div);
+        });
+
+        resultsDiv.style.display = filteredData.length > 0 ? 'block' : 'none';
+      })
+      .catch(err => {
+        console.error(err);
+        resultsDiv.style.display = 'none';
+      });
+  });
+}
+
+setupSearch("source-room", "sourceResults", "destination-room");
+setupSearch("destination-room", "destinationResults", "source-room", ".room-info");
+
