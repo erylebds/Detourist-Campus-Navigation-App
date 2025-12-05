@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 05, 2025 at 02:58 PM
+-- Generation Time: Dec 05, 2025 at 06:47 PM
 -- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
@@ -258,6 +258,7 @@ CREATE TABLE IF NOT EXISTS `mapfloor` (
 --
 
 INSERT INTO `mapfloor` (`floor_id`, `building_code`, `floor_number`, `map_image_path`) VALUES
+(4, 'D', 4, 'admin/public/assets/floors/floor4.png'),
 (5, 'D', 5, 'admin/public/assets/floors/floor5.png'),
 (6, 'D', 6, 'admin/public/assets/floors/floor6.png');
 
@@ -447,7 +448,7 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
   `room_type` enum('classroom','office','lab','comfort_room','entrance','safe_route','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'classroom',
   `room_image_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'admin/public/assets/backgrounds/maryheights-campus.jpg',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `roomlabel`
@@ -492,7 +493,28 @@ INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `w
 (36, 'CR(M)', 765, 145, 'Devesse', 2, 6, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (37, 'D622', 755, 210, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (38, 'D623', 755, 300, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
-(39, 'D624', 755, 390, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg');
+(39, 'D624', 755, 390, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(40, 'D401', 48, 40, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(41, 'CR(F)', 30, 145, 'Devesse', 0, 4, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(42, 'D402', 48, 210, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(43, 'D403', 48, 300, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(44, 'D406', 160, 70, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(45, 'D405', 160, 160, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(46, 'D404', 160, 250, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(47, 'ACCG', 297, 405, 'Devesse', 1, 4, 'other', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(48, 'Book Store', 342, 360, 'Devesse', 1, 4, 'other', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(49, 'D412', 400, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(50, 'D413', 480, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(51, 'D414', 560, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(52, 'D425', 640, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(53, 'D428', 640, 70, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(54, 'D427', 640, 160, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(55, 'D426', 640, 250, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(56, 'D421', 755, 40, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(57, 'CR(M)', 765, 145, 'Devesse', 2, 4, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(58, 'D422', 755, 210, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(59, 'D423', 755, 300, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(60, 'D424', 755, 390, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg');
 
 --
 -- Constraints for dumped tables
