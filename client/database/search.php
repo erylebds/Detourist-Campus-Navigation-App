@@ -11,7 +11,7 @@
 require 'connectDB.php';
 
 $roomName = $_GET['room_code'] ?? '';
-$roomName = $conn->real_escape_string($roomName);
+$roomName = $conn->real_escape_string($roomName . '%');
 
 $stmt = $conn->prepare("SELECT rl.id AS room_id, rl.name AS room_code, rl.floor_id, rl.wing, rl.room_image_path,
                mf.map_image_path AS floor_map
@@ -19,7 +19,7 @@ $stmt = $conn->prepare("SELECT rl.id AS room_id, rl.name AS room_code, rl.floor_
         LEFT JOIN mapfloor mf ON rl.floor_id = mf.floor_id
         WHERE rl.floor_id=? AND rl.name LIKE ?
         LIMIT 10");
-$stmt->bind_param("is", $_GET["current_floor"], $_GET["room_code"]);
+$stmt->bind_param("is", $_GET["current_floor"], $roomName);
 $stmt->execute();
 
 $result = $stmt->get_result();
