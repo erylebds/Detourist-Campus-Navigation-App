@@ -25,10 +25,10 @@
                 </thead>
                 <tbody>
                     <% rooms.forEach(room => { %>
-                    <tr id="row-<%= room.id %>">
+                    <tr id="row-<%= room.room_id %>"> 
                         <td>
-                            <% if(room.room_image_path) { %>
-                                <img src="/<%= room.room_image_path %>" alt="Room Img" style="height: 50px; width: 50px; object-fit: cover;">
+                            <% if(room.image_path) { %> 
+                                <img src="/<%= room.image_path %>" alt="Room Img" style="height: 50px; width: 50px; object-fit: cover;">
                             <% } else { %>
                                 No Image
                             <% } %>
@@ -41,7 +41,7 @@
                             <button class="btn btn-sm btn-warning" 
                                 onclick='openModal("edit", <%- JSON.stringify(room) %>)'>Edit</button>
                             <button class="btn btn-sm btn-danger" 
-                                onclick="deleteRoom(<%= room.id %>)">Delete</button>
+                                onclick="deleteRoom(<%= room.room_id %>)">Delete</button>
                         </td>
                     </tr>
                     <% }) %>
