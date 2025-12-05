@@ -179,7 +179,7 @@ function drawRoute(source, destination) {
   const params = new URLSearchParams();
   params.append("current_floor", currentFloor);
   fetch(`client/database/mapNodes.php?${params}`)
-    .then(res => res.json())
+    .then(res => nodeList = res.json())
     .then(nodeList => {
       const startNodes = [];
       const endNodes = [];
@@ -195,8 +195,8 @@ function drawRoute(source, destination) {
       drawBetweenEndPoints(nodeList, startNodes, endNodes, "blue");
     })
     .catch(err => {
-      console.error("Error loading map nodes:", err);
-      alert("Could not load map nodes from the server.");
+      console.error("Error getting map nodes:", err);
+      alert("Could not get map nodes from the server.");
     });
 }
 
@@ -236,41 +236,38 @@ function drawBetweenEndPoints(nodeList, startNodes, endNodes, lineColor) {
     return;
   }
 
-  let { nearestStartingPoint: nearestStart, nearestEndingPoint: nearestEnd } =
-    findNearestEndPoints(startNodes, endNodes);
-
-  const visited = findShortestPath(nodeList, nearestStart.id);
-  const traceBackNode = findNodeById(visited, nearestEnd.id);
-
+  const traceBackNode = findNearestTraceBackNode(nodeList, startNodes, endNodes);
   drawRouteLines(traceBackNode, lineColor);
 }
 
-function findNearestEndPoints(startNodes, endNodes) {
+function findNearestTraceBackNode(nodeList, startNodes, endNodes) {
   let shortestDistance = Infinity;
-  let nearestStart, nearestEnd;
+  let nearestTraceBackNode;
 
   startNodes.forEach(startNode => {
+    const visited = findShortestPaths(nodeList, startNode.id);
     endNodes.forEach(endNode => {
-      let distance = calculateDistanceBetween(startNode, endNode);
+      const traceBackNode = findNodeById(visited, endNode.id);
+      let distance = traceBackNode.distance;
       if (distance < shortestDistance) {
         shortestDistance = distance;
-        nearestStart = startNode;
-        nearestEnd = endNode;
+        nearestTraceBackNode = traceBackNode;
       }
     });
   });
-  return { nearestStartingPoint: nearestStart, nearestEndingPoint: nearestEnd };
+  return nearestTraceBackNode;
 }
 
 let points, t;
 const lineCanvas = document.getElementById("map-line-canvas");
 const lineContext = lineCanvas.getContext("2d");
 
-function drawRouteLines(currentNode, lineColor) {
+function drawRouteLines(traceBackNode, lineColor) {
   lineContext.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
   lineContext.strokeStyle = lineColor;
 
   let vertices = [];
+  let currentNode = traceBackNode;
   while (currentNode) {
     vertices.unshift({
       x: Number(currentNode.x_coord),
@@ -322,7 +319,8 @@ function findNodeById(nodeList, targetId) {
   return result;
 }
 
-function findShortestPath(unvisited, sourceId) {
+function findShortestPaths(nodeList, sourceId) {
+  const unvisited = cloneObject(nodeList);
   const visited = [];
   let currentNode;
 
@@ -357,6 +355,10 @@ function findShortestPath(unvisited, sourceId) {
   } while (unvisited.length > 0);
 
   return visited;
+}
+
+function cloneObject(object) {
+  return JSON.parse(JSON.stringify(object));
 }
 
 function getShortestNode(unvisited) {
