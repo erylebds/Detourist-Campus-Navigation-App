@@ -1,50 +1,25 @@
-const express = require("express");
-const session = require("express-session");
+const express = require("express"); //import node express framework for server creation
+const session = require("express-session"); //track user requests
 const path = require("path");
 const multer = require('multer');
-const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
-const csrf = require('csurf');
 const upload = multer();
 
 const app = express();
 
 console.log("Starting the server...");
 
-// security headers
-app.use(helmet({
-    contentSecurityPolicy: false,
-}));
-
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true})); //parse HTML form data
 app.use(express.json());
-app.use(cookieParser());
-app.use(express.static("public"))
+app.use(express.static("public")); //access static files
 
-app.set("view engine", "ejs");
+app.set("view engine", "ejs"); //render ejs to html
 app.set("views", path.join(__dirname, "views"));
 
-// session configuration with security settings
 app.use(session({
     secret:"detourist-secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 24 * 60 * 60 * 1000
-    }
+    resave: false, //prevent saving unchanged sessions
+    saveUninitialized: false //prevent creating session until there's data to store
 }));
-
-// CSRF protection
-const csrfProtection = csrf({ cookie: true });
-app.use(csrfProtection);
-
-// make CSRF token available in all views
-app.use((req, res, next) => {
-    res.locals.csrfToken = req.csrfToken();
-    next();
-});
 
 app.use("/", require("./routes/authRoutes"));
 app.use("/rooms", require("./routes/roomRoutes"));

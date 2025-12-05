@@ -7,11 +7,13 @@ const announcementController = require("../controllers/announcementController");
 const requireAdmin = require("../middleware/requireAdmin");
 const bcrypt = require("bcrypt");
 
+// show login page
 router.get("/login", (req, res) => {
     res.render("login", {loginError: req.session.loginError});
     delete req.session.loginError;
 });
 
+// handle login submission
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 

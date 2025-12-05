@@ -1,5 +1,4 @@
 const announcementModel = require("../models/announcementModel");
-const { sanitizeHtml } = require("../middleware/sanitizer"); // XSS prevention
 
 exports.getAllAnnouncements = async () => {
     return await announcementModel.getAllAnnouncements();
@@ -18,10 +17,7 @@ exports.saveAnnouncement = async (req, res) => {
             return res.redirect("/admin?tab=announcements");
         }
 
-        const cleanTitle = sanitizeHtml(title.trim());
-        const cleanMessage = sanitizeHtml(message.trim());
-
-        if (!cleanTitle || !cleanMessage) {
+        if (!title.trim() || !message.trim()) {
             if (req.xhr) return res.json({ success: false, message: "Title and message are required." });
             req.session.annMsg = "Title and message are required.";
             return res.redirect("/admin?tab=announcements");
@@ -38,16 +34,16 @@ exports.saveAnnouncement = async (req, res) => {
         if (announcement_id) {
             await announcementModel.updateAnnouncement({
                 id: announcement_id,
-                title: cleanTitle,
-                message: cleanMessage,
+                title,
+                message,
                 created_at: formattedCreatedAt,
             });
             if (req.xhr) return res.json({ success: true, message: "Announcement updated" });
             req.session.annMsg = "Announcement updated";
         } else {
             await announcementModel.createAnnouncement({
-                title: cleanTitle,
-                message: cleanMessage,
+                title,
+                message,
                 created_at: formattedCreatedAt,
             });
             if (req.xhr) return res.json({ success: true, message: "Announcement created" });
