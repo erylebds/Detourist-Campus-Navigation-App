@@ -26,6 +26,22 @@ app.use("/rooms", require("./routes/roomRoutes"));
 app.use("/", require("./routes/announcementRoutes"));
 app.use("/", require("./routes/accountRoutes"));
 
+// GLOBAL ERROR HANDLING MIDDLEWARE
+// Import error handlers
+const { 
+    notFoundHandler, 
+    errorHandler, 
+    handleDatabaseError 
+} = require("./middleware/errorHandler");
+
+// Handle 404 errors (must be after all routes)
+app.use(notFoundHandler);
+
+// Handle database errors
+app.use(handleDatabaseError);
+
+// Global error handler (must be last)
+app.use(errorHandler);
 
 //start the server and listen to port
 app.listen(3000, () => console.log("Admin server is running on port 3000..."));
