@@ -16,15 +16,15 @@ downFloorBtn.addEventListener('click', goToLowerFloor);
 function goToUpperFloor() {
   if (currentFloor != 6) {
     currentFloor++;
+    updateFloorView();
   }
-  updateFloorView();
 }
 
 function goToLowerFloor() {
   if (currentFloor != 4) {
     currentFloor--;
+    updateFloorView();
   }
-  updateFloorView();
 }
 
 function updateFloorView() {
