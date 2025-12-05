@@ -87,7 +87,7 @@ let mapLabelsData = [];
 
 function updateRoomLabels() {
   const params = new URLSearchParams();
-  params.append("currentFloor", currentFloor);
+  params.append("current_floor", currentFloor);
   fetch(`client/database/roomLabels.php?${params}`)
     .then(res => res.json())
     .then(data => {
@@ -161,7 +161,7 @@ function showPopup(room, pageX, pageY) {
 
 function drawRoute(source, destination) {
   const params = new URLSearchParams();
-  params.append("currentFloor", currentFloor);
+  params.append("current_floor", currentFloor);
   fetch(`client/database/mapNodes.php?${params}`)
     .then(res => res.json())
     .then(nodeList => {
@@ -186,7 +186,7 @@ function drawRoute(source, destination) {
 
 function drawEmergencyRoute(source) {
   const params = new URLSearchParams();
-  params.append("currentFloor", currentFloor);
+  params.append("current_floor", currentFloor);
   fetch(`client/database/mapNodes.php?${params}`)
     .then(res => res.json())
     .then(nodeList => {

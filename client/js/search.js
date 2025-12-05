@@ -23,7 +23,10 @@ function setupSearch(inputId, resultsId, excludeInputId = null, imageContainerSe
       return;
     }
 
-    fetch(`client/database/search.php?room_code=${encodeURIComponent(query)}`)
+    // currentFloor is in the global scope of mapFunctions.js
+    const params = new URLSearchParams({ current_floor: currentFloor, room_code: query });
+    console.log(`client/database/search.php?${params}`);
+    fetch(`client/database/search.php?${params}`)
       .then(res => res.json())
       .then(data => {
         resultsDiv.innerHTML = '';
