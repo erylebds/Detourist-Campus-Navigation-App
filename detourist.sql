@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 05, 2025 at 10:24 AM
+-- Generation Time: Dec 05, 2025 at 11:13 AM
 -- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
@@ -305,13 +305,13 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
   `name` varchar(50) NOT NULL,
   `x_coord` int NOT NULL,
   `y_coord` int NOT NULL,
-  `building_name` varchar(100) DEFAULT NULL,
+  `building_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'Devesse',
   `wing` tinyint DEFAULT NULL,
   `floor_id` int DEFAULT NULL,
-  `room_type` enum('classroom','office','lab','comfort_room','entrance','safe_route') DEFAULT 'classroom',
-  `room_image_path` varchar(255) DEFAULT NULL,
+  `room_type` enum('classroom','office','lab','comfort_room','entrance','safe_route','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'classroom',
+  `room_image_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'admin/public/assets/backgrounds/maryheights-campus.jpg',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `roomlabel`
@@ -338,7 +338,25 @@ INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `w
 (18, 'D526', 640, 230, 'Devesse', 2, 5, 'classroom', 'admin/public/assets/rooms/D526.jpg'),
 (19, 'D528', 640, 90, 'Devesse', 2, 5, 'classroom', 'admin/public/assets/rooms/D528.jpg'),
 (20, 'CR(M)', 30, 145, 'Devesse', 0, 5, 'classroom', 'admin/public/assets/rooms/CR(M).jpg'),
-(21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'classroom', 'admin/public/assets/rooms/CR(F).jpg');
+(21, 'CR(F)', 765, 145, 'Devesse', 2, 5, 'classroom', 'admin/public/assets/rooms/CR(F).jpg'),
+(22, 'D601', 48, 40, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(23, 'CR(F)', 30, 145, 'Devesse', 0, 6, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(24, 'D602', 48, 210, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(25, 'D603', 48, 300, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(26, 'D604', 48, 390, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(27, 'D608', 160, 70, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(28, 'D607', 160, 160, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(29, 'D606', 160, 250, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(30, 'Water\\nis Life', 160, 390, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(31, 'D628', 640, 70, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(32, 'D627', 640, 160, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(33, 'D626', 640, 250, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(34, 'D625', 640, 390, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(35, 'D621', 755, 40, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(36, 'CR(M)', 765, 145, 'Devesse', 2, 6, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(37, 'D622', 755, 210, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(38, 'D623', 755, 300, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(39, 'D624', 755, 390, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg');
 
 --
 -- Constraints for dumped tables
