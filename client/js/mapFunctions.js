@@ -30,7 +30,14 @@ function goToLowerFloor() {
 function updateFloorView() {
   document.getElementById("floor-number").innerHTML = currentFloor;
   document.getElementById("floor-image").src = `admin/public/assets/floors/floor${currentFloor}.png`;
+  clearRouteLines();
   updateRoomLabels();
+}
+
+function clearRouteLines() {
+  const lineCanvas = document.getElementById("map-line-canvas");
+  const lineContext = lineCanvas.getContext("2d");
+  lineContext.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
 }
 
 const normRouteBtn = document.getElementById("norm-route");
@@ -263,7 +270,7 @@ const lineCanvas = document.getElementById("map-line-canvas");
 const lineContext = lineCanvas.getContext("2d");
 
 function drawRouteLines(traceBackNode, lineColor) {
-  lineContext.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
+  clearRouteLines();
   lineContext.strokeStyle = lineColor;
 
   let vertices = [];
