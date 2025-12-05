@@ -94,10 +94,19 @@ function updateRoomLabels() {
       textContext.clearRect(0, 0, textCanvas.width, textCanvas.height);
       mapLabelsData = data;
       data.forEach(roomLabel => {
-        textContext.fillText(roomLabel.name, roomLabel.x_coord, roomLabel.y_coord);
+        drawRoomLabel(roomLabel.name, roomLabel.x_coord, roomLabel.y_coord);
       });
     })
     .catch(err => console.error("Error loading room labels:", err));
+}
+
+// For multi-line labels
+function drawRoomLabel(name, x, y) {
+  lines = name.split('\\n');
+  lineHeight = 15;
+  for (i = 0; i < lines.length; i++) {
+    textContext.fillText(lines[i], x, y + (i * lineHeight));
+  }
 }
 
 textCanvas.addEventListener('click', (e) => {
