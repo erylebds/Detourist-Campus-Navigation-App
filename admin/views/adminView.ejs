@@ -66,10 +66,11 @@
 
             <!-- Rooms Tab -->
             <section class="admin-tab <%= activeTab === 'rooms' ? 'active' : '' %>" id="tab-rooms">
-                <h1 class="section-title">Rooms</h1>
-                <div class="card-box">
-                    <p>Rooms management (to follow)</p>
-                </div>
+                <% if (typeof rooms !== 'undefined') { %>
+                    <%- include("rooms", { rooms: rooms }) %>
+                <% } else { %>
+                    <p>Error loading rooms data.</p>
+                <% } %>
             </section>
 
             <!-- Routes Tab -->
