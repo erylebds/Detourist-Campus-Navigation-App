@@ -113,7 +113,7 @@ function drawRoomLabel(name, x, y) {
   lineHeight = 15;
   for (i = 0; i < lines.length; i++) {
     line = lines[i];
-    if ((line.length < 5) && (i + 1 < lines.length)) {
+    if ((i + 1 < lines.length) && (line.length < 5) && (`${line} ${lines[i + 1]}`.length < 10)) {
       line = `${line} ${lines[i + 1]}`;
       textContext.fillText(line, x, y + (i * lineHeight));
       i++;
