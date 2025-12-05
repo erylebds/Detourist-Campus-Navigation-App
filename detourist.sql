@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 05, 2025 at 11:13 AM
+-- Generation Time: Dec 05, 2025 at 02:02 PM
 -- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
@@ -184,14 +184,15 @@ CREATE TABLE IF NOT EXISTS `mapfloor` (
   `map_image_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`floor_id`),
   UNIQUE KEY `building_code` (`building_code`,`floor_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `mapfloor`
 --
 
 INSERT INTO `mapfloor` (`floor_id`, `building_code`, `floor_number`, `map_image_path`) VALUES
-(5, 'D', 5, 'admin/public/assets/floors/floor5.png');
+(5, 'D', 5, 'admin/public/assets/floors/floor5.png'),
+(6, 'D', 6, 'admin/public/assets/floors/floor6.png');
 
 -- --------------------------------------------------------
 
@@ -210,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `mapnode` (
   PRIMARY KEY (`id`),
   KEY `FK_mapnode_roomlabel` (`room_label_id`),
   KEY `FK_mapnode_mapfloor` (`floor_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `mapnode`
@@ -291,7 +292,75 @@ INSERT INTO `mapnode` (`id`, `room_label_id`, `type`, `x_coord`, `y_coord`, `flo
 (72, NULL, 'exit', 265, 297, 5),
 (73, NULL, 'exit', 572, 297, 5),
 (74, NULL, 'exit', 750, 60, 5),
-(75, NULL, 'exit', 446, 297, 5);
+(75, NULL, 'exit', 446, 297, 5),
+(76, 22, 'room', 105, 27, 6),
+(77, 23, 'room', 86, 127, 6),
+(78, 24, 'room', 105, 165, 6),
+(79, 24, 'room', 105, 231, 6),
+(80, 25, 'room', 105, 260, 6),
+(81, 25, 'room', 105, 325, 6),
+(82, 26, 'room', 105, 352, 6),
+(83, 26, 'room', 105, 418, 6),
+(84, 27, 'room', 136, 37, 6),
+(85, 27, 'room', 136, 86, 6),
+(86, 28, 'room', 136, 123, 6),
+(87, 28, 'room', 136, 190, 6),
+(88, 29, 'room', 136, 220, 6),
+(89, 29, 'room', 136, 286, 6),
+(90, 30, 'other', 154, 343, 6),
+(91, 30, 'other', 209, 343, 6),
+(92, 31, 'room', 700, 37, 6),
+(93, 31, 'room', 700, 86, 6),
+(94, 32, 'room', 700, 123, 6),
+(95, 32, 'room', 700, 190, 6),
+(96, 33, 'room', 700, 220, 6),
+(97, 33, 'room', 700, 286, 6),
+(98, 34, 'room', 628, 343, 6),
+(99, 34, 'room', 683, 343, 6),
+(100, 35, 'room', 732, 27, 6),
+(101, 36, 'room', 750, 127, 6),
+(102, 37, 'room', 732, 165, 6),
+(103, 37, 'room', 732, 231, 6),
+(104, 38, 'room', 732, 260, 6),
+(105, 38, 'room', 732, 325, 6),
+(106, 39, 'room', 732, 352, 6),
+(107, 39, 'room', 732, 418, 6),
+(108, NULL, 'corridor', 119, 37, 6),
+(109, NULL, 'corridor', 119, 60, 6),
+(110, NULL, 'corridor', 119, 86, 6),
+(111, NULL, 'corridor', 119, 123, 6),
+(112, NULL, 'corridor', 119, 165, 6),
+(113, NULL, 'corridor', 119, 190, 6),
+(114, NULL, 'corridor', 119, 220, 6),
+(115, NULL, 'corridor', 119, 231, 6),
+(116, NULL, 'corridor', 119, 260, 6),
+(117, NULL, 'corridor', 119, 286, 6),
+(118, NULL, 'corridor', 119, 325, 6),
+(119, NULL, 'corridor', 119, 352, 6),
+(120, NULL, 'corridor', 119, 418, 6),
+(121, NULL, 'corridor', 154, 325, 6),
+(122, NULL, 'corridor', 209, 325, 6),
+(123, NULL, 'corridor', 247, 325, 6),
+(126, NULL, 'corridor', 417, 325, 6),
+(127, NULL, 'corridor', 590, 325, 6),
+(128, NULL, 'corridor', 628, 325, 6),
+(129, NULL, 'corridor', 683, 325, 6),
+(130, NULL, 'corridor', 715, 37, 6),
+(131, NULL, 'corridor', 715, 60, 6),
+(132, NULL, 'corridor', 715, 86, 6),
+(133, NULL, 'corridor', 715, 123, 6),
+(134, NULL, 'corridor', 715, 165, 6),
+(135, NULL, 'corridor', 715, 190, 6),
+(136, NULL, 'corridor', 715, 220, 6),
+(137, NULL, 'corridor', 715, 231, 6),
+(138, NULL, 'corridor', 715, 260, 6),
+(139, NULL, 'corridor', 715, 286, 6),
+(140, NULL, 'corridor', 715, 325, 6),
+(141, NULL, 'corridor', 715, 352, 6),
+(142, NULL, 'corridor', 715, 418, 6),
+(143, NULL, 'exit', 119, 433, 6),
+(144, NULL, 'exit', 418, 433, 6),
+(145, NULL, 'exit', 715, 433, 6);
 
 -- --------------------------------------------------------
 
@@ -305,7 +374,7 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
   `name` varchar(50) NOT NULL,
   `x_coord` int NOT NULL,
   `y_coord` int NOT NULL,
-  `building_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'Devesse',
+  `building_name` varchar(100) NOT NULL DEFAULT 'Devesse',
   `wing` tinyint DEFAULT NULL,
   `floor_id` int DEFAULT NULL,
   `room_type` enum('classroom','office','lab','comfort_room','entrance','safe_route','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'classroom',
