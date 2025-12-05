@@ -7,14 +7,17 @@
 ?>
  
 <?php
-    require 'connectDB.php';
-    $sql = "SELECT * FROM roomlabel";
-    $result = $conn->query($sql);
+require 'connectDB.php';
+$stmt = $conn->prepare("SELECT * FROM roomlabel WHERE floor_id=?");
+$stmt->bind_param("s", $_GET["currentFloor"]);
+$stmt->execute();
 
-    $roomLabels = [];
-    while ($row = $result->fetch_assoc()) {
-    $roomLabels[] = $row;
-    }
-    echo json_encode($roomLabels);
-    $conn->close();
-    ?>
+$result = $stmt->get_result();
+
+$roomLabels = [];
+while ($row = $result->fetch_assoc()) {
+   $roomLabels[] = $row;
+}
+echo json_encode($roomLabels);
+$conn->close();
+?>
