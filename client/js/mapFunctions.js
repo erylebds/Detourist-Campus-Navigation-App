@@ -100,12 +100,19 @@ function updateRoomLabels() {
     .catch(err => console.error("Error loading room labels:", err));
 }
 
-// For multi-line labels
+// Split long labels into multiple lines
 function drawRoomLabel(name, x, y) {
-  lines = name.split('\\n');
+  lines = name.trim().split(" ");
   lineHeight = 15;
   for (i = 0; i < lines.length; i++) {
-    textContext.fillText(lines[i], x, y + (i * lineHeight));
+    line = lines[i];
+    if ((line.length < 5) && (i + 1 < lines.length)) {
+      line = `${line} ${lines[i + 1]}`;
+      textContext.fillText(line, x, y + (i * lineHeight));
+      i++;
+    } else {
+      textContext.fillText(line, x, y + (i * lineHeight))
+    }
   }
 }
 

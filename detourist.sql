@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 05, 2025 at 02:47 PM
+-- Generation Time: Dec 05, 2025 at 02:58 PM
 -- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
@@ -483,7 +483,7 @@ INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `w
 (27, 'D608', 160, 70, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (28, 'D607', 160, 160, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (29, 'D606', 160, 250, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
-(30, 'Water\\nis Life', 160, 390, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(30, 'Water is Life', 160, 390, 'Devesse', 0, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (31, 'D628', 640, 70, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (32, 'D627', 640, 160, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (33, 'D626', 640, 250, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
