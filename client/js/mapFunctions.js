@@ -285,12 +285,18 @@ function drawRouteLines(traceBackNode, lineColor) {
 
   points = calcWaypoints(vertices);
   t = 1;
+  activeFloor = currentFloor;
   animate();
 }
 
 function animate() {
   if (t < points.length - 1) {
-    requestAnimationFrame(animate);
+    if (activeFloor == currentFloor) {
+      requestAnimationFrame(animate);
+    } else {
+      // If user suddenly switches floors while the animation is underway, stop drawing
+      return;
+    }
   }
   lineContext.beginPath();
   lineContext.moveTo(points[t - 1].x, points[t - 1].y);
