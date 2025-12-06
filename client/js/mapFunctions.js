@@ -418,9 +418,10 @@ function calculateDistanceBetween(node1, node2) {
 
 updateFloorView();
 
-textCanvas.addEventListener('mousedown', (event) => {
-  const rect = textCanvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  console.log(`Clicked at: x=${x}, y=${y}`);
-});
+//// test function for getting map coordinates
+// textCanvas.addEventListener('mousedown', (event) => {
+//   const rect = textCanvas.getBoundingClientRect();
+//   const x = event.clientX - rect.left;
+//   const y = event.clientY - rect.top;
+//   console.log(`Clicked at: x=${x}, y=${y}`);
+// });
