@@ -182,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('x_coord').value = this.dataset.x;
             document.getElementById('y_coord').value = this.dataset.y;
 
-            // --- CHANGE: Disable Floor Select in Edit Mode ---
             floorSelect.disabled = true;
             floorSelect.style.backgroundColor = "#e9ecef"; // Visual cue
 
@@ -197,7 +196,6 @@ document.addEventListener("DOMContentLoaded", function() {
         roomIdInput.value = '';
         formTitle.innerText = 'Add New Room';
 
-        // --- CHANGE: Re-enable Floor Select for "Add" Mode ---
         floorSelect.disabled = false;
         floorSelect.style.backgroundColor = ""; // Reset color
 
