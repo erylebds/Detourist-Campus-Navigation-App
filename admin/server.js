@@ -1,8 +1,7 @@
 const express = require("express"); //import node express framework for server creation
 const session = require("express-session"); //track user requests
 const path = require("path");
-const multer = require('multer');
-const upload = multer();
+
 
 const app = express();
 
