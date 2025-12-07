@@ -31,7 +31,7 @@
                 <td><%= room.x_coord %>, <%= room.y_coord %></td>
                 <td>
                     <button class="btn btn-sm btn-warning" 
-                        onclick='openRoomModal("edit", <%- JSON.stringify(room) %>)'>Edit</button>
+                        onclick='openRoomModal("edit", <%= JSON.stringify(room) %>)'>Edit</button>
                     <button class="btn btn-sm btn-danger" 
                         onclick="deleteRoom(<%= room.room_id %>)">Delete</button>
                 </td>
