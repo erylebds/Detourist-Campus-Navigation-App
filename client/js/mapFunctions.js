@@ -113,7 +113,7 @@ function drawRoomLabel(name, x, y) {
   lineHeight = 15;
   for (i = 0; i < lines.length; i++) {
     line = lines[i];
-    if ((line.length < 5) && (i + 1 < lines.length)) {
+    if ((i + 1 < lines.length) && (line.length < 5) && (`${line} ${lines[i + 1]}`.length < 10)) {
       line = `${line} ${lines[i + 1]}`;
       textContext.fillText(line, x, y + (i * lineHeight));
       i++;
@@ -285,12 +285,18 @@ function drawRouteLines(traceBackNode, lineColor) {
 
   points = calcWaypoints(vertices);
   t = 1;
+  activeFloor = currentFloor;
   animate();
 }
 
 function animate() {
   if (t < points.length - 1) {
-    requestAnimationFrame(animate);
+    if (activeFloor == currentFloor) {
+      requestAnimationFrame(animate);
+    } else {
+      // If user suddenly switches floors while the animation is underway, stop drawing
+      return;
+    }
   }
   lineContext.beginPath();
   lineContext.moveTo(points[t - 1].x, points[t - 1].y);
@@ -418,9 +424,10 @@ function calculateDistanceBetween(node1, node2) {
 
 updateFloorView();
 
-textCanvas.addEventListener('mousedown', (event) => {
-  const rect = textCanvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  console.log(`Clicked at: x=${x}, y=${y}`);
-});
+//// test function for getting map coordinates
+// textCanvas.addEventListener('mousedown', (event) => {
+//   const rect = textCanvas.getBoundingClientRect();
+//   const x = event.clientX - rect.left;
+//   const y = event.clientY - rect.top;
+//   console.log(`Clicked at: x=${x}, y=${y}`);
+// });

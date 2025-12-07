@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 05, 2025 at 02:58 PM
+-- Generation Time: Dec 06, 2025 at 08:50 AM
 -- Server version: 8.0.41
 -- PHP Version: 8.3.14
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `mapedge` (
   PRIMARY KEY (`id`),
   KEY `FK_mapedge_mapnode_1` (`adjacent_node_id`),
   KEY `FK_mapedge_mapnode_2` (`map_node_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `mapedge`
@@ -235,7 +235,86 @@ INSERT INTO `mapedge` (`id`, `adjacent_node_id`, `map_node_id`) VALUES
 (143, 131, 132),
 (144, 130, 131),
 (145, 92, 130),
-(146, 100, 130);
+(146, 100, 130),
+(147, 146, 182),
+(148, 152, 182),
+(149, 183, 182),
+(150, 216, 183),
+(151, 184, 183),
+(152, 153, 184),
+(153, 185, 184),
+(154, 216, 184),
+(155, 147, 184),
+(156, 147, 185),
+(157, 154, 185),
+(158, 186, 185),
+(159, 148, 186),
+(160, 187, 186),
+(161, 155, 187),
+(162, 188, 187),
+(163, 156, 188),
+(164, 189, 188),
+(165, 149, 189),
+(166, 190, 189),
+(167, 150, 190),
+(168, 191, 190),
+(169, 157, 191),
+(170, 192, 191),
+(171, 151, 192),
+(172, 193, 192),
+(173, 220, 193),
+(174, 193, 194),
+(175, 217, 220),
+(176, 158, 220),
+(177, 194, 158),
+(178, 195, 194),
+(179, 159, 195),
+(180, 196, 195),
+(181, 160, 196),
+(182, 197, 196),
+(183, 161, 197),
+(184, 219, 197),
+(185, 198, 197),
+(186, 162, 198),
+(187, 199, 198),
+(188, 163, 199),
+(189, 200, 199),
+(190, 164, 200),
+(191, 201, 200),
+(192, 165, 201),
+(193, 202, 201),
+(194, 166, 202),
+(195, 203, 202),
+(196, 167, 203),
+(197, 214, 203),
+(198, 213, 214),
+(199, 179, 214),
+(200, 215, 214),
+(201, 180, 215),
+(202, 173, 213),
+(203, 212, 213),
+(204, 178, 212),
+(205, 211, 212),
+(206, 177, 211),
+(207, 210, 211),
+(208, 172, 210),
+(209, 209, 210),
+(210, 171, 209),
+(211, 208, 209),
+(212, 176, 208),
+(213, 207, 208),
+(214, 170, 207),
+(215, 175, 207),
+(216, 206, 207),
+(217, 169, 206),
+(218, 175, 206),
+(219, 218, 206),
+(220, 205, 206),
+(221, 204, 205),
+(222, 168, 204),
+(223, 174, 204),
+(224, 216, 147),
+(225, 218, 175);
 
 -- --------------------------------------------------------
 
@@ -258,6 +337,7 @@ CREATE TABLE IF NOT EXISTS `mapfloor` (
 --
 
 INSERT INTO `mapfloor` (`floor_id`, `building_code`, `floor_number`, `map_image_path`) VALUES
+(4, 'D', 4, 'admin/public/assets/floors/floor4.png'),
 (5, 'D', 5, 'admin/public/assets/floors/floor5.png'),
 (6, 'D', 6, 'admin/public/assets/floors/floor6.png');
 
@@ -278,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `mapnode` (
   PRIMARY KEY (`id`),
   KEY `FK_mapnode_roomlabel` (`room_label_id`),
   KEY `FK_mapnode_mapfloor` (`floor_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `mapnode`
@@ -407,9 +487,9 @@ INSERT INTO `mapnode` (`id`, `room_label_id`, `type`, `x_coord`, `y_coord`, `flo
 (120, NULL, 'corridor', 119, 418, 6),
 (121, NULL, 'corridor', 154, 325, 6),
 (122, NULL, 'corridor', 209, 325, 6),
-(123, NULL, 'corridor', 247, 325, 6),
+(123, NULL, 'corridor', 265, 325, 6),
 (126, NULL, 'corridor', 417, 325, 6),
-(127, NULL, 'corridor', 590, 325, 6),
+(127, NULL, 'corridor', 572, 325, 6),
 (128, NULL, 'corridor', 628, 325, 6),
 (129, NULL, 'corridor', 683, 325, 6),
 (130, NULL, 'corridor', 715, 37, 6),
@@ -427,7 +507,81 @@ INSERT INTO `mapnode` (`id`, `room_label_id`, `type`, `x_coord`, `y_coord`, `flo
 (142, NULL, 'corridor', 715, 418, 6),
 (143, NULL, 'exit', 119, 433, 6),
 (144, NULL, 'exit', 418, 433, 6),
-(145, NULL, 'exit', 715, 433, 6);
+(145, NULL, 'exit', 715, 433, 6),
+(146, 40, 'room', 105, 27, 4),
+(147, 41, 'room', 86, 127, 4),
+(148, 42, 'room', 105, 165, 4),
+(149, 42, 'room', 105, 231, 4),
+(150, 43, 'room', 105, 260, 4),
+(151, 43, 'room', 105, 325, 4),
+(152, 44, 'room', 136, 37, 4),
+(153, 44, 'room', 136, 86, 4),
+(154, 45, 'room', 136, 123, 4),
+(155, 45, 'room', 136, 190, 4),
+(156, 46, 'room', 136, 220, 4),
+(157, 46, 'room', 136, 286, 4),
+(158, 47, 'other', 283, 343, 4),
+(159, 48, 'other', 361, 343, 4),
+(160, 49, 'room', 389, 343, 4),
+(161, 49, 'room', 446, 343, 4),
+(162, 50, 'room', 475, 343, 4),
+(163, 50, 'room', 520, 343, 4),
+(164, 51, 'room', 554, 343, 4),
+(165, 51, 'room', 590, 343, 4),
+(166, 52, 'room', 628, 343, 4),
+(167, 52, 'room', 683, 343, 4),
+(168, 53, 'room', 700, 37, 4),
+(169, 53, 'room', 700, 86, 4),
+(170, 54, 'room', 700, 123, 4),
+(171, 54, 'room', 700, 190, 4),
+(172, 55, 'room', 700, 220, 4),
+(173, 55, 'room', 700, 286, 4),
+(174, 56, 'room', 732, 27, 4),
+(175, 57, 'room', 750, 127, 4),
+(176, 58, 'room', 732, 165, 4),
+(177, 58, 'room', 732, 231, 4),
+(178, 59, 'room', 732, 260, 4),
+(179, 59, 'room', 732, 325, 4),
+(180, 60, 'room', 732, 352, 4),
+(182, NULL, 'corridor', 119, 37, 4),
+(183, NULL, 'corridor', 119, 60, 4),
+(184, NULL, 'corridor', 119, 86, 4),
+(185, NULL, 'corridor', 119, 123, 4),
+(186, NULL, 'corridor', 119, 165, 4),
+(187, NULL, 'corridor', 119, 190, 4),
+(188, NULL, 'corridor', 119, 220, 4),
+(189, NULL, 'corridor', 119, 231, 4),
+(190, NULL, 'corridor', 119, 260, 4),
+(191, NULL, 'corridor', 119, 286, 4),
+(192, NULL, 'corridor', 119, 325, 4),
+(193, NULL, 'corridor', 260, 325, 4),
+(194, NULL, 'corridor', 283, 325, 4),
+(195, NULL, 'corridor', 361, 325, 4),
+(196, NULL, 'corridor', 389, 325, 4),
+(197, NULL, 'corridor', 446, 325, 4),
+(198, NULL, 'corridor', 475, 325, 4),
+(199, NULL, 'corridor', 520, 325, 4),
+(200, NULL, 'corridor', 554, 325, 4),
+(201, NULL, 'corridor', 590, 325, 4),
+(202, NULL, 'corridor', 628, 325, 4),
+(203, NULL, 'corridor', 683, 325, 4),
+(204, NULL, 'corridor', 715, 37, 4),
+(205, NULL, 'corridor', 715, 60, 4),
+(206, NULL, 'corridor', 715, 86, 4),
+(207, NULL, 'corridor', 715, 123, 4),
+(208, NULL, 'corridor', 715, 165, 4),
+(209, NULL, 'corridor', 715, 190, 4),
+(210, NULL, 'corridor', 715, 220, 4),
+(211, NULL, 'corridor', 715, 231, 4),
+(212, NULL, 'corridor', 715, 260, 4),
+(213, NULL, 'corridor', 715, 286, 4),
+(214, NULL, 'corridor', 715, 325, 4),
+(215, NULL, 'corridor', 715, 352, 4),
+(216, NULL, 'exit', 86, 60, 4),
+(217, NULL, 'exit', 260, 370, 4),
+(218, NULL, 'exit', 750, 60, 4),
+(219, NULL, 'exit', 446, 297, 4),
+(220, NULL, 'corridor', 260, 343, 4);
 
 -- --------------------------------------------------------
 
@@ -447,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `roomlabel` (
   `room_type` enum('classroom','office','lab','comfort_room','entrance','safe_route','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'classroom',
   `room_image_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'admin/public/assets/backgrounds/maryheights-campus.jpg',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `roomlabel`
@@ -492,7 +646,28 @@ INSERT INTO `roomlabel` (`id`, `name`, `x_coord`, `y_coord`, `building_name`, `w
 (36, 'CR(M)', 765, 145, 'Devesse', 2, 6, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (37, 'D622', 755, 210, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
 (38, 'D623', 755, 300, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
-(39, 'D624', 755, 390, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg');
+(39, 'D624', 755, 390, 'Devesse', 2, 6, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(40, 'D401', 48, 40, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(41, 'CR(F)', 30, 145, 'Devesse', 0, 4, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(42, 'D402', 48, 210, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(43, 'D403', 48, 300, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(44, 'D406', 160, 70, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(45, 'D405', 160, 160, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(46, 'D404', 160, 250, 'Devesse', 0, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(47, 'ACCG', 297, 405, 'Devesse', 1, 4, 'other', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(48, 'Book Store', 342, 360, 'Devesse', 1, 4, 'other', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(49, 'D412', 400, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(50, 'D413', 480, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(51, 'D414', 560, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(52, 'D425', 640, 390, 'Devesse', 1, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(53, 'D428', 640, 70, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(54, 'D427', 640, 160, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(55, 'D426', 640, 250, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(56, 'D421', 755, 40, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(57, 'CR(M)', 765, 145, 'Devesse', 2, 4, 'comfort_room', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(58, 'D422', 755, 210, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(59, 'D423', 755, 300, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg'),
+(60, 'D424', 755, 390, 'Devesse', 2, 4, 'classroom', 'admin/public/assets/backgrounds/maryheights-campus.jpg');
 
 --
 -- Constraints for dumped tables
