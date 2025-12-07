@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const adminService = require("../controllers/adminController");
-const adminModel = require("../models/adminModel");
+const adminModel = require("../models/adminModel"); 
 const announcementController = require("../controllers/announcementController");
+const roomModel = require("../models/roomModel");
 const requireAdmin = require("../middleware/requireAdmin");
 const bcrypt = require("bcrypt");
 
@@ -18,19 +19,18 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // find admin by username or email
-        const admin = await adminService.findAdminByUsernameOrEmail(username);
+        const admin = await adminModel.findAdminByUsernameOrEmail(username);
 
         // if not found, show error
         if (!admin) {
-            req.session.loginError = "username or email not found";
+            req.session.loginError = "Username or email not found";
             return res.redirect("/login");
         }
 
         // compare password
         const match = await bcrypt.compare(password, admin.password);
         if (!match) {
-            req.session.loginError = "invalid password";
+            req.session.loginError = "Invalid password";
             return res.redirect("/login");
         }
 
@@ -41,8 +41,8 @@ router.post("/login", async (req, res) => {
         req.session.isAdmin = true;
         return res.redirect("/admin");
     } catch (err) {
-        console.error(err);
-        res.send("server error");
+        console.error("Login Error:", err);
+        res.status(500).send("Server error during login");
     }
 });
 
@@ -54,9 +54,26 @@ router.get("/admin", requireAdmin, async (req, res) => {
         // get all announcements
         const announcements = await announcementController.getAllAnnouncements();
 
+        // get all rooms
+        let rooms = [];
+        try {
+            rooms = await roomModel.getAllRooms(); 
+        } catch (err) {
+            console.error("Error fetching rooms:", err);
+        }
+
         // check if editing a specific announcement
         const editId = req.query.edit ? Number(req.query.edit) : null;
         const editAnnouncement = editId ? await announcementController.getAnnouncementById(editId) : null;
+        
+        // get other admins excluding current
+        let otherAdmins = [];
+        try {
+            const allAdmins = await adminModel.getAllAdmins();
+            otherAdmins = allAdmins.filter(a => a.admin_id !== req.session.adminId);
+        } catch (err) {
+            console.warn("Could not fetch other admins (function might be missing in model):", err.message);
+        }
 
         // render admin view with data
         res.render("adminView", {
@@ -65,6 +82,7 @@ router.get("/admin", requireAdmin, async (req, res) => {
             annMsg: req.session.annMsg || null,
             announcements,
             editAnnouncement,
+            rooms: rooms, 
             accMsg: req.session.accMsg || null,
             accError: req.session.accerror || null,
             currentAdmin: {
@@ -72,9 +90,7 @@ router.get("/admin", requireAdmin, async (req, res) => {
                 email: req.session.adminEmail || "",
                 created_at: req.session.adminCreatedAt || "n/a"
             },
-            otherAdmins: await adminModel.getAllAdmins().then(admins =>
-                admins.filter(a => a.admin_id !== req.session.adminId)
-            )
+            otherAdmins: otherAdmins
         });
 
         // reset temporary session messages
@@ -83,8 +99,8 @@ router.get("/admin", requireAdmin, async (req, res) => {
         req.session.accMsg = null;
         req.session.accerror = null;
     } catch (err) {
-        console.error("render admin error:", err);
-        res.setMaxListeners(500).send("server error");
+        console.error("Render admin error:", err);
+        res.status(500).send("Server error loading dashboard"); 
     }
 });
 
