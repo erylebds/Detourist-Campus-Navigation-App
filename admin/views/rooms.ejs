@@ -75,15 +75,10 @@
             <tr data-id="<%= room.room_id %>">
                 <td>
                     <% if(room.image_path) {
-                        // --- IMAGE PATH FIX ---
-                        // 1. Get the path from the database.
                         let imgSrc = room.image_path;
-                        // 2. If it's an old path starting with 'admin/public/', remove that prefix.
-                        //    This assumes the file is now in your project's 'public/' folder.
                         if (imgSrc.includes('admin/public/')) {
                             imgSrc = imgSrc.replace('admin/public/', '');
                         }
-                        // 3. Ensure the path starts with a '/' so the browser loads it relative to the root.
                         if (!imgSrc.startsWith('/')) {
                             imgSrc = '/' + imgSrc;
                         }
@@ -123,33 +118,41 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Get references to form elements
     const form = document.getElementById('roomForm');
     const formTitle = document.getElementById('formTitle');
     const cancelBtn = document.getElementById('cancelBtn');
     const roomIdInput = document.getElementById('roomId');
+    const floorSelect = document.getElementById('floor_id'); 
 
-    // ==================== 1. FORM SUBMISSION (Create & Update) ====================
+    // ==================== 1. FORM SUBMISSION ====================
     form.addEventListener('submit', async function(e) {
-        e.preventDefault(); // Stop the normal form submission
+        e.preventDefault();
 
-        // Create FormData object to send files and text data
+    
+        const wasDisabled = floorSelect.disabled;
+        if(wasDisabled) {
+            floorSelect.disabled = false;
+        }
+
         const formData = new FormData(this);
         const id = formData.get('id');
 
-        // Determine URL based on whether an ID exists
+        // Restore the disabled state immediately
+        if(wasDisabled) {
+            floorSelect.disabled = true;
+        }
+
         const url = id ? '/admin/rooms/update' : '/admin/rooms/create';
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                body: formData // fetch automatically sets the correct Content-Type for FormData
+                body: formData
             });
 
             const result = await response.json();
 
             if (response.ok && result.success) {
-                // Show success message
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
@@ -157,7 +160,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                // Reload page after a short delay to show changes
                 setTimeout(() => window.location.reload(), 800);
             } else {
                 Swal.fire('Error', result.message || 'Error saving room', 'error');
@@ -171,34 +173,34 @@ document.addEventListener("DOMContentLoaded", function() {
     // ==================== 2. EDIT BUTTON CLICK ====================
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            // Change form title
             formTitle.innerText = 'Edit Room';
 
-            // Populate form inputs with data from the button's data-attributes
             roomIdInput.value = this.dataset.id;
             document.getElementById('roomName').value = this.dataset.name;
-            document.getElementById('floor_id').value = this.dataset.floor;
+            floorSelect.value = this.dataset.floor;
             document.getElementById('room_type').value = this.dataset.type;
             document.getElementById('x_coord').value = this.dataset.x;
             document.getElementById('y_coord').value = this.dataset.y;
 
-            // Show the cancel button
-            cancelBtn.style.display = 'inline-block';
+            // --- CHANGE: Disable Floor Select in Edit Mode ---
+            floorSelect.disabled = true;
+            floorSelect.style.backgroundColor = "#e9ecef"; // Visual cue
 
-            // Scroll up to the form so the user can see it
+            cancelBtn.style.display = 'inline-block';
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
     // ==================== 3. CANCEL BUTTON CLICK ====================
     cancelBtn.addEventListener('click', function() {
-        // Reset the form to its default state
         form.reset();
-        // Clear the hidden ID
         roomIdInput.value = '';
-        // Change title back to 'Add New Room'
         formTitle.innerText = 'Add New Room';
-        // Hide the cancel button
+
+        // --- CHANGE: Re-enable Floor Select for "Add" Mode ---
+        floorSelect.disabled = false;
+        floorSelect.style.backgroundColor = ""; // Reset color
+
         this.style.display = 'none';
     });
 
@@ -208,7 +210,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const id = this.dataset.id;
             const row = this.closest('tr');
 
-            // Show confirmation alert
             const result = await Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -219,7 +220,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 confirmButtonText: 'Yes, delete it!'
             });
 
-            // If user confirms deletion
             if (result.isConfirmed) {
                 try {
                     const response = await fetch(`/admin/rooms/delete/${id}`, { method: 'DELETE' });
@@ -227,7 +227,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (response.ok && data.success) {
                         Swal.fire('Deleted!', data.message, 'success');
-                        // Remove the table row from the DOM
                         row.remove();
                     } else {
                         Swal.fire('Error', data.message || 'Error deleting room', 'error');
