@@ -82,6 +82,7 @@ router.get("/admin", requireAdmin, async (req, res) => {
             annMsg: req.session.annMsg || null,
             announcements,
             editAnnouncement,
+            rooms: rooms, 
             accMsg: req.session.accMsg || null,
             accError: req.session.accerror || null,
             currentAdmin: {
