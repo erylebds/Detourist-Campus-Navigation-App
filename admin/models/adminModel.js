@@ -8,24 +8,20 @@ async function findAdminByUsernameOrEmail(identifier) {
     return rows[0];
 }
 
-async function findAdminById(id) {
-    const [rows] = await pool.query(
-        "SELECT * FROM admin WHERE admin_id = ?",
-        [id]
-    );
-    return rows[0];
+// get all admins
+async function getAllAdmins() {
+    const [rows] = await pool.query("SELECT * FROM admin");
+    return rows;
 }
 
-async function createAdmin(username, email, password) {
-    const [result] = await pool.query(
-        "INSERT INTO admin (username, email, password) VALUES (?, ?, ?)",
-        [username, email, password]
-    );
-    return result.insertId;
+// find admin by ID
+async function findAdminById(id) {
+    const [rows] = await pool.query("SELECT * FROM admin WHERE admin_id = ?", [id]);
+    return rows[0];
 }
 
 module.exports = {
     findAdminByUsernameOrEmail,
-    findAdminById,
-    createAdmin
+    getAllAdmins,  
+    findAdminById
 };
