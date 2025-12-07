@@ -4,6 +4,7 @@ const router = express.Router();
 const adminService = require("../controllers/adminController");
 const adminModel = require("../models/adminModel"); 
 const announcementController = require("../controllers/announcementController");
+const roomModel = require("../models/roomModel");
 const requireAdmin = require("../middleware/requireAdmin");
 const bcrypt = require("bcrypt");
 
@@ -52,6 +53,14 @@ router.get("/admin", requireAdmin, async (req, res) => {
 
         // get all announcements
         const announcements = await announcementController.getAllAnnouncements();
+
+        // get all rooms
+        let rooms = [];
+        try {
+            rooms = await roomModel.getAllRooms(); 
+        } catch (err) {
+            console.error("Error fetching rooms:", err);
+        }
 
         // check if editing a specific announcement
         const editId = req.query.edit ? Number(req.query.edit) : null;
