@@ -417,6 +417,10 @@ a {
   font-size: 1.8rem;
 }
 
+.dark-mode {
+  filter: invert();
+}
+
 @media (max-width: 1024px) {
   #home {
     flex-direction: column;
