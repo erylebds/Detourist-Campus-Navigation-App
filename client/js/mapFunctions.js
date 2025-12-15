@@ -6,7 +6,11 @@
 - Smooth route line animation between map nodes
 */
 
-var currentFloor = 5;
+var currentFloor = localStorage.getItem('currentFloor');
+if (!currentFloor) {
+  currentFloor = 5;
+}
+
 const upFloorBtn = document.getElementById("upFloor");
 const downFloorBtn = document.getElementById("downFloor");
 
@@ -15,14 +19,14 @@ downFloorBtn.addEventListener('click', goToLowerFloor);
 
 function goToUpperFloor() {
   if (currentFloor != 6) {
-    currentFloor++;
+    localStorage.setItem('currentFloor', ++currentFloor);
     updateFloorView();
   }
 }
 
 function goToLowerFloor() {
   if (currentFloor != 4) {
-    currentFloor--;
+    localStorage.setItem('currentFloor', --currentFloor);
     updateFloorView();
   }
 }
