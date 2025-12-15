@@ -1,28 +1,32 @@
 <h1 class="section-title">Announcements</h1>
 
 <% if (annMsg) { %>
-    <div class="msg-success"><%= annMsg %></div>
-<% } %>
+    <div class="msg-success">
+        <%= annMsg %>
+    </div>
+    <% } %>
 
-<div class="card-box">
-    <h2><%= editAnnouncement ? 'Edit Announcement' : 'Add New Announcement' %></h2>
+        <div class="card-box">
+            <h2>
+                <%= editAnnouncement ? 'Edit Announcement' : 'Add New Announcement' %>
+            </h2>
 
-    <form id="announcementForm" method="POST" action="/admin/announcements">
-        <input type="hidden" name="form_type" value="announcement">
-        <% if (editAnnouncement) { %>
-            <input type="hidden" name="announcement_id" value="<%= editAnnouncement.announcement_id %>">
-        <% } %>
+            <form id="announcementForm" method="POST" action="/admin/announcements">
+                <input type="hidden" name="form_type" value="announcement">
+                <% if (editAnnouncement) { %>
+                    <input type="hidden" name="announcement_id" value="<%= editAnnouncement.announcement_id %>">
+                    <% } %>
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required
-               value="<%= editAnnouncement ? editAnnouncement.title : '' %>">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required
+                            value="<%= editAnnouncement ? editAnnouncement.title : '' %>">
 
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required><%= editAnnouncement ? editAnnouncement.message : '' %></textarea>
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message"
+                            required><%= editAnnouncement ? editAnnouncement.message : '' %></textarea>
 
-        <label for="created_at">Date & Time:</label>
-        <input type="datetime-local" id="created_at" name="created_at"
-               value="<%= (() => {
+                        <label for="created_at">Date & Time:</label>
+                        <input type="datetime-local" id="created_at" name="created_at" value="<%= (() => {
                    function formatLocalDate(d){
                        const pad = n => n.toString().padStart(2,'0');
                        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -34,126 +38,135 @@
                    return formatLocalDate(new Date());
                })() %>">
 
-        <button type="submit" class="btn-primary">Save Announcement</button>
+                        <button type="submit" class="btn-primary">Save Announcement</button>
 
-        <% if (editAnnouncement) { %>
-            <a href="/admin?tab=announcements" class="btn-secondary">Cancel</a>
-        <% } %>
-    </form>
-</div>
+                        <% if (editAnnouncement) { %>
+                            <a href="/admin?tab=announcements" class="btn-secondary">Cancel</a>
+                            <% } %>
+            </form>
+        </div>
 
-<div class="card-box">
-    <h2>Existing Announcements</h2>
+        <div class="card-box">
+            <h2>Existing Announcements</h2>
 
-    <table class="admin-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Message</th>
-                <th>Created At</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Message</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-        <tbody>
-            <% announcements.forEach(a => { %>
-            <tr data-id="<%= a.announcement_id %>">
-                <td><%= a.announcement_id %></td>
-                <td><%= a.title %></td>
-                <td><%= a.message %></td>
-                <td><%= a.created_at %></td>
-                <td>
-                    <a href="/admin/announcements/edit/<%= a.announcement_id %>">Edit</a> |
-                    <button class="delete-btn" data-id="<%= a.announcement_id %>" style="color:#e74c3c; background:none; border:none; cursor:pointer;">Delete</button>
-                </td>
-            </tr>
-            <% }) %>
-        </tbody>
-    </table>
-</div>
+                <tbody>
+                    <% announcements.forEach(a=> { %>
+                        <tr data-id="<%= a.announcement_id %>">
+                            <td>
+                                <%= a.announcement_id %>
+                            </td>
+                            <td>
+                                <%= a.title %>
+                            </td>
+                            <td>
+                                <%= a.message %>
+                            </td>
+                            <td>
+                                <%= a.created_at %>
+                            </td>
+                            <td>
+                                <a href="/admin/announcements/edit/<%= a.announcement_id %>">Edit</a> |
+                                <button class="delete-announcement-btn" data-id="<%= a.announcement_id %>"
+                                    style="color:#e74c3c; background:none; border:none; cursor:pointer;">Delete</button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
 
-<!-- UI Library -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- UI Library -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById('announcementForm');
-    const createdInput = document.getElementById('created_at');
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById('announcementForm');
+                const createdInput = document.getElementById('created_at');
 
-    form.addEventListener('submit', async function(e){ //Ajaxx
-        e.preventDefault();
+                form.addEventListener('submit', async function (e) { //Ajaxx
+                    e.preventDefault();
 
-        const title = form.title.value.trim();
-        const message = form.message.value.trim();
-        const created_at = createdInput.value;
+                    const title = form.title.value.trim();
+                    const message = form.message.value.trim();
+                    const created_at = createdInput.value;
 
-        if(!title || !message){
-            Swal.fire('Error', 'Title and message are required.', 'error');
-            return;
-        }
+                    if (!title || !message) {
+                        Swal.fire('Error', 'Title and message are required.', 'error');
+                        return;
+                    }
 
-        const formData = new FormData(form);
-        formData.set('created_at', created_at);
+                    const formData = new FormData(form);
+                    formData.set('created_at', created_at);
 
-        try{
-            const res = await fetch('/admin/announcements', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: formData
-            });
+                    try {
+                        const res = await fetch('/admin/announcements', {
+                            method: 'POST',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            body: formData
+                        });
 
-            const data = await res.json();
-            if(data.success){
-                Swal.fire('Success', data.message, 'success');
-                setTimeout(() => location.reload(), 800);
-            } else {
-                Swal.fire('Error', data.message, 'error');
-            }
-        } catch(err){
-            console.error(err);
-            Swal.fire('Error', 'Server error occurred.', 'error');
-        }
-    });
+                        const data = await res.json();
+                        if (data.success) {
+                            Swal.fire('Success', data.message, 'success');
+                            setTimeout(() => location.reload(), 800);
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        Swal.fire('Error', 'Server error occurred.', 'error');
+                    }
+                });
 
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', async function(){
-            const id = this.dataset.id;
-            const row = this.closest('tr');
+                document.querySelectorAll('.delete-announcement-btn').forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const id = this.dataset.id;
+                        const row = this.closest('tr');
 
-            const result = await Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            });
+                        const result = await Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        });
 
-            if(result.isConfirmed){
-                try{
-                    const res = await fetch(`/admin/announcements/delete/${id}`, {
-                        method: 'GET',
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
+                        if (result.isConfirmed) {
+                            try {
+                                const res = await fetch(`/admin/announcements/delete/${id}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'X-Requested-With': 'XMLHttpRequest'
+                                    }
+                                });
+                                const data = await res.json();
+                                if (data.success) {
+                                    Swal.fire('Deleted!', data.message, 'success');
+                                    row.remove();
+                                } else {
+                                    Swal.fire('Error', data.message, 'error');
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                Swal.fire('Error', 'Server error occurred.', 'error');
+                            }
                         }
                     });
-                    const data = await res.json();
-                    if(data.success){
-                        Swal.fire('Deleted!', data.message, 'success');
-                        row.remove();
-                    } else {
-                        Swal.fire('Error', data.message, 'error');
-                    }
-                } catch(err){
-                    console.error(err);
-                    Swal.fire('Error', 'Server error occurred.', 'error');
-                }
-            }
-        });
-    });
-});
-</script>
+                });
+            });
+        </script>

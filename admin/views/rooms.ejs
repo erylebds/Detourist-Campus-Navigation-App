@@ -46,12 +46,14 @@
         <div class="form-group">
             <label for="room_image">Room Image</label>
             <input type="file" id="room_image" name="room_image" accept="image/*">
-            <small style="display: block; margin-top: 5px; color: #666;">Leave blank to keep existing image when editing.</small>
+            <small style="display: block; margin-top: 5px; color: #666;">Leave blank to keep existing image when
+                editing.</small>
         </div>
 
         <div class="form-actions" style="margin-top: 20px;">
             <button type="submit" class="btn-primary">Save Room</button>
-            <button type="button" id="cancelBtn" class="btn-secondary" style="display: none; margin-left: 10px;">Cancel</button>
+            <button type="button" id="cancelBtn" class="btn-secondary"
+                style="display: none; margin-left: 10px;">Cancel</button>
         </div>
     </form>
 </div>
@@ -71,45 +73,44 @@
             </tr>
         </thead>
         <tbody>
-            <% rooms.forEach(room => { %>
-            <tr data-id="<%= room.room_id %>">
-                <td>
-                    <% if(room.image_path) {
-                        let imgSrc = room.image_path;
-                        if (imgSrc.includes('admin/public/')) {
-                            imgSrc = imgSrc.replace('admin/public/', '');
-                        }
-                        if (!imgSrc.startsWith('/')) {
-                            imgSrc = '/' + imgSrc;
-                        }
-                    %>
-                    <img src="<%= imgSrc %>" alt="<%= room.name %>" style="height: 50px; width: 50px; object-fit: cover; border-radius: 4px;">
-                    <% } else { %>
-                    <span style="color: #999; font-style: italic;">No Image</span>
-                    <% } %>
-                </td>
-                <td><strong><%= room.name %></strong></td>
-                <td><%= room.room_type.replace('_', ' ') %></td>
-                <td><%= room.floor_id %></td>
-                <td><%= room.x_coord %>, <%= room.y_coord %></td>
-                <td>
-                    <a href="javascript:void(0);" class="edit-btn"
-                       style="color: #3498db; text-decoration: none; font-weight: bold;"
-                       data-id="<%= room.room_id %>"
-                       data-name="<%= room.name %>"
-                       data-floor="<%= room.floor_id %>"
-                       data-type="<%= room.room_type %>"
-                       data-x="<%= room.x_coord %>"
-                       data-y="<%= room.y_coord %>"
-                    >Edit</a>
-                    |
-                    <button class="delete-btn" data-id="<%= room.room_id %>"
+            <% rooms.forEach(room=> { %>
+                <tr data-id="<%= room.room_id %>">
+                    <td>
+                        <% if(room.image_path) { let imgSrc=room.image_path; if (imgSrc.includes('admin/public/')) {
+                            imgSrc=imgSrc.replace('admin/public/', '' ); } if (!imgSrc.startsWith('/')) { imgSrc='/' +
+                            imgSrc; } %>
+                            <img src="<%= imgSrc %>" alt="<%= room.name %>"
+                                style="height: 50px; width: 50px; object-fit: cover; border-radius: 4px;">
+                            <% } else { %>
+                                <span style="color: #999; font-style: italic;">No Image</span>
+                                <% } %>
+                    </td>
+                    <td><strong>
+                            <%= room.name %>
+                        </strong></td>
+                    <td>
+                        <%= room.room_type.replace('_', ' ' ) %>
+                    </td>
+                    <td>
+                        <%= room.floor_id %>
+                    </td>
+                    <td>
+                        <%= room.x_coord %>, <%= room.y_coord %>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" class="edit-btn"
+                            style="color: #3498db; text-decoration: none; font-weight: bold;"
+                            data-id="<%= room.room_id %>" data-name="<%= room.name %>" data-floor="<%= room.floor_id %>"
+                            data-type="<%= room.room_type %>" data-x="<%= room.x_coord %>"
+                            data-y="<%= room.y_coord %>">Edit</a>
+                        |
+                        <button class="delete-room-btn" data-id="<%= room.room_id %>"
                             style="color:#e74c3c; background:none; border:none; cursor:pointer; font-weight: bold;">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-            <% }) %>
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                <% }) %>
         </tbody>
     </table>
 </div>
@@ -117,124 +118,124 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById('roomForm');
-    const formTitle = document.getElementById('formTitle');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const roomIdInput = document.getElementById('roomId');
-    const floorSelect = document.getElementById('floor_id'); 
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('roomForm');
+        const formTitle = document.getElementById('formTitle');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const roomIdInput = document.getElementById('roomId');
+        const floorSelect = document.getElementById('floor_id');
 
-    // ==================== 1. FORM SUBMISSION ====================
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
+        // ==================== 1. FORM SUBMISSION ====================
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-    
-        const wasDisabled = floorSelect.disabled;
-        if(wasDisabled) {
-            floorSelect.disabled = false;
-        }
 
-        const formData = new FormData(this);
-        const id = formData.get('id');
+            const wasDisabled = floorSelect.disabled;
+            if (wasDisabled) {
+                floorSelect.disabled = false;
+            }
 
-        // Restore the disabled state immediately
-        if(wasDisabled) {
-            floorSelect.disabled = true;
-        }
+            const formData = new FormData(this);
+            const id = formData.get('id');
 
-        const url = id ? '/admin/rooms/update' : '/admin/rooms/create';
+            // Restore the disabled state immediately
+            if (wasDisabled) {
+                floorSelect.disabled = true;
+            }
 
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData
-            });
+            const url = id ? '/admin/rooms/update' : '/admin/rooms/create';
 
-            const result = await response.json();
-
-            if (response.ok && result.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: result.message,
-                    timer: 1500,
-                    showConfirmButton: false
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
                 });
-                setTimeout(() => window.location.reload(), 800);
-            } else {
-                Swal.fire('Error', result.message || 'Error saving room', 'error');
-            }
-        } catch (error) {
-            console.error("Submission error:", error);
-            Swal.fire('Error', 'A server error occurred.', 'error');
-        }
-    });
 
-    // ==================== 2. EDIT BUTTON CLICK ====================
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            formTitle.innerText = 'Edit Room';
+                const result = await response.json();
 
-            roomIdInput.value = this.dataset.id;
-            document.getElementById('roomName').value = this.dataset.name;
-            floorSelect.value = this.dataset.floor;
-            document.getElementById('room_type').value = this.dataset.type;
-            document.getElementById('x_coord').value = this.dataset.x;
-            document.getElementById('y_coord').value = this.dataset.y;
-
-            floorSelect.disabled = true;
-            floorSelect.style.backgroundColor = "#e9ecef"; // Visual cue
-
-            cancelBtn.style.display = 'inline-block';
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-
-    // ==================== 3. CANCEL BUTTON CLICK ====================
-    cancelBtn.addEventListener('click', function() {
-        form.reset();
-        roomIdInput.value = '';
-        formTitle.innerText = 'Add New Room';
-
-        floorSelect.disabled = false;
-        floorSelect.style.backgroundColor = ""; // Reset color
-
-        this.style.display = 'none';
-    });
-
-    // ==================== 4. DELETE BUTTON CLICK ====================
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const id = this.dataset.id;
-            const row = this.closest('tr');
-
-            const result = await Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            });
-
-            if (result.isConfirmed) {
-                try {
-                    const response = await fetch(`/admin/rooms/delete/${id}`, { method: 'DELETE' });
-                    const data = await response.json();
-
-                    if (response.ok && data.success) {
-                        Swal.fire('Deleted!', data.message, 'success');
-                        row.remove();
-                    } else {
-                        Swal.fire('Error', data.message || 'Error deleting room', 'error');
-                    }
-                } catch (error) {
-                    console.error("Deletion error:", error);
-                    Swal.fire('Error', 'Failed to delete room.', 'error');
+                if (response.ok && result.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: result.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    setTimeout(() => window.location.reload(), 800);
+                } else {
+                    Swal.fire('Error', result.message || 'Error saving room', 'error');
                 }
+            } catch (error) {
+                console.error("Submission error:", error);
+                Swal.fire('Error', 'A server error occurred.', 'error');
             }
         });
+
+        // ==================== 2. EDIT BUTTON CLICK ====================
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                formTitle.innerText = 'Edit Room';
+
+                roomIdInput.value = this.dataset.id;
+                document.getElementById('roomName').value = this.dataset.name;
+                floorSelect.value = this.dataset.floor;
+                document.getElementById('room_type').value = this.dataset.type;
+                document.getElementById('x_coord').value = this.dataset.x;
+                document.getElementById('y_coord').value = this.dataset.y;
+
+                floorSelect.disabled = true;
+                floorSelect.style.backgroundColor = "#e9ecef"; // Visual cue
+
+                cancelBtn.style.display = 'inline-block';
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ==================== 3. CANCEL BUTTON CLICK ====================
+        cancelBtn.addEventListener('click', function () {
+            form.reset();
+            roomIdInput.value = '';
+            formTitle.innerText = 'Add New Room';
+
+            floorSelect.disabled = false;
+            floorSelect.style.backgroundColor = ""; // Reset color
+
+            this.style.display = 'none';
+        });
+
+        // ==================== 4. DELETE BUTTON CLICK ====================
+        document.querySelectorAll('.delete-room-btn').forEach(btn => {
+            btn.addEventListener('click', async function () {
+                const id = this.dataset.id;
+                const row = this.closest('tr');
+
+                const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                });
+
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch(`/admin/rooms/delete/${id}`, { method: 'DELETE' });
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            Swal.fire('Deleted!', data.message, 'success');
+                            row.remove();
+                        } else {
+                            Swal.fire('Error', data.message || 'Error deleting room', 'error');
+                        }
+                    } catch (error) {
+                        console.error("Deletion error:", error);
+                        Swal.fire('Error', 'Failed to delete room.', 'error');
+                    }
+                }
+            });
+        });
     });
-});
 </script>
