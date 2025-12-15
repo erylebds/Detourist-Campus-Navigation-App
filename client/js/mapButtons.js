@@ -57,17 +57,25 @@ if (mapContainer) {
     isDragging = false;
   });
 
+
+  let darkMode = localStorage.getItem("darkMode") == "true";
+
+  if (darkMode) {
+    toggleDarkMode();
+  }
+
   document.getElementById("darkMode")
     .addEventListener("click", () => {
-      let mapWrapper = document.getElementById("mapWrapper");
-      let darkModeBtn = document.getElementById("darkMode");
-      if (!mapWrapper) return;
-      if (mapWrapper.style.filter === "invert(1)") {
-        mapWrapper.style.filter = "none";
-        darkModeBtn.innerHTML = "☼";
-      } else {
-        mapWrapper.style.filter = "invert(1)";
-        darkModeBtn.innerHTML = "☾";
-      }
+      darkMode = !darkMode;
+      localStorage.setItem("darkMode", darkMode);
+      toggleDarkMode();
     });
+
+  function toggleDarkMode() {
+    let mapWrapper = document.getElementById("mapWrapper");
+    let darkModeBtn = document.getElementById("darkMode");
+
+    mapWrapper.classList.toggle('dark-mode');
+    darkModeBtn.innerHTML = darkMode ? "☾" : "☼";
+  }
 }
