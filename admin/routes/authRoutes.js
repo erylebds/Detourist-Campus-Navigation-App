@@ -8,37 +8,38 @@ const roomModel = require("../models/roomModel");
 const requireAdmin = require("../middleware/requireAdmin");
 const bcrypt = require("bcrypt");
 
-// show login page
+// Show login page
 router.get("/login", (req, res) => {
-    res.render("login", {loginError: req.session.loginError});
-    delete req.session.loginError;
+    res.render("login", { loginError: req.session.loginError }); // render login template with error if exists
+    delete req.session.loginError; // clear the error from session after displaying
 });
 
-// handle login submission
+// Handle login submission
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     try {
         const admin = await adminModel.findAdminByUsernameOrEmail(username);
 
-        // if not found, show error
+        // Show error if user not found
         if (!admin) {
             req.session.loginError = "Username or email not found";
             return res.redirect("/login");
         }
 
-        // compare password
+        // Compare submitted password with hashed password
         const match = await bcrypt.compare(password, admin.password);
         if (!match) {
             req.session.loginError = "Invalid password";
             return res.redirect("/login");
         }
 
-        // login success, store session data
+        // Login successful, store session info
         req.session.adminId = admin.admin_id;
         req.session.adminUsername = admin.username;
         req.session.adminEmail = admin.email;
         req.session.isAdmin = true;
+
         return res.redirect("/admin");
     } catch (err) {
         console.error("Login Error:", err);
@@ -46,15 +47,15 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// show admin dashboard, protect with requireAdmin
+// Admin dashboard (protected)
 router.get("/admin", requireAdmin, async (req, res) => {
     try {
-        const tab = req.query.tab || "announcements";
+        const tab = req.query.tab || "announcements"; // determine active tab
 
-        // get all announcements
+        // Get all announcements
         const announcements = await announcementController.getAllAnnouncements();
 
-        // get all rooms
+        // Get all rooms (if any)
         let rooms = [];
         try {
             rooms = await roomModel.getAllRooms(); 
@@ -62,20 +63,20 @@ router.get("/admin", requireAdmin, async (req, res) => {
             console.error("Error fetching rooms:", err);
         }
 
-        // check if editing a specific announcement
+        // Check if editing a specific announcement
         const editId = req.query.edit ? Number(req.query.edit) : null;
         const editAnnouncement = editId ? await announcementController.getAnnouncementById(editId) : null;
         
-        // get other admins excluding current
+        // Get other admins excluding current logged-in admin
         let otherAdmins = [];
         try {
             const allAdmins = await adminModel.getAllAdmins();
             otherAdmins = allAdmins.filter(a => a.admin_id !== req.session.adminId);
         } catch (err) {
-            console.warn("Could not fetch other admins (function might be missing in model):", err.message);
+            console.warn("Could not fetch other admins:", err.message);
         }
 
-        // render admin view with data
+        // Render admin dashboard with all required data
         res.render("adminView", {
             activeTab: tab,
             adminUsername: req.session.adminUsername,
@@ -93,7 +94,7 @@ router.get("/admin", requireAdmin, async (req, res) => {
             otherAdmins: otherAdmins
         });
 
-        // reset temporary session messages
+        // Clear session messages after rendering
         req.session.annMsg = null;
         req.session.editAnnouncement = null;
         req.session.accMsg = null;
@@ -104,10 +105,10 @@ router.get("/admin", requireAdmin, async (req, res) => {
     }
 });
 
-// handle logout
+// Handle logout
 router.get("/admin/logout", (req, res) => {
-    req.session.destroy();
-    res.redirect("/login");
+    req.session.destroy(); // destroy session
+    res.redirect("/login"); // redirect to login page
 });
 
 module.exports = router;

@@ -1,172 +1,189 @@
 <h1 class="section-title">Announcements</h1>
 
+<!-- Display success message if available -->
 <% if (annMsg) { %>
     <div class="msg-success">
         <%= annMsg %>
     </div>
-    <% } %>
+<% } %>
 
-        <div class="card-box">
-            <h2>
-                <%= editAnnouncement ? 'Edit Announcement' : 'Add New Announcement' %>
-            </h2>
+<!-- Form to Add or Edit Announcement -->
+<div class="card-box">
+    <h2>
+        <!-- Dynamically show Add or Edit based on editAnnouncement -->
+        <%= editAnnouncement ? 'Edit Announcement' : 'Add New Announcement' %>
+    </h2>
 
-            <form id="announcementForm" method="POST" action="/admin/announcements">
-                <input type="hidden" name="form_type" value="announcement">
-                <% if (editAnnouncement) { %>
-                    <input type="hidden" name="announcement_id" value="<%= editAnnouncement.announcement_id %>">
-                    <% } %>
+    <form id="announcementForm" method="POST" action="/admin/announcements">
+        <!-- Hidden input to identify the form type -->
+        <input type="hidden" name="form_type" value="announcement">
 
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" required
-                            value="<%= editAnnouncement ? editAnnouncement.title : '' %>">
+        <!-- If editing, include the announcement ID -->
+        <% if (editAnnouncement) { %>
+            <input type="hidden" name="announcement_id" value="<%= editAnnouncement.announcement_id %>">
+        <% } %>
 
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message"
-                            required><%= editAnnouncement ? editAnnouncement.message : '' %></textarea>
+        <!-- Announcement Title -->
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required
+            value="<%= editAnnouncement ? editAnnouncement.title : '' %>">
 
-                        <label for="created_at">Date & Time:</label>
-                        <input type="datetime-local" id="created_at" name="created_at" value="<%= (() => {
-                   function formatLocalDate(d){
-                       const pad = n => n.toString().padStart(2,'0');
-                       return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-                   }
-                   if(editAnnouncement && editAnnouncement.created_at){
-                       const d = new Date(editAnnouncement.created_at);
-                       if(!isNaN(d)) return formatLocalDate(d);
-                   }
-                   return formatLocalDate(new Date());
-               })() %>">
+        <!-- Announcement Message -->
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required><%= editAnnouncement ? editAnnouncement.message : '' %></textarea>
 
-                        <button type="submit" class="btn-primary">Save Announcement</button>
+        <!-- Date & Time -->
+        <label for="created_at">Date & Time:</label>
+        <input type="datetime-local" id="created_at" name="created_at" value="<%= (() => {
+            // Helper function to format date as yyyy-mm-ddThh:mm
+            function formatLocalDate(d){
+                const pad = n => n.toString().padStart(2,'0');
+                return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+            }
 
-                        <% if (editAnnouncement) { %>
-                            <a href="/admin?tab=announcements" class="btn-secondary">Cancel</a>
-                            <% } %>
-            </form>
-        </div>
+            // If editing and created_at exists, use it
+            if(editAnnouncement && editAnnouncement.created_at){
+                const d = new Date(editAnnouncement.created_at);
+                if(!isNaN(d)) return formatLocalDate(d);
+            }
+            // Otherwise use current date and time
+            return formatLocalDate(new Date());
+        })() %>">
 
-        <div class="card-box">
-            <h2>Existing Announcements</h2>
+        <!-- Submit button -->
+        <button type="submit" class="btn-primary">Save Announcement</button>
 
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Message</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+        <!-- Cancel button only visible when editing -->
+        <% if (editAnnouncement) { %>
+            <a href="/admin?tab=announcements" class="btn-secondary">Cancel</a>
+        <% } %>
+    </form>
+</div>
 
-                <tbody>
-                    <% announcements.forEach(a=> { %>
-                        <tr data-id="<%= a.announcement_id %>">
-                            <td>
-                                <%= a.announcement_id %>
-                            </td>
-                            <td>
-                                <%= a.title %>
-                            </td>
-                            <td>
-                                <%= a.message %>
-                            </td>
-                            <td>
-                                <%= a.created_at %>
-                            </td>
-                            <td>
-                                <a href="/admin/announcements/edit/<%= a.announcement_id %>">Edit</a> |
-                                <button class="delete-announcement-btn" data-id="<%= a.announcement_id %>"
-                                    style="color:#e74c3c; background:none; border:none; cursor:pointer;">Delete</button>
-                            </td>
-                        </tr>
-                        <% }) %>
-                </tbody>
-            </table>
-        </div>
+<!-- Table of Existing Announcements -->
+<div class="card-box">
+    <h2>Existing Announcements</h2>
 
-        <!-- UI Library -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const form = document.getElementById('announcementForm');
-                const createdInput = document.getElementById('created_at');
+        <tbody>
+            <% announcements.forEach(a=> { %>
+                <tr data-id="<%= a.announcement_id %>">
+                    <td><%= a.announcement_id %></td>
+                    <td><%= a.title %></td>
+                    <td><%= a.message %></td>
+                    <td><%= a.created_at %></td>
+                    <td>
+                        <!-- Edit link goes to edit route -->
+                        <a href="/admin/announcements/edit/<%= a.announcement_id %>">Edit</a> |
+                        <!-- Delete button triggers AJAX delete -->
+                        <button class="delete-announcement-btn" data-id="<%= a.announcement_id %>"
+                            style="color:#e74c3c; background:none; border:none; cursor:pointer;">Delete</button>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
 
-                form.addEventListener('submit', async function (e) { //Ajaxx
-                    e.preventDefault();
+<!-- SweetAlert2 UI library for styled alerts and confirmation dialogs -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                    const title = form.title.value.trim();
-                    const message = form.message.value.trim();
-                    const created_at = createdInput.value;
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-                    if (!title || !message) {
-                        Swal.fire('Error', 'Title and message are required.', 'error');
-                        return;
-                    }
+    const form = document.getElementById('announcementForm'); // Announcement form
+    const createdInput = document.getElementById('created_at'); // Date input
 
-                    const formData = new FormData(form);
-                    formData.set('created_at', created_at);
+    // Handle form submission via AJAX
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent default form submission
 
-                    try {
-                        const res = await fetch('/admin/announcements', {
-                            method: 'POST',
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                            body: formData
-                        });
+        const title = form.title.value.trim();
+        const message = form.message.value.trim();
+        const created_at = createdInput.value;
 
-                        const data = await res.json();
-                        if (data.success) {
-                            Swal.fire('Success', data.message, 'success');
-                            setTimeout(() => location.reload(), 800);
-                        } else {
-                            Swal.fire('Error', data.message, 'error');
-                        }
-                    } catch (err) {
-                        console.error(err);
-                        Swal.fire('Error', 'Server error occurred.', 'error');
-                    }
-                });
+        // Validate inputs
+        if (!title || !message) {
+            Swal.fire('Error', 'Title and message are required.', 'error');
+            return;
+        }
 
-                document.querySelectorAll('.delete-announcement-btn').forEach(btn => {
-                    btn.addEventListener('click', async function () {
-                        const id = this.dataset.id;
-                        const row = this.closest('tr');
+        // Prepare form data
+        const formData = new FormData(form);
+        formData.set('created_at', created_at); // Update created_at in FormData
 
-                        const result = await Swal.fire({
-                            title: 'Are you sure?',
-                            text: "You won't be able to revert this!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, delete it!'
-                        });
-
-                        if (result.isConfirmed) {
-                            try {
-                                const res = await fetch(`/admin/announcements/delete/${id}`, {
-                                    method: 'GET',
-                                    headers: {
-                                        'X-Requested-With': 'XMLHttpRequest'
-                                    }
-                                });
-                                const data = await res.json();
-                                if (data.success) {
-                                    Swal.fire('Deleted!', data.message, 'success');
-                                    row.remove();
-                                } else {
-                                    Swal.fire('Error', data.message, 'error');
-                                }
-                            } catch (err) {
-                                console.error(err);
-                                Swal.fire('Error', 'Server error occurred.', 'error');
-                            }
-                        }
-                    });
-                });
+        try {
+            // AJAX POST request to save announcement
+            const res = await fetch('/admin/announcements', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: formData
             });
-        </script>
+
+            const data = await res.json(); // Expect JSON response
+
+            if (data.success) {
+                // Show success popup
+                Swal.fire('Success', data.message, 'success');
+                setTimeout(() => location.reload(), 800); // Reload page after 0.8s
+            } else {
+                Swal.fire('Error', data.message, 'error');
+            }
+        } catch (err) {
+            console.error(err);
+            Swal.fire('Error', 'Server error occurred.', 'error');
+        }
+    });
+
+    // Handle delete announcement buttons via AJAX
+    document.querySelectorAll('.delete-announcement-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+            const id = this.dataset.id; // Announcement ID
+            const row = this.closest('tr'); // Row to remove after deletion
+
+            // Show confirmation dialog
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    // AJAX GET request to delete announcement
+                    const res = await fetch(`/admin/announcements/delete/${id}`, {
+                        method: 'GET',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        Swal.fire('Deleted!', data.message, 'success');
+                        row.remove(); // Remove table row without reload
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire('Error', 'Server error occurred.', 'error');
+                }
+            }
+        });
+    });
+
+});
+</script>

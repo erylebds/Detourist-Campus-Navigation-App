@@ -1,49 +1,51 @@
+// Wait until DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
 
-    // modal setup
-    const modals = document.querySelectorAll(".modal");
-    const modalButtons = document.querySelectorAll("[data-modal]");
-    const closeButtons = document.querySelectorAll(".modal .close");
+    // --- Modal Setup ---
+    const modals = document.querySelectorAll(".modal"); // All modals
+    const modalButtons = document.querySelectorAll("[data-modal]"); // Buttons to open modals
+    const closeButtons = document.querySelectorAll(".modal .close"); // Modal close buttons
 
-    // open modal when button clicked
+    // Open modal when corresponding button is clicked
     modalButtons.forEach(btn => {
         btn.addEventListener("click", () => {
-            const modalId = btn.getAttribute("data-modal");
+            const modalId = btn.getAttribute("data-modal"); // get modal id
             const modal = document.getElementById(modalId);
-            if (modal) modal.style.display = "block";
+            if (modal) modal.style.display = "block"; // show modal
         });
     });
 
-    // close modal when close button clicked
+    // Close modal when close button clicked
     closeButtons.forEach(btn => {
         btn.addEventListener("click", () => {
-            btn.closest(".modal").style.display = "none";
+            btn.closest(".modal").style.display = "none"; // hide modal
         });
     });
 
-    // close modal when clicking outside modal
+    // Close modal when clicking outside modal content
     window.onclick = function(event) {
         if (event.target.classList.contains("modal")) {
             event.target.style.display = "none";
         }
     };
 
-    // helper function to send ajax post request
+    // --- Helper Function ---
+    // AJAX POST helper using fetch, sends FormData
     async function ajaxPost(url, data) {
         try {
             const res = await fetch(url, {
                 method: "POST",
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }, // mark as AJAX
                 body: data
             });
-            return await res.json();
+            return await res.json(); // return JSON response
         } catch (err) {
             console.error(err);
-            Swal.fire("Error", "server error occurred", "error");
+            Swal.fire("Error", "server error occurred", "error"); // show error popup
         }
     }
 
-    // my account - change username
+    // --- My Account - Change Username ---
     const myUsernameForm = document.getElementById("myUsernameForm");
     myUsernameForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentPassword = myUsernameForm.cu_password.value.trim();
         const oldUsername = document.getElementById("currentUsername").textContent.trim();
 
+        // validation
         if (!newUsername || !currentPassword) {
             Swal.fire("Error", "please fill out all fields", "error");
             return;
@@ -67,28 +70,27 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // prepare data for AJAX
         const formData = new FormData();
         formData.append("form_type", "username");
         formData.append("old_username", oldUsername);
         formData.append("new_username", newUsername);
         formData.append("cu_password", currentPassword);
 
+        // send request
         const data = await ajaxPost("/admin/account/username", formData);
 
         if (data.success) {
             Swal.fire("Success", data.message, "success");
-
-            // update username in interface
-            document.getElementById("currentUsername").textContent = newUsername;
-
+            document.getElementById("currentUsername").textContent = newUsername; // update UI
             myUsernameForm.reset();
-            document.getElementById("changeUsernameModal").style.display = "none";
+            document.getElementById("changeUsernameModal").style.display = "none"; // close modal
         } else {
             Swal.fire("Error", data.message, "error");
         }
     });
 
-    // my account - change email
+    // --- My Account - Change Email ---
     const myEmailForm = document.getElementById("myEmailForm");
     myEmailForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -108,10 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.success) {
             Swal.fire("Success", data.message, "success");
-
-            // update email in interface
-            document.querySelector(".card-box p:nth-of-type(2)").textContent = newEmail;
-
+            document.querySelector(".card-box p:nth-of-type(2)").textContent = newEmail; // update UI
             myEmailForm.reset();
             document.getElementById("changeEmailModal").style.display = "none";
         } else {
@@ -119,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // admin actions - edit admin
+    // --- Admin Actions - Edit Admin ---
     document.querySelectorAll(".edit-admin-link").forEach(link => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
@@ -129,12 +128,12 @@ document.addEventListener("DOMContentLoaded", () => {
             form.admin_id.value = id;
             form.username.value = tr.children[1].textContent.trim();
             form.email.value = tr.children[2].textContent.trim();
-            form.password.value = "";
+            form.password.value = ""; // clear password field
             document.getElementById("editAdminModal").style.display = "block";
         });
     });
 
-    // submit edited admin form
+    // Submit edited admin form
     const editAdminForm = document.getElementById("editAdminForm");
     editAdminForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -144,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else Swal.fire("Error", data.message, "error");
     });
 
-    // admin actions - delete admin
+    // --- Admin Actions - Delete Admin ---
     document.querySelectorAll(".delete-admin-link").forEach(link => {
         link.addEventListener("click", async (e) => {
             e.preventDefault();
@@ -152,12 +151,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const row = link.closest("tr");
             const username = row.children[1].textContent.trim();
 
-            // confirm deletion by typing username
+            // confirm deletion
             const { value: inputUsername } = await Swal.fire({
                 title: "are you sure?",
                 html: `type <strong>${username}</strong> to confirm deletion:`,
                 input: 'text',
-                inputPlaceholder: 'type username here',
                 showCancelButton: true,
                 confirmButtonText: "delete",
                 cancelButtonText: "cancel",
@@ -175,14 +173,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await ajaxPost(`/admin/account/delete/${id}`, formData);
             if (data.success) {
                 Swal.fire("Deleted!", data.message, "success");
-                row.remove();
+                row.remove(); // remove row from table
             } else {
                 Swal.fire("Error", data.message, "error");
             }
         });
     });
 
-    // my account - change password
+    // --- My Account - Change Password ---
     const myPasswordForm = document.getElementById("myPasswordForm");
     myPasswordForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -210,12 +208,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // open add admin modal
+    // --- Add New Admin ---
     document.getElementById("addAdminBtn")?.addEventListener("click", () => {
         document.getElementById("addAdminModal").style.display = "block";
     });
 
-    // add new admin
     const addAdminForm = document.getElementById("addAdminForm");
     addAdminForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -224,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = addAdminForm.email.value.trim();
         const password = addAdminForm.password.value.trim();
 
-        // validate username, email, password
+        // validate
         if (username.length < 3) {
             Swal.fire("Error", "username must be at least 3 characters", "error");
             return;
@@ -238,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         if (!strongPassword.test(password)) {
-            Swal.fire("Error", "password must be at least 8 characters with uppercase, lowercase, number, and a special character", "error");
+            Swal.fire("Error", "password must meet requirements", "error");
             return;
         }
 
@@ -249,11 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const data = await ajaxPost("/admin/account/create", new FormData(addAdminForm));
 
-        if (data.success) {
-            Swal.fire("Success", data.message, "success").then(() => location.reload());
-        } else {
-            Swal.fire("Error", data.message, "error");
-        }
+        if (data.success) Swal.fire("Success", data.message, "success").then(() => location.reload());
+        else Swal.fire("Error", data.message, "error");
     });
 
 });
