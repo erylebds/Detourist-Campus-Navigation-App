@@ -37,11 +37,6 @@
                     <span class="icon">🏫</span> Rooms
                 </button>
                 <button type="button"
-                    class="<%= activeTab === 'routes' ? 'active' : '' %>"
-                    onclick="window.location.href='/admin?tab=routes'">
-                    <span class="icon">🧭</span> Routes
-                </button>
-                <button type="button"
                     class="<%= activeTab === 'account' ? 'active' : '' %>"
                     onclick="window.location.href='/admin?tab=account'">
                     <span class="icon">👤</span> Account
@@ -71,14 +66,6 @@
                 <% } else { %>
                     <p>Error loading rooms data.</p>
                 <% } %>
-            </section>
-
-            <!-- Routes Tab -->
-            <section class="admin-tab <%= activeTab === 'routes' ? 'active' : '' %>" id="tab-routes">
-                <h1 class="section-title">Routes</h1>
-                <div class="card-box">
-                    <p>Routes management (to follow)</p>
-                </div>
             </section>
 
             <!-- Account Tab -->
